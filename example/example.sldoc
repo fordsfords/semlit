@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Semlit Example</title>
+  </head>
+  <body>
+    <h1>Semlit Example</h1>
+    <p>This is a <a href="http://geeky-boy.com/semlit/">semi-literate
+        document</a> for the program <tt>example.c</tt>. This program and
+      its semi-literate document are intended to be used as a simple starting
+      point for users' own programs and documents.
+
+    <h2>Introduction</h2>
+    <p>This document describes the internals of the <tt>example.c</tt>
+      program, and is intended to be read by a programmer who wants to
+      understand, maintain, and perhaps reuse the code.
+    </p>
+    <p>The main program is written in C.
+    </p>
+    <p>There is one program source file:<br>
+    </p>
+    <ul>
+      <li><b><tt>=semlit,srcfile,example_c.slsrc,example_c.txt=</tt></b>
+        - (right-click and save as "example.c") main program.</li>
+    </ul>
+
+    <h2>Program explanation: <tt>example.c</tt></h2>
+
+    <h3>Main</h3>
+	=semlit,insert,main=
+    <p>Here are the high-level steps performed by the main example program:
+	</p>
+    <ol>
+      <li>Print "Hello world".</li>
+      <li>Exit.</li>
+    </ol>
+
+    <h4>Print "Hello world"</h4>
+	=semlit,insert,print=
+	<p>The <tt>printf()</tt> function is used.
+	</p>
+
+    <h4>Exit</h4>
+    =semlit,insert,exit=
+	<p>Call the <tt>exit()<tt> function.  I could have simply
+	returned zero, which does the same thing.
+	</p>
+
+    <h3>Includes</h3>
+	=semlit,insert,includes=
+	<p><tt>stdio.h</tt> declares <tt>printf()</tt>, and <tt>stdlib.h</tt>
+	declares <tt>exit()</tt>.
+	</p>
+  </body>
+</html>

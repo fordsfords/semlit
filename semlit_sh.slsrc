@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# repeat the shebang for doc purposes (the real shebang needs to be line 1)
+#=semlit,block,sh_shebang=
+#!/bin/sh
+#=semlit,endblock,sh_shebang=
+
+# semlit - wrapper script around the perl tool
+
+#=semlit,block,sh_iwd=
+IWD=`pwd`                    # remember initial working directory
+#=semlit,endblock,sh_iwd=
+
+#=semlit,block,sh_finddir=
+# Find dir where tool is stored (useful for finding related files)
+#=semlit,block,sh_dirname=
+TOOLDIR=`dirname $0`
+#=semlit,endblock,sh_dirname=
+# Make sure TOOLDIR is a full path name (not relative)
+#=semlit,block,sh_fix_tooldir=
+cd $TOOLDIR; TOOLDIR=`pwd`; cd $IWD
+#=semlit,endblock,sh_fix_tooldir=
+#=semlit,endblock,sh_finddir=
+
+#=semlit,block,sh_runperl=
+perl $TOOLDIR/semlit.pl $*
+#=semlit,endblock,sh_runperl=
+exit $?

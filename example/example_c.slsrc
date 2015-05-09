@@ -1,0 +1,20 @@
+/* example.c - program to serve as a starting point for users of semlit
+ * See http://wiki.geeky-boy.com/semlit/  */
+
+/* =semlit,block,includes=*/
+#include <stdio.h>
+#include <stdlib.h>
+/* =semlit,endblock,includes=*/
+
+/* =semlit,block,main= */
+int main(int argc, char **argv)
+{
+	/* =semlit,block,print=*/
+	printf("Hello world!\n");
+	/* =semlit,endblock,print=*/
+
+	/* =semlit,block,exit=*/
+	exit(0);
+	/* =semlit,endblock,exit=*/
+}  /* main */
+/* =semlit,endblock,main=*/

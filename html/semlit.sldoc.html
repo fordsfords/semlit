@@ -1,0 +1,1469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=ISO-8859-1">
+    <title>semlit - Semi-Literate Documentation</title>
+  </head>
+  <body>
+    <h1><a class="mozTocH1" name="mozTocId336658"></a>semlit Program
+      Description</h1>
+    <p>This is a <a href="http://geeky-boy.com/semlit/">semi-literate
+
+        document</a> for the program <tt>semlit.pl</tt> and it's shell
+      wrapper <tt>semlit</tt>.&nbsp; This program is used to create
+      semi-literate documentation (of which this document is an
+      example).&nbsp; Semi-literate documents like this are intended to
+      explain the internals of a program, which is different than user
+      documentation.&nbsp; If you are an end user, you probably want the
+      <a href="../index.html">user document</a>.</p>
+    <p>Copyright 2012 Steven Ford <a href="http://geeky-boy.com">http://geeky-boy.com</a> and
+licensed under:</p>
+    <p xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"> <a
+        rel="license"
+        href="http://creativecommons.org/publicdomain/zero/1.0/"> <img
+          src="http://i.creativecommons.org/p/zero/1.0/88x31.png"
+          style="border-style: none;" alt="CC0"> </a> <br>
+      To the extent possible under law, the contributors to this project
+      have waived all copyright and related or neighboring rights to
+      this work. This work is published from: <span
+        property="vcard:Country" datatype="dct:ISO3166" content="US"
+        about="geeky-boy.com"> United States</span>.&nbsp; The project
+      home is <a href="http://geeky-boy.com/semlit">http://geeky-boy.com/semlit</a>.&nbsp;
+      To contact me, Steve Ford, project owner, you can find my email
+      address at <a href="http://geeky-boy.com">http://geeky-boy.com</a>.&nbsp;
+      Can't see it?&nbsp; Keep looking.</p>
+    <br>
+<br>
+    <ol class="readonly" id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId336658">semlit Program Description</a>
+        <ol>
+          <li><a href="#mozTocId638880">Introduction</a></li>
+          <li><a href="#mozTocId41959">Program explanation: semlit.pl </a>
+            <ol>
+              <li><a href="#mozTocId462502">Main </a>
+                <ol>
+                  <li><a href="#mozTocId280226">Process command line</a></li>
+                  <li><a href="#mozTocId129472">Create a few html output
+                      files </a></li>
+                  <li><a href="#mozTocId259975">Read and process the
+                      input sldoc file </a></li>
+                  <li><a href="#mozTocId64">Fix up multiple source block
+                      references</a></li>
+                  <li><a href="#mozTocId139735">Write out the main
+                      documentation html file and exit </a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId142916">Function: process_doc_file()
+                </a>
+                <ol>
+                  <li><a href="#mozTocId221127">Open sldoc input file</a></li>
+                  <li><a href="#mozTocId702636">Read the file into
+                      memory</a></li>
+                  <li><a href="#mozTocId210353">For each semlit command
+                      contained in that file</a></li>
+                  <li><a href="#mozTocId612865">Execute the command</a></li>
+                  <li><a href="#mozTocId447263">Replace the command with
+                      the html returned by the command execution and
+                      loop </a></li>
+                  <li><a href="#mozTocId72820">return the processed html</a></li>
+                  <li><a href="#mozTocId903260">Recursion</a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId193858">Function: semlit_cmd()</a>
+                <ol>
+                  <li><a href="#mozTocId638426">Command: tabstop</a></li>
+                  <li><a href="#mozTocId897187">Command: srcfile </a></li>
+                  <li><a href="#mozTocId395404">Command: include</a></li>
+                  <li><a href="#mozTocId374013">Command: insert</a></li>
+                  <li><a href="#mozTocId495366">Command: block </a></li>
+                  <li><a href="#mozTocId911738">Command: endblock</a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId378007">Function: process_src_file()</a>
+                <ol>
+                  <li><a href="#mozTocId9443">Open the slsrc input file</a></li>
+                  <li><a href="#mozTocId68855">Open the output source
+                      html file</a></li>
+                  <li><a href="#mozTocId958072">Open the output src file</a></li>
+                  <li><a href="#mozTocId318560">For each input line in
+                      the slsrc file:</a></li>
+                  <li><a href="#mozTocId292395">If it is a semlit
+                      command, process it</a></li>
+                  <li><a href="#mozTocId511329">Else it is a source
+                      line:</a></li>
+                  <li><a href="#mozTocId457775">Write the line to the
+                      src file</a></li>
+                  <li><a href="#mozTocId786450">Html-ify the line</a></li>
+                  <li><a href="#mozTocId331395">If there are active
+                      source blocks accumulating:</a></li>
+                  <li><a href="#mozTocId187875">Create doc link and
+                      write source html file </a></li>
+                  <li><a href="#mozTocId829189">Add the source line to
+                      all of the active blocks</a></li>
+                  <li><a href="#mozTocId409513">Else no active block,
+                      write source html file without link</a></li>
+                  <li><a href="#mozTocId103803">Close files and wrap up</a></li>
+                  <li><a href="#mozTocId891933">Return html link to the
+                      src file</a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId370472">Function: help() </a></li>
+              <li><a href="#mozTocId389878">Error handling</a>
+                <ol>
+                  <li><a href="#mozTocId49613">Function: usage()</a></li>
+                  <li><a href="#mozTocId899250">Function: err()</a></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li><a href="#mozTocId647222">Wrapper Shell Script</a></li>
+        </ol>
+      </li>
+    </ol>
+    <h2><a class="mozTocH2" name="mozTocId638880"></a>Introduction</h2>
+    <p>This document describes the internals of the <tt>semlit.pl</tt>
+      program, and is intended to be read by a programmer who wants to
+      understand, maintain, and perhaps reuse the code.&nbsp; Before
+      reading this documentation, you are expected to have a good
+      user-level understanding of SEMLIT.&nbsp; Please be familiar <a
+        href="../index.html">user document</a> with&nbsp; before starting this,
+      unless you are just getting a feel for what SEMLIT documentation
+      is like.<br>
+    </p>
+    <p>The main program is written in Perl. The reader is assumed to
+      have at least <a
+href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-level
+        knowledge of Perl</a>. Some of the more-advanced Perl constructs
+      are explained for the benefit of the novice.<br>
+    </p>
+    <p>There are two program source files:<br>
+    </p>
+    <ul>
+      <li><b><span style="font-family: monospace;"><a href="semlit_pl.txt">semlit_pl.txt</a></span></b>
+        - (right-click and save as "semlit.pl") main program.</li>
+      <li><b><span style="font-family: monospace;"><a href="semlit_sh.txt">semlit_sh.txt</a></span></b>
+        - (right-click and save as "semlit.sh") wrapper shell script for
+        <span style="font-family: monospace;">semlit.pl</span>.
+        Strictly-speaking, this file is optional and is provided for
+        convenience.</li>
+    </ul>
+    <p> </p>
+    <h2><a class="mozTocH2" name="mozTocId41959"></a>Program
+      explanation: <tt>semlit.pl</tt><br>
+    </h2>
+    <br>
+    <h3><a class="mozTocH3" name="mozTocId462502"></a>Main<br>
+    </h3>
+    <p>Here are the high-level steps performed by the main semlit
+      program:<br>
+    </p>
+    <ol>
+      <li>Process command line.</li>
+      <li>Create a few <b>html</b> output files.</li>
+      <li>Read and process the input <b>sldoc</b> file. This has the
+        side effect of reading the <b>slsrc</b> files and generating
+        the <b>src</b> files.</li>
+      <li>Fix up multiple source block references.<br>
+      </li>
+      <li>Write out the main documentation <b>html</b> file and exit.</li>
+    </ol>
+    <h4><a class="mozTocH3" name="mozTocId280226"></a>Process command
+      line</h4>
+    <p>Let's declare some global variables to hold values for program
+      options, and set their default values: <a name="options_ref_1" id="options_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#options" target="src">00049</a>  my $o_help;
+<a href="semlit_pl.slsrc.html#options" target="src">00050</a>  my $o_fs = ",";
+<a href="semlit_pl.slsrc.html#options" target="src">00051</a>  my $o_delim = "=";
+<a href="semlit_pl.slsrc.html#options" target="src">00052</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+<a href="semlit_pl.slsrc.html#options" target="src">00053</a>  $tabstop = 4;  # defined and used by Text::Tabs - see "expand()" function
+<a href="semlit_pl.slsrc.html#options" target="src">00054</a>  
+<a href="semlit_pl.slsrc.html#options" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="semlit_pl.slsrc.html#options" target="src">00056</a>  if (defined($o_help)) {
+<a href="semlit_pl.slsrc.html#options" target="src">00057</a>      help();  # if -h had a value, it would be in $opt_h
+<a href="semlit_pl.slsrc.html#options" target="src">00058</a>  }
+</pre><!-- endblock options_ref_1 --></small>
+
+
+      Note the use of the Perl built-in function <span
+        style="font-family: monospace;">GetOptions</span>. This function
+      does the work of parsing the command-line and setting new values
+      into the global option variables. <span style="font-family:
+        monospace;"></span>See the <a
+        href="http://perldoc.perl.org/Getopt/Long.html">Perl
+        documentation</a> if you are not familiar with the construct.<br>
+    </p>
+    <h4><a class="mozTocH3" name="mozTocId129472"></a>Create a few html
+      output files<br>
+    </h4>
+    <p>There are a couple of misc support files needed by the html
+      documentation. Since the documentation is best viewed with html
+      frames, the first file is the frameset: <a name="frameset_ref_1" id="frameset_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#frameset" target="src">00073</a>  # Create frameset page
+<a href="semlit_pl.slsrc.html#frameset" target="src">00074</a>  
+<a href="semlit_pl.slsrc.html#frameset" target="src">00075</a>  my $index_o_file;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00076</a>  open($index_o_file, "&gt;", "index.html") || die "Error, could not open htmlfile 'index.html'";
+<a href="semlit_pl.slsrc.html#frameset" target="src">00077</a>  print $index_o_file &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00078</a>  &lt;html&gt;&lt;head&gt;&lt;/head&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00079</a>  &lt;frameset cols="50%,*"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00080</a>  &lt;frame src="$doc_html_filename" name="doc"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00081</a>  &lt;frame src="blank.html" name="src"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00082</a>  &lt;/frameset&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00083</a>  &lt;/html&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00084</a>  __EOF__
+<a href="semlit_pl.slsrc.html#frameset" target="src">00085</a>  close($index_o_file);
+</pre><!-- endblock frameset_ref_1 --></small>
+
+
+      Note the use of Perl's "here document" <span style="font-family:
+        monospace;">&lt;&lt;__EOF__</span> ... <span
+        style="font-family: monospace;">__EOF__</span> See <a
+        href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
+      and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+
+
+
+
+
+
+
+        documentation</a> if you are not familiar with this construct.
+      Contrast this with the next code fragment.<br>
+    </p>
+    <p>When the documentation is first brought up, there is no source to
+      display in the source frame. So we need an almost blank page:
+      <a name="blank_ref_1" id="blank_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#blank" target="src">00087</a>  # Create blank page for initial source frame
+<a href="semlit_pl.slsrc.html#blank" target="src">00088</a>  
+<a href="semlit_pl.slsrc.html#blank" target="src">00089</a>  my $blank_o_file;
+<a href="semlit_pl.slsrc.html#blank" target="src">00090</a>  open($blank_o_file, "&gt;", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
+<a href="semlit_pl.slsrc.html#blank" target="src">00091</a>  print $blank_o_file "&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;Click a source line number to see the line in context.&lt;/body&gt;&lt;/html&gt;\n";
+<a href="semlit_pl.slsrc.html#blank" target="src">00092</a>  close($blank_o_file);
+</pre><!-- endblock blank_ref_1 --></small>
+
+ I didn't use a "here" document for this, but
+      I could have. </p>
+    <h4><a class="mozTocH3" name="mozTocId259975"></a>Read and process
+      the input sldoc file<br>
+    </h4>
+    <p>The program assumes that there is a single master <b>sldoc</b>
+      file supplied on the command line. So, early on we get that file
+      name: <a name="infile_ref_1" id="infile_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#infile" target="src">00060</a>  if (scalar(@ARGV) != 1) {
+<a href="semlit_pl.slsrc.html#infile" target="src">00061</a>      usage("Error, .sldoc file missing");
+<a href="semlit_pl.slsrc.html#infile" target="src">00062</a>  }
+<a href="semlit_pl.slsrc.html#infile" target="src">00063</a>  $main_doc_filename = $ARGV[0];
+<a href="semlit_pl.slsrc.html#infile" target="src">00064</a>  if ( ! -r "$main_doc_filename" ) {
+<a href="semlit_pl.slsrc.html#infile" target="src">00065</a>      usage("Error, could not read '$main_doc_filename'");
+<a href="semlit_pl.slsrc.html#infile" target="src">00066</a>  }
+</pre><!-- endblock infile_ref_1 --></small>
+
+ Note the use of the perl construct <span
+        style="font-family: monospace;">scalar(@array)</span> to
+      determine the number of elements in the array. There are shorter
+      ways to do this (in terms of keystrokes), but I prefer the
+      explicit construct. Makes it easier to spot. Also note the use of
+      <span style="font-family: monospace;">-r file</span> to test if
+      the file exists and is readable.<br>
+    </p>
+    <p>Once the file name is determined, we now process that input file:
+      <a name="mainloop_ref_1" id="mainloop_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  # Main loop; read each line in doc file
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00096</a>  my $doc_html_str = process_doc_file($main_doc_filename);
+<a href="#mainloop_ref_2">next ref</a>  <a href="#mainloop_ref_2">last ref</a></pre></small>
+
+ Note that the function <a
+        href="#mozTocId142916"><span style="font-family: monospace;">process_doc_file()</span></a>
+      returns the html output for the documentation.<br>
+    </p>
+    <h4><a class="mozTocH3" name="mozTocId64"></a>Fix up multiple source
+      block references</h4>
+    <p>An <b>sldoc</b> file might insert the same block of source code
+      multiple times. The source <b>html</b> will link to the first doc
+      reference to it. How does the reader find the other references? At
+      the end of an inserted source block, links will be inserted to
+      adjacent references within the doc.<br>
+    </p>
+    <p>However, the <b>sldoc</b> file is processed sequentially. When a
+      reference (<tt>insert</tt> command) is seen, it is not yet known
+      if there will be subsequent references. So, a fixup step is added
+      after the <b>sldoc</b> file is fully processed. That fixup step
+      looks at each source block that has multiple references and adds
+      the appropriate links (next/prev).<br>
+    </p>
+    <p>Since this step needs a count of the number of references, we
+      need code in the <a href="#mozTocId193858"><tt>semlit_cmd()</tt></a>
+      function to do the counting: <a name="countRefs_ref_1" id="countRefs_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00218</a>              my $num_refs = 1;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00219</a>              my $block_ref_name = $block_name;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00220</a>              if (defined($block_numrefs{$block_name})) {
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00221</a>                  $num_refs = $block_numrefs{$block_name} + 1;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00222</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00223</a>              }
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00224</a>              $block_numrefs{$block_name} = $num_refs;
+</pre><!-- endblock countRefs_ref_1 --></small>
+
+ If <tt>$block_numrefs{$block_name}</tt>
+      already exists, then this is not the first <tt>insert</tt> for
+      this block.<br>
+    </p>
+    <p>Back to main and the fix-up step: <a name="fixRefs_ref_1" id="fixRefs_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00098</a>  # fix up multiple source references
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00099</a>  foreach my $blockname (keys(%block_numrefs)) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00100</a>      if ($block_numrefs{$blockname} &gt; 1) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00101</a>          # First ref points to next and last
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00102</a>          my $refnum = 1;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00103</a>          my $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00104</a>          my $first_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00105</a>          my $last_block = $blockname . "_ref_" . $block_numrefs{$blockname};
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00106</a>          my $next_block = $blockname . "_ref_" . ($refnum + 1);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00107</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$last_block"&gt;last ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00108</a>  
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00109</a>          # Middle refs point to previous and next
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00110</a>          my $prev_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00111</a>          for ($refnum = 2; $refnum &lt;= $block_numrefs{$blockname} - 1; $refnum ++) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00112</a>              # middle refs point to prev and next
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00113</a>              $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00114</a>              $next_block = $blockname . "_ref_" . ($refnum + 1);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00115</a>              $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00116</a>              $prev_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00117</a>          }
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00118</a>  
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00119</a>          # last ref points to first and previous
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00120</a>          $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00121</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$first_block"&gt;first ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00122</a>      }
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00123</a>  }
+</pre><!-- endblock fixRefs_ref_1 --></small>
+
+ The
+      first reference has no "prev", so a link to the last reference is
+      included. The last reference has no "next", so a link to the first
+      reference is included. (The source <b>html</b> always links to
+      the first reference.)<br>
+    </p>
+    <h4><a class="mozTocH3" name="mozTocId139735"></a>Write out the main
+      documentation html file and exit<br>
+    </h4>
+    <p>A bit earlier in the program, the output file was opened:
+      <a name="openOutHtml_ref_1" id="openOutHtml_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00068</a>  # open main doc file
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00069</a>  
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00070</a>  $doc_html_filename = basename($main_doc_filename) . ".html";  # strip directory
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00071</a>  open($doc_html_outfd, "&gt;", $doc_html_filename) || die "Error, could not open htmlfile '$doc_html_filename'";
+</pre><!-- endblock openOutHtml_ref_1 --></small>
+
+ Then, after the input file is
+      processed, the returned html output is written to the output file:
+      <a name="writeOut_ref_1" id="writeOut_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00125</a>  # write doc html file
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00126</a>  
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00127</a>  print $doc_html_outfd "$doc_html_str\n";
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00128</a>  close($doc_html_outfd);
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00129</a>  
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00130</a>  # All done.
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00131</a>  exit($exit_status);
+</pre><!-- endblock writeOut_ref_1 --></small>
+
+ The variable <span style="font-family:
+        monospace;">$exit_status</span> is initialized to zero in main
+      and is incremented each time an error is reported. Thus, if no
+      errors are reported, the program exits with success (0).<br>
+    </p>
+    <h3><a class="mozTocH3" name="mozTocId142916"></a>Function: <span
+        style="font-family: monospace;">process_doc_file()</span><br>
+    </h3>
+    <p>The <span style="font-family: monospace;">process_doc_file()</span>
+      function is called from the main program: <a name="mainloop_ref_2" id="mainloop_ref_2"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  # Main loop; read each line in doc file
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00096</a>  my $doc_html_str = process_doc_file($main_doc_filename);
+<a href="#mainloop_ref_1">first ref</a>  <a href="#mainloop_ref_1">prev ref</a></pre></small>
+
+
+      It is also called (recursively) from the semlit command <a
+        href="#mozTocId395404"><span style="font-family: monospace;">include</span></a>.<br>
+    </p>
+    <p>The function starts out with: <a name="process_doc_file_ref_1" id="process_doc_file_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00137</a>  sub process_doc_file {
+<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00138</a>      my ($doc_filename) = @_;
+</pre><!-- endblock process_doc_file_ref_1 --></small>
+
+
+      Since this function can be called recursively, we save any
+      existing file name and line number (they are restored before
+      return).<br>
+    </p>
+    <p>The main function is to open an <b>sldoc</b> file, read the file
+      and process the semlit commands, and return the documentation html
+      output. Note that the <b>sldoc</b> input file is already in html
+      form; once the file is read, all that remains to be done is to
+      process the semlit commands. In the degenerate simple case of an <b>sldoc</b>
+      file containing <span style="font-style: italic;">no</span>
+      semlit commands at all, the output <b>html</b> file will be
+      exactly equal to the <b>sldoc</b> input file. (An unlikely case
+      since it is the semlit commands which provide the value of
+      semi-literate documentation.)<br>
+    </p>
+    <p>Here are the high-level steps it performs:<br>
+    </p>
+    <ol>
+      <li>Open <b>sldoc</b> input file.</li>
+      <li>Read the file into memory.</li>
+      <li>For each semlit command contained in that file:</li>
+      <ol>
+        <li>Execute the command.</li>
+        <li>Replace the command with the html returned by the command
+          execution and loop.</li>
+      </ol>
+      <li>Return the processed html.<br>
+      </li>
+    </ol>
+    <p>In an earlier version, the program read the <b>sldoc</b> input
+      file one line at a time. The line was tested to determine if it
+      was an semlit command. If so, the line was executed and the line
+      dropped. This approach worked fine when I used a simple text
+      editor to create the html <b>sldoc</b> file. But editing html
+      with a simple text editor is painful, error-prone, and
+      inefficient. I really wanted to use an html editor. But html
+      editors generally do not make it easy to control how the content
+      is arranged on lines of the physical html file. I discovered that
+      multiple semlit commands can be packed onto a single line, and
+      even split across lines.<br>
+    </p>
+    <p>Fortunately, Perl provides powerful constructs which make this
+      kind of processing easy. Instead of looking at the file
+      line-by-line, the entire file can be read into a single string
+      variable, and regular expression matching can be used to find the
+      commands, one at a time. You will see this <a
+        href="mozTocId210353">below</a>.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId221127"></a>Open sldoc input
+      file</h4>
+    <p>The semlit program supports having libraries of <b>sldoc</b>
+      files for standard boilerplate. I chose to model this after the C
+      compiler: the programmer simply specifies the name of the file,
+      and one or more search directories can be specified on the command
+      line with the <span style="font-family: monospace;">-I</span>
+      option. These directories are set up in the main program thus:
+      <a name="initIncdirs_ref_1" id="initIncdirs_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#initIncdirs" target="src">00052</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+</pre><!-- endblock initIncdirs_ref_1 --></small>
+
+ ... <a name="GetOptionsError_ref_1" id="GetOptionsError_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="#GetOptionsError_ref_2">next ref</a>  <a href="#GetOptionsError_ref_3">last ref</a></pre></small>
+
+
+      The <span style="font-family: monospace;">GetOptions()</span>
+      function will parse out as many <span style="font-family:
+        monospace;">-I</span> options that the user supplies and leaves
+      the <span style="font-family: monospace;">@incdirs</span> array
+      set with the directories (including ".").<br>
+    </p>
+    <p>Back in the process_doc_file() function, the file is opened as
+      follows: <a name="openSldocFile_ref_1" id="openSldocFile_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00141</a>      # open source file, using one or more search directories
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00142</a>  
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00143</a>      my $incdir;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00144</a>      my $open_success = 0;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00145</a>      foreach $incdir (@o_incdirs) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00146</a>          if (open($doc_infd, "&lt;", "$incdir/$doc_filename")) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00147</a>              $open_success = 1;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00148</a>              last;  # break out of foreach
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00149</a>          }
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00150</a>      }
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00151</a>      if (! $open_success) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00152</a>          err("could not open doc file '$doc_filename', skipping");
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00153</a>          return;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00154</a>      }
+</pre><!-- endblock openSldocFile_ref_1 --></small>
+
+ It loops through the array
+      of include directories until the file can be opened. Note that
+      almost the <a href="#mozTocId9443">same code</a> exists in <tt><a
+          href="#mozTocId378007">process_src_file()</a>.</tt><br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId702636"></a>Read the file into
+      memory</h4>
+    <p>Perl makes this easy: <a name="readsldoc_ref_1" id="readsldoc_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00156</a>      # Read entire file into memory
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00157</a>  
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00158</a>      my @doctexts = &lt;$doc_infd&gt;;
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00159</a>      close($doc_infd);
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00160</a>      chomp(@doctexts);  # remove line delims from every line
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00161</a>      my $num_lines = scalar(@doctexts);  # count lines in file
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00162</a>      my $doctext = join("\n", @doctexts) . "\n";  # combine as a single string
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00163</a>      $doctext =~ s/\r//gs;  # remove carriage returns, if any
+</pre><!-- endblock readsldoc_ref_1 --></small>
+
+ The <tt>chomp()</tt>
+      function removes line delimiters, which, depending on platform,
+      might be something other than linefeeds, and the <tt>join()</tt>
+      combines the lines into one long string, and inserts linefeeds as
+      line endings. Then, carriage returns, if any, are removed. This
+      unifies different platforms. (<a href="#mozTocId318560">Similar
+        code</a> can be found in <a href="#mozTocId378007"><tt>process_src_file()</tt></a>.)<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId210353"></a>For each semlit
+      command contained in that file</h4>
+    <p>The basic algorithm is to find the <span style="font-style:
+        italic;">first</span> semlit command in the file, execute it,
+      and then replace that semlit command with the results of the
+      command. Note that it is possible that the replacement text
+      contains semlit commands. So, each time a semlit command is
+      processed, the entire file must be re-scanned from the beginning.
+      Instead of trying to process the file line-by-line, the loop
+      executes until there are no more commands to execute:
+      <a name="findCommand_ref_1" id="findCommand_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00168</a>      # process semlit commands
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00169</a>      while ($doctext =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/is) {
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00170</a>          my $cmd = $1;  # text of command (minus standard stuff)
+</pre><!-- endblock findCommand_ref_1 --></small>
+
+ The variable <span
+        style="font-family: monospace;">$o_delim</span> contains the
+      semlit command delimiter and defaults to "<span
+        style="font-family: monospace;">=</span>". The variable <span
+        style="font-family: monospace;">$o_fs</span> contains the semlit
+      command field separator and defaults to "<span style="font-family:
+        monospace;">,</span>".<br>
+    </p>
+    <p>Note that the delimiter will certainly be used in the code
+      without being associated with a semlit command, so the mere
+      presence of the delimiter does not flag the start of a semlit
+      command. The word "<span style="font-family: monospace;">semlit</span>"
+      must immediately follow the delimiter ("<span style="font-family:
+        monospace;">=semlit</span>"), and that must be followed by a
+      field separator ("<span style="font-family: monospace;">,</span>").
+
+
+
+
+
+
+      Also note that the match pattern captures the text between that
+      field separator and the ending delimiter. That represents the
+      semlit command keyword and parameters.<br>
+    </p>
+    <p>The next lines captures the file contents before and after the
+      semlit command: <a name="prematch_ref_1" id="prematch_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#prematch" target="src">00171</a>          my $prefix = $PREMATCH;  # text preceiding the command
+<a href="semlit_pl.slsrc.html#prematch" target="src">00172</a>          my $suffix = $POSTMATCH;  # text after the command
+</pre><!-- endblock prematch_ref_1 --></small>
+
+ Note the use of the <span
+        style="font-family: monospace;">$PREMATCH</span> and <span
+        style="font-family: monospace;">$POSTMATCH</span> built-in
+      variables. See the <a href="http://perldoc.perl.org/perlvar.html">Perl
+
+
+
+
+        documentation</a> if you are not familiar with this construct.<br>
+    </p>
+    <p>If errors are detected in the source files, it is helpful to
+      print error messages which include the line number. This is
+      challenging in this function because we are not processing on a
+      line-by-line basis. It is further complicated by the fact that as
+      commands are replaced by the returned text form command execution,
+      the number of lines in the <span style="font-family: monospace;">$doctext</span>
+      changes over time. However, since the commands are processed in
+      order, we can calculate the line number by looking at the number
+      of lines <span style="font-style: italic;">following</span> the
+      command, and subtracting it from the total number:
+      <a name="linecount_ref_1" id="linecount_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#linecount" target="src">00174</a>          # calculate line number containing the start of this semlit command
+<a href="semlit_pl.slsrc.html#linecount" target="src">00175</a>          $cur_file_linenum = $num_lines - scalar(my @t = split("\n", $suffix)) + 1;
+</pre><!-- endblock linecount_ref_1 --></small>
+
+ As you know from the <a
+        href="http://perldoc.perl.org/functions/split.html">Perl
+        documentation</a>, the <span style="font-family: monospace;">split()</span>
+      function will by default not create an empty entry at the end
+      (after the final '<span style="font-family: monospace;">\n</span>').<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId612865"></a>Execute the
+      command</h4>
+    <p>Now execute the command and capture the replacement text:
+      <a name="executeCmd_ref_1" id="executeCmd_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#executeCmd" target="src">00177</a>          my $repl = semlit_cmd($cmd);
+</pre><!-- endblock executeCmd_ref_1 --></small>
+
+ The <a href="#mozTocId193858"><tt>semlit_cmd()</tt></a>
+      function returns formatted html.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId447263"></a>Replace the
+      command with the html returned by the command execution and loop<br>
+    </h4>
+    <p>Replacing the matched semlit command with the resulting text is
+      straight-forward: <a name="replText_ref_1" id="replText_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#replText" target="src">00179</a>          # Commands are removed, and often replaced with some result
+<a href="semlit_pl.slsrc.html#replText" target="src">00180</a>          $doctext = $prefix . $repl . $suffix;
+<a href="semlit_pl.slsrc.html#replText" target="src">00181</a>      }  # while
+</pre><!-- endblock replText_ref_1 --></small>
+
+ This is where the
+      number of lines in <span style="font-family: monospace;">$doctext</span>
+      can change.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId72820"></a>return the
+      processed html</h4>
+    <p>Finally: <a name="returnHtml_ref_1" id="returnHtml_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#returnHtml" target="src">00185</a>      return $doctext;
+<a href="semlit_pl.slsrc.html#returnHtml" target="src">00186</a>  }  # process_doc_file
+</pre><!-- endblock returnHtml_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId903260"></a>Recursion</h4>
+    <p>For the most part, Perl takes care of allowing functions to be
+      recursive. However, we do have some global variables for error
+      reporting which adds an extra challange:
+      <a name="fileGlobals_ref_1" id="fileGlobals_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00033</a>  my $cur_file_name = "";
+<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00034</a>  my $cur_file_linenum = 0;
+</pre><!-- endblock fileGlobals_ref_1 --></small>
+
+ By keeping the file name and line
+      number as global variables, any function can report a
+      user-friendly error message with a minimum of fuss.<br>
+    </p>
+    <p>Once the initial steps are completed, the <span
+        style="font-family: monospace;">process_doc_file()</span>
+      function is ready to start handling commands. But before it does,
+      we want to save those global variables: <a name="saveFile_ref_1" id="saveFile_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#saveFile" target="src">00165</a>      my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
+<a href="semlit_pl.slsrc.html#saveFile" target="src">00166</a>      ($cur_file_name, $cur_file_linenum) = ($doc_filename, 0);
+</pre><!-- endblock saveFile_ref_1 --></small>
+
+
+      Then the command loop executes. When that is done, just before
+      returning, we want to restore the global variables:
+      <a name="restoreFile_ref_1" id="restoreFile_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#restoreFile" target="src">00183</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
+</pre><!-- endblock restoreFile_ref_1 --></small>
+
+ You will see very similar code in the
+      <a href="#mozTocId378007"><span style="font-family: monospace;">process_src_file()</span></a>
+      function.<br>
+    </p>
+    <h3><a class="mozTocH3" name="mozTocId193858"></a>Function: <span
+        style="font-family: monospace;">semlit_cmd()</span></h3>
+    <p>The <a href="#mozTocId142916"><span style="font-family:
+          monospace;">process_doc_file()</span></a> and <a
+        href="#mozTocId378007"><span style="font-family: monospace;">process_src_file()</span></a>
+      functions read input files, find semlit commands, and call <span
+        style="font-family: monospace;">semlit_cmd()</span> to execute
+      them. The delimiters, "<span style="font-family: monospace;">semlit</span>",
+
+
+
+
+
+
+      and the first field separator are stripped, so that the passed-in
+      command string starts with the command name.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId638426"></a>Command: <span
+        style="font-family: monospace;">tabstop</span></h4>
+    <p>The <span style="font-family: monospace;">tabstop</span> command
+      simply updates the <span style="font-family: monospace;">$tabstop</span>
+      global variable: <a name="tabstop_ref_1" id="tabstop_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00193</a>      # semlit tabstop - doc: source tab expansion
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00194</a>      if ($cmd =~ /^tabstop\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00195</a>          if ($1 =~ /^\d+$/) {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00196</a>              $tabstop = $1;  # used by Text::Tabs
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00197</a>              return "";
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00198</a>          } else {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00199</a>              err("Tabstop value '$1' must be numeric");
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00200</a>              return "";
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00201</a>          }
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00202</a>      }
+</pre><!-- endblock tabstop_ref_1 --></small>
+
+ The <span
+        style="font-family: monospace;">$tabstop</span> variable is used
+      directly by the built-in <span style="font-family: monospace;">Text::Tabs</span>
+      Perl module: <a name="useTabs_ref_1" id="useTabs_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#useTabs" target="src">00024</a>  use Text::Tabs;
+</pre><!-- endblock useTabs_ref_1 --></small>
+
+ Note that the <span
+        style="font-family: monospace;">$tabstop</span> variable can
+      also be set on the command line: <a name="GetOptionsError_ref_2" id="GetOptionsError_ref_2"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="#GetOptionsError_ref_3">next ref</a>  <a href="#GetOptionsError_ref_1">prev ref</a></pre></small>
+
+
+      So, where does this actually get used? Right here:
+      <a name="expand_ref_1" id="expand_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#expand" target="src">00338</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
+</pre><!-- endblock expand_ref_1 --></small>
+
+ (In the function <a href="#mozTocId378007"><span
+          style="font-family: monospace;">process_src_file()</span></a>.)
+
+
+
+
+
+      The <span style="font-family: monospace;">expand()</span>
+      function is part of the <span style="font-family: monospace;">Text::Tabs</span>
+      module.<br>
+    </p>
+    <p>The <span style="font-family: monospace;">tabstop</span> command
+      does not return any text (returns <span style="font-family:
+        monospace;">""</span> - empty string).<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId897187"></a>Command: <span
+        style="font-family: monospace;">srcfile</span><br>
+    </h4>
+    <p>The <span style="font-family: monospace;">srcfile</span> command
+      is used to scan an <b>slsrc</b> file: <a name="srcfile_ref_1" id="srcfile_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00204</a>      # semlit srcfile - doc: read and process source file
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00205</a>      elsif ($cmd =~ /^srcfile\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00206</a>          return process_src_file($1, $2);
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00207</a>      }
+</pre><!-- endblock srcfile_ref_1 --></small>
+
+
+      During the scan, any semlit commands found in the <b>slsrc</b>
+      file are processed (usually <span style="font-family: monospace;">block</span>/<span
+        style="font-family: monospace;">endblock</span> commands), and
+      the source output files are created (both <b>html</b> and <b>src</b>).<br>
+    </p>
+    <p>The returned text is a link to the plaintext output <b>src</b>
+      file. The author of the <b>sldoc</b> file expects this and
+      positions the <tt>srcfile</tt> command such that a link to the <b>src</b>
+      file makes sense. For example, near the top of this sldoc file,
+      the <tt>srcfile</tt> commands are arranged in a bullet list. Each
+      <tt>srcfile</tt> command is followed by the hint "(right-click and
+      save)" followed by a short description of the file. </p>
+    <h4><a class="mozTocH4" name="mozTocId395404"></a>Command: <span
+        style="font-family: monospace;">include</span></h4>
+    <p>The <span style="font-family: monospace;">include</span> command
+      is used to scan an <b>sldoc</b> file: <a name="include_ref_1" id="include_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#include" target="src">00209</a>      # semlit include - doc: read and process doc file
+<a href="semlit_pl.slsrc.html#include" target="src">00210</a>      elsif ($cmd =~ /^include\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#include" target="src">00211</a>          return process_doc_file($1);
+<a href="semlit_pl.slsrc.html#include" target="src">00212</a>      }
+</pre><!-- endblock include_ref_1 --></small>
+
+
+      Note that this represents a recursive call to <a
+        href="#mozTocId142916"><span style="font-family: monospace;">process_doc_file()</span></a>.
+      During the scan, the included file is processed the same way as
+      the master <b>sldoc</b> file.<br>
+    </p>
+    <p>The returned text is simply the processed html of the included
+      file.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId374013"></a>Command: <span
+        style="font-family: monospace;">insert</span></h4>
+    <p>The <tt>insert</tt> command is used to insert into the document
+      output <b>html</b> file a named block of source lines (from <b>slsrc</b>
+      files): <a name="insert_ref_1" id="insert_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#insert" target="src">00214</a>      # semlit insert - doc: insert a source block
+<a href="semlit_pl.slsrc.html#insert" target="src">00215</a>      elsif ($cmd =~ /^insert\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00216</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00217</a>          if (exists($srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00218</a>              my $num_refs = 1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00219</a>              my $block_ref_name = $block_name;
+<a href="semlit_pl.slsrc.html#insert" target="src">00220</a>              if (defined($block_numrefs{$block_name})) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00221</a>                  $num_refs = $block_numrefs{$block_name} + 1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00222</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
+<a href="semlit_pl.slsrc.html#insert" target="src">00223</a>              }
+<a href="semlit_pl.slsrc.html#insert" target="src">00224</a>              $block_numrefs{$block_name} = $num_refs;
+<a href="semlit_pl.slsrc.html#insert" target="src">00225</a>  
+<a href="semlit_pl.slsrc.html#insert" target="src">00226</a>              my $block_str = $srcblocks{$block_name};
+<a href="semlit_pl.slsrc.html#insert" target="src">00227</a>              return &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#insert" target="src">00228</a>  &lt;a name="$block_ref_name" id="$block_ref_name"&gt;&lt;\/a&gt;
+<a href="semlit_pl.slsrc.html#insert" target="src">00229</a>  &lt;small&gt;&lt;pre&gt;
+<a href="semlit_pl.slsrc.html#insert" target="src">00230</a>  $block_str
+<a href="semlit_pl.slsrc.html#insert" target="src">00231</a>  &lt;\/pre&gt;&lt;!-- endblock $block_ref_name --&gt;&lt;/small&gt;\n
+<a href="semlit_pl.slsrc.html#insert" target="src">00232</a>  __EOF__
+<a href="semlit_pl.slsrc.html#insert" target="src">00233</a>          } else {
+<a href="semlit_pl.slsrc.html#insert" target="src">00234</a>              err("attempt to insert block named '$block_name' but block not defined");
+<a href="semlit_pl.slsrc.html#insert" target="src">00235</a>              return "";
+<a href="semlit_pl.slsrc.html#insert" target="src">00236</a>          }
+<a href="semlit_pl.slsrc.html#insert" target="src">00237</a>      }
+</pre><!-- endblock insert_ref_1 --></small>
+
+ Note the use of Perl's "here
+      document" <span style="font-family: monospace;">&lt;&lt;__EOF__</span>
+      ... <span style="font-family: monospace;">__EOF__</span> See <a
+        href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
+      and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+
+
+
+
+
+
+
+        documentation</a> if you are not familiar with this construct.
+      Also note that the source blocks <a href="#mozTocId829189">are
+        stored</a> in the <span style="font-family: monospace;">%srcblocks</span>
+      hash by the <a href="#mozTocId378007"><span style="font-family:
+          monospace;">process_src_file()</span></a> function.<br>
+    </p>
+    <p>The endblock html comment becomes important during the <a
+        href="#mozTocId64">final fix up step</a>; for blocks inserted
+      multiple times, the comment is replaced with links to other
+      references.<br>
+    </p>
+    <p>The returned text is the processed html of the source block.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId495366"></a>Command: <tt>block</tt><br>
+    </h4>
+    <p>The <tt>block</tt> command essentially tells the <a
+        href="#mozTocId378007"><tt>process_src_file()</tt></a> function
+      to start storing source lines into a named block:
+      <a name="block_ref_1" id="block_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#block" target="src">00239</a>      # semlit block - src: start a named block of source
+<a href="semlit_pl.slsrc.html#block" target="src">00240</a>      elsif ($cmd =~ /^block\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#block" target="src">00241</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#block" target="src">00242</a>          if (defined($srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#block" target="src">00243</a>              err("block '$block_name' already defined");
+<a href="semlit_pl.slsrc.html#block" target="src">00244</a>              return "";
+<a href="semlit_pl.slsrc.html#block" target="src">00245</a>          }
+<a href="semlit_pl.slsrc.html#block" target="src">00246</a>          $srcblocks{$block_name} = "";
+<a href="semlit_pl.slsrc.html#block" target="src">00247</a>          $block_numrefs{$block_name} = 0;
+<a href="semlit_pl.slsrc.html#block" target="src">00248</a>          $active_srcblocks{$block_name} = $cur_file_linenum;
+<a href="semlit_pl.slsrc.html#block" target="src">00249</a>          print $src_html_outfd "&lt;a name=\"$block_name\" id=\"$block_name\"&gt;&lt;\/a&gt;";
+<a href="semlit_pl.slsrc.html#block" target="src">00250</a>          return "";
+<a href="semlit_pl.slsrc.html#block" target="src">00251</a>      }
+</pre><!-- endblock block_ref_1 --></small>
+
+ Since it is possible for source lines to be
+      included in multiple named blocks, the global hash <tt>%active_src_blocks</tt>
+      is used to indicate which named blocks are accumulating.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId911738"></a>Command: <tt>endblock</tt></h4>
+    <p>The <tt>endblock</tt> command essentially tells the <a
+        href="#mozTocId378007"><tt>process_src_file()</tt></a> function
+      to stop storing source lines into the named block:
+      <a name="endblock_ref_1" id="endblock_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#endblock" target="src">00253</a>      # semlit endblock - src: end a named block of source
+<a href="semlit_pl.slsrc.html#endblock" target="src">00254</a>      elsif ($cmd =~ /^endblock\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00255</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00256</a>          if (exists($active_srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00257</a>              delete($active_srcblocks{$block_name});
+<a href="semlit_pl.slsrc.html#endblock" target="src">00258</a>              $srcblocks{$block_name} =~ s/\n$//s;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00259</a>              return "";
+<a href="semlit_pl.slsrc.html#endblock" target="src">00260</a>          } else {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00261</a>              err("found endblock for '$block_name', which is not active");
+<a href="semlit_pl.slsrc.html#endblock" target="src">00262</a>              return "";
+<a href="semlit_pl.slsrc.html#endblock" target="src">00263</a>          }
+<a href="semlit_pl.slsrc.html#endblock" target="src">00264</a>      }
+</pre><!-- endblock endblock_ref_1 --></small>
+
+ The block name needs to be supplied
+      because a nested block does not need to be fully-contained by the
+      outer block. I.e. if multiple blocks are active, the <tt>endblock</tt>
+      does not necessarily end the most-recently opened block.<br>
+    </p>
+    <h3><a class="mozTocH3" name="mozTocId378007"></a>Function: <tt>process_src_file()</tt></h3>
+    <p>The <tt>process_src_file()</tt> function is called from the <a
+        href="#mozTocId897187"><tt>srcfile</tt></a> command. It reads
+      and processes an <b>slsrc</b> file (program source code). Part of
+      the processing is to generate two output files: a source <b>html</b>
+      file, and a <b>src</b> file, stripped of its semlit commands and
+      ready for compilation.<br>
+    </p>
+    <p>This function has conceptual similarities with the <a
+        href="#mozTocId142916"><tt>process_doc_file()</tt></a> function,
+      but there are important differences. The biggest difference is the
+      overall approach to processing the file. Here, we process the <b>slsrc</b>
+      file line-at-a-time. A line must contain either program source
+      code, or a single semlit command (although that command might be
+      enclosed in comment delimiters). Instead of replacing the command
+      with returned content, the line containing the command is simply
+      discarded.<br>
+    </p>
+    <p>Here are the high-level steps performed:<br>
+    </p>
+    <ol>
+      <li>Open the <b>slsrc</b> input file.</li>
+      <li>Open the output source <b>html</b> file.</li>
+      <li>Open the output <b>src</b> file.</li>
+      <li>For each input line in the <b>slsrc</b> file:</li>
+      <ol>
+        <li>If it is a semlit command, process it.</li>
+        <li>Else it is a source line:</li>
+        <ol>
+          <li>Write the line to the <b>src</b> file.</li>
+          <li>Html-ify the line.</li>
+          <li>If there are active source blocks accumulating:</li>
+          <ol>
+            <li>Create doc link and write source <b>html</b> file.</li>
+            <li>Add the source line to all of the active blocks.</li>
+          </ol>
+          <li>Else no active block, write source <b>html</b> file
+            without link.<br>
+          </li>
+        </ol>
+      </ol>
+      <li>Close files and wrap up.</li>
+      <li>Return html link to the <b>src</b> file.<br>
+      </li>
+    </ol>
+    <h4><a class="mozTocH4" name="mozTocId9443"></a>Open the slsrc input
+      file</h4>
+    <p>Almost the <a href="#mozTocId221127">same code exists</a> in <a
+        href="#mozTocId142916"><tt>process_doc_file()</tt></a>. Here we
+      are opening an <b>slsrc</b> file which might be in any of the
+      directories in the array <tt>@o_incdirs</tt>:
+      <a name="openslsrc_ref_1" id="openslsrc_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00280</a>      # open source file, using one or more search directories
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00281</a>      my $incdir;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00282</a>      my $open_success = 0;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00283</a>      foreach $incdir (@o_incdirs) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00284</a>          if (open($slsrc_infd, "&lt;", "$incdir/$src_filename")) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00285</a>              $open_success = 1;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00286</a>              last;  # break out of foreach
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00287</a>          }
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00288</a>      }
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00289</a>      if (! $open_success) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00290</a>          err("could not open src file '$src_filename', skipping");
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00291</a>          return "";
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00292</a>      }
+</pre><!-- endblock openslsrc_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId68855"></a>Open the output
+      source html file</h4>
+    <p>The output source <b>html</b> file is opened and some initial
+      content is written: <a name="openSourceHtml_ref_1" id="openSourceHtml_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00294</a>      # create and write initial content to html-ified source file
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00295</a>      if (! open($src_html_outfd, "&gt;", "$src_filename.html")) {
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00296</a>          err("could not open output source html file '$src_filename.html', skipping");
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00297</a>          close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00298</a>          return "";
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00299</a>      }
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00300</a>      print $src_html_outfd &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00301</a>  &lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;&lt;/head&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00302</a>  &lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;&lt;/head&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00303</a>  &lt;body&gt;&lt;h1&gt;$plain_src_filename&lt;/h1&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00304</a>  &lt;p&gt;&lt;em&gt;Hint:&lt;/em&gt; do not cut-and-paste from this page.  Instead, right-click on '&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;' and save file.
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00305</a>  &lt;small&gt;&lt;pre&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00306</a>  __EOF__
+</pre><!-- endblock openSourceHtml_ref_1 --></small>
+
+ In addition to
+      the initial html source, it also contains a link to the plain text
+      <b>src</b> file which can be downloaded.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId958072"></a>Open the output
+      src file</h4>
+    <p>The output <b>src</b> file is opened: <a name="openSrc_ref_1" id="openSrc_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00308</a>      # Create plaintext source file (without semlit commands)
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00309</a>      if (! open($src_outfd, "&gt;", "$plain_src_filename")) {
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00310</a>          err("could not open output src '$plain_src_filename', skipping");
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00311</a>          close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00312</a>          close($src_html_outfd);
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00313</a>          return "";
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00314</a>      }
+</pre><!-- endblock openSrc_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId318560"></a>For each input
+      line in the slsrc file:</h4>
+    <p>Read the <b>slsrc</b> file, line-by-line:
+      <a name="foreachLine_ref_1" id="foreachLine_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00320</a>      my $iline;
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00321</a>      while (defined($iline = &lt;$slsrc_infd&gt;)) {
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00322</a>          chomp($iline);  # remove line delim
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00323</a>          $iline .= "\n";  # add newline
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00324</a>          $iline =~ s/\r//gs;  # remove carriage returns, if any
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00325</a>          $cur_file_linenum ++;
+</pre><!-- endblock foreachLine_ref_1 --></small>
+
+ The <tt>chomp()</tt> function removes
+      line delimiter, which, depending on platform, might be something
+      other than a linefeeds, and the next line adds a newline to be the
+      line delimiter. Then, carriage returns, if any, are removed. This
+      unifies different platforms. (<a href="#mozTocId702636">Similar
+        code</a> can be found in <a href="#mozTocId142916"><tt>process_doc_file()</tt></a>.)</p>
+    <h4><a class="mozTocH4" name="mozTocId292395"></a>If it is a semlit
+      command, process it</h4>
+    <p>The <b>slsrc</b> file contains semlit commands, usually <a
+        href="#mozTocId495366"><tt>block</tt></a> and <a
+        href="#mozTocId911738"><tt>endblock</tt></a>. Find and process
+      them: <a name="ifsemlit_ref_1" id="ifsemlit_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00327</a>          # check for semlit commands
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00328</a>          if ($iline =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/i) {
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00329</a>              semlit_cmd($1);
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00330</a>              # discard command line
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00331</a>          }
+</pre><!-- endblock ifsemlit_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId511329"></a>Else it is a
+      source line:</h4>
+    <p>If the <b>slsrc</b> line does not contain a semlit command, then
+      it is normal source code. <a name="elseSource_ref_1" id="elseSource_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#elseSource" target="src">00332</a>          else {
+<a href="semlit_pl.slsrc.html#elseSource" target="src">00333</a>              $src_linenum ++;  # don't count semlit command lines
+</pre><!-- endblock elseSource_ref_1 --></small>
+
+ Note that
+      source code lines are counted separately than input <b>slsrc</b>
+      file lines (<tt>$cur_file_linenum</tt> counted above). The input
+      line count (<tt>$cur_file_linenum</tt>) includes semlit command
+      lines and is used when printing error messages by <a
+        href="#mozTocId899250"><tt>err()</tt></a>, while the source code
+      line count (<tt>$src_linenum</tt>) does not include semlit command
+      lines and is used as the user-visible line number in the output
+      source <b>html</b> file.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId457775"></a>Write the line to
+      the src file</h4>
+    <p>Write the plaintext source line to the <b>src</b> file:
+      <a name="writeSrc_ref_1" id="writeSrc_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#writeSrc" target="src">00335</a>              print $src_outfd $iline;
+</pre><!-- endblock writeSrc_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId786450"></a>Html-ify the line</h4>
+    <p>In advance of writing the line to the output source <b>html</b>
+      file, expand tabs and convert the special characters '&amp;',
+      '&lt;' and '&gt;' to their html forms:
+      <a name="htmlifySource_ref_1" id="htmlifySource_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00337</a>              # fix up source for html rendering (tab expansion, special char encoding)
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00338</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00339</a>              $iline =~ s/\&amp;/\&amp;amp;/g;  $iline =~ s/&lt;/\&amp;lt;/g;  $iline =~ s/&gt;/\&amp;gt;/g;
+</pre><!-- endblock htmlifySource_ref_1 --></small>
+
+ Note that the <tt>expand()</tt>
+      function is part of the <tt>Text::Tabs</tt> Perl module and uses
+      the <tt>$tabstop</tt> global variable to control how it expands.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId331395"></a>If there are
+      active source blocks accumulating:</h4>
+    <p>Check to see if this source line is inside one or more <tt>block</tt>/<tt>endblock</tt>
+      constructs: <a name="ifActiveBlocks_ref_1" id="ifActiveBlocks_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00341</a>              # if we are in at least one block, link the source to the earliest block's first doc reference
+<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00342</a>              if (scalar(keys(%active_srcblocks)) &gt; 0) {
+</pre><!-- endblock ifActiveBlocks_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId187875"></a>Create doc link
+      and write source html file<br>
+    </h4>
+    <p>There is at least one named block active. Assuming there might be
+      more than one, find the active block which was most-recently
+      opened (is at the highest-numbered input line):
+      <a name="createDocLink1_ref_1" id="createDocLink1_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00343</a>                  # descending sort so that elemet 0 is largest
+<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00344</a>                  my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
+</pre><!-- endblock createDocLink1_ref_1 --></small>
+
+ This sort construct orders the keys
+      by descending <i>content</i> of the <tt>%active_srcblocks</tt>
+      hash. Thus, <tt>$active_blocks[0]</tt> is the name of that
+      most-recently opened block. This is used to construct the link
+      back to the doc: <a name="createDocLink2_ref_1" id="createDocLink2_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00345</a>                  my $targ = $active_blocks[0] . "_ref_1";
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00346</a>                  my $a = sprintf("&lt;a href=\"$doc_html_filename#$targ\" target=\"doc\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00347</a>                  print $src_html_outfd $a;
+</pre><!-- endblock createDocLink2_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId829189"></a>Add the source
+      line to all of the active blocks</h4>
+    <p>For each active named <tt>block</tt>/<tt>endblock</tt>
+      construct, add the source code to the <tt>%srcblocks</tt> hash:
+      <a name="addBlocks_ref_1" id="addBlocks_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00349</a>                  # for each open source block on this line of source, link the doc block to the that source block
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00350</a>                  foreach my $block_name (keys(%active_srcblocks)) {
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00351</a>                      my $a = sprintf("&lt;a href=\"$cur_file_name.html#$block_name\" target=\"src\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00352</a>                      $srcblocks{$block_name} .= $a;
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00353</a>                  }
+</pre><!-- endblock addBlocks_ref_1 --></small>
+
+ This is used by the <a
+        href="#mozTocId374013"><tt>insert</tt></a> semlit command to
+      insert the source block into the output doc <b>html</b> file.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId409513"></a>Else no active
+      block, write source html file without link</h4>
+    <p>For source lines which are not contained in a <tt>block</tt>/<tt>endblock</tt>
+      construct, no doc link is needed when writing to the output source
+      <b>html</b> file: <a name="elseNoActiveBlocks_ref_1" id="elseNoActiveBlocks_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00354</a>              } else {
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00355</a>                  # no active blocks
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00356</a>                  print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00357</a>              }
+</pre><!-- endblock elseNoActiveBlocks_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId103803"></a>Close files and
+      wrap up</h4>
+    <p>Close the files: <a name="closeWrap1_ref_1" id="closeWrap1_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00361</a>      close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00362</a>      close($src_outfd);
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00363</a>  
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00364</a>      print $src_html_outfd "&lt;/pre&gt;&lt;/small&gt;&lt;/body&gt;&lt;/html&gt;\n";
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00365</a>      close($src_html_outfd);
+</pre><!-- endblock closeWrap1_ref_1 --></small>
+
+ Also, if the user
+      accidentally started one or more named blocks but did not end
+      them, print errors and force them ended:
+      <a name="closeWrap2_ref_1" id="closeWrap2_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00367</a>      # if the source file started a block but reached eof without ending it, end it here.
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00368</a>      foreach (keys(%active_srcblocks)) {
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00369</a>          err("block named '$_' started but not ended");
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00370</a>          semlit_cmd("endblock$o_fs$_");  # end it for the user
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00371</a>      }
+</pre><!-- endblock closeWrap2_ref_1 --></small>
+
+ Do it by calling <a
+        href="#mozTocId193858"><tt>semlit_cmd()</tt></a> function,
+      passing it the <a href="#mozTocId911738"><tt>endblock</tt></a>
+      command (as if the <b>slsrc</b> file had it).<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId891933"></a>Return html link
+      to the src file</h4>
+    <p>But before we return, restore the <tt>$cur_file_name</tt> and <tt>$cur_file_linenum</tt>
+      variables to their previous state. Then return.
+      <a name="returnSrcLink_ref_1" id="returnSrcLink_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00373</a>      # the semlit.srcfile command writes a link to the plaintext source file
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00374</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00375</a>      return "&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;";
+</pre><!-- endblock returnSrcLink_ref_1 --></small>
+
+ Since the call to <tt>process_src_file()</tt>
+      came from semlit_cmd() executing the <a href="#mozTocId897187"><tt>srcfile</tt></a>
+      command, and that command is used in the <b>sldoc</b> file, the
+      thing we return is a link to the plaintext output <b>src</b>
+      file.<br>
+    </p>
+    <h3><a class="mozTocH3" name="mozTocId370472"></a>Function: <tt>help()</tt><br>
+    </h3>
+    <p>First, let's declare a couple of globals that will be used for
+      helping the user: <a name="usage_ref_1" id="usage_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $tool = "semlit.pl";
+<a href="semlit_pl.slsrc.html#usage" target="src">00030</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
+<a href="#usage_ref_2">next ref</a>  <a href="#usage_ref_2">last ref</a></pre></small>
+
+ (The <a
+        href="#mozTocId49613"><tt>usage()</tt></a> function also uses
+      this.) In the <a href="#options">main code</a>, the "<span
+        style="font-family: monospace;">-h</span>"option calls <tt>help()</tt>
+      to print a more-extensive help: <a name="help_ref_1" id="help_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#help" target="src">00399</a>  sub help {
+<a href="semlit_pl.slsrc.html#help" target="src">00400</a>      my($err_str) = @_;
+<a href="semlit_pl.slsrc.html#help" target="src">00401</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00402</a>      if (defined $err_str) {
+<a href="semlit_pl.slsrc.html#help" target="src">00403</a>          print "$tool: $err_str\n\n";
+<a href="semlit_pl.slsrc.html#help" target="src">00404</a>      }
+<a href="semlit_pl.slsrc.html#help" target="src">00405</a>      print &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#help" target="src">00406</a>  Usage: $usage_str
+<a href="semlit_pl.slsrc.html#help" target="src">00407</a>  Where:
+<a href="semlit_pl.slsrc.html#help" target="src">00408</a>      -h - print help screen
+<a href="semlit_pl.slsrc.html#help" target="src">00409</a>      -d delim - delimiter character at start and end of a semlit command.
+<a href="semlit_pl.slsrc.html#help" target="src">00410</a>              (default to '=')
+<a href="semlit_pl.slsrc.html#help" target="src">00411</a>      -f fs - field separator character within a semlit command.
+<a href="semlit_pl.slsrc.html#help" target="src">00412</a>              (default to ',')
+<a href="semlit_pl.slsrc.html#help" target="src">00413</a>      -I dir - directory to find files for 'srcfile' and 'include' commands.
+<a href="semlit_pl.slsrc.html#help" target="src">00414</a>              (default to ".")  The "-I dir" option can be repeated.
+<a href="semlit_pl.slsrc.html#help" target="src">00415</a>      -t tabstop - convert tabs to "tabstop" spaces.
+<a href="semlit_pl.slsrc.html#help" target="src">00416</a>              (default to '4')
+<a href="semlit_pl.slsrc.html#help" target="src">00417</a>      files - zero or more input files.  If omitted, inputs from stdin.
+<a href="semlit_pl.slsrc.html#help" target="src">00418</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00419</a>  __EOF__
+<a href="semlit_pl.slsrc.html#help" target="src">00420</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00421</a>      exit($exit_status);
+<a href="semlit_pl.slsrc.html#help" target="src">00422</a>  }  # help
+</pre><!-- endblock help_ref_1 --></small>
+
+ Note the use
+      of Perl's "here document" <span style="font-family: monospace;">&lt;&lt;__EOF__</span>
+      ... <span style="font-family: monospace;">__EOF__</span> See <a
+        href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
+      and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+
+
+
+
+
+
+
+        documentation</a> if you are not familiar with this construct. </p>
+    <h3><a class="mozTocH3" name="mozTocId389878"></a>Error handling</h3>
+    <p>When there is an obvious user error in the invocation of the
+      semlit program, the <a href="#mozTocId49613"><span
+          style="font-family: monospace;">usage()</span></a> function is
+      called.<br>
+    </p>
+    <p>For example: <a name="GetOptionsError_ref_3" id="GetOptionsError_ref_3"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="#GetOptionsError_ref_1">first ref</a>  <a href="#GetOptionsError_ref_2">prev ref</a></pre></small>
+
+ Note the use of the
+      logical OR construct (<span style="font-family: monospace;">||</span>).
+
+
+
+
+
+
+
+
+      Because of Perl's C-like <a
+        href="http://en.wikipedia.org/wiki/Short-circuit_evaluation">short-circuit</a>
+      evaluation, the right-hand expression (function call to <span
+        style="font-family: monospace;">usage()</span>) is only executed
+      if the left-hand side (function call to <span style="font-family:
+        monospace;">GetOptions()</span>) returns false. I.e. usage is
+      called if <span style="font-family: monospace;">GetOptions()</span>
+      fails. Non-Perl programmers might be tempted to use a simple <span
+        style="font-family: monospace;">if/then</span> construct, but
+      the logical OR construct is such a common Perl idiom that the wise
+      reader will learn it.<br>
+    </p>
+    <p>In other cases, an error is discovered in one of the input files,
+      <b>sldoc</b> and/or <b>slsrc</b>. In those cases, the <a
+        href="#mozTocId899250"><tt>err()</tt></a> function is called.<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId49613"></a>Function: <tt>usage()</tt></h4>
+    <p>First, let's declare a couple of globals that will be used for
+      helping the user: <a name="usage_ref_2" id="usage_ref_2"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $tool = "semlit.pl";
+<a href="semlit_pl.slsrc.html#usage" target="src">00030</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
+<a href="#usage_ref_1">first ref</a>  <a href="#usage_ref_1">prev ref</a></pre></small>
+
+ (The <a
+        href="#mozTocId49613"><tt>help()</tt></a> function also uses
+      this.) The <tt>usage()</tt> function allows an optional error
+      message to be passed in, which is printed before the usage string:
+      <a name="usageFunct_ref_1" id="usageFunct_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00387</a>  sub usage {
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00388</a>      my($err_str) = @_;
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00389</a>  
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00390</a>      if (defined $err_str) {
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00391</a>          print STDERR "$tool: $err_str\n\n";
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00392</a>      }
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00393</a>      print STDERR "Usage: $usage_str\n\n";
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00394</a>      $exit_status ++;
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00395</a>      exit($exit_status);
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00396</a>  }  # usage
+</pre><!-- endblock usageFunct_ref_1 --></small>
+
+<br>
+    </p>
+    <h4><a class="mozTocH4" name="mozTocId899250"></a>Function: <tt>err()</tt></h4>
+    <p>The function err() is a programmer convenience which prints an
+      error message, along with the file name and line number where the
+      error was discovered. <a name="err_ref_1" id="err_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#err" target="src">00379</a>  sub err {
+<a href="semlit_pl.slsrc.html#err" target="src">00380</a>      my ($msg) = @_;
+<a href="semlit_pl.slsrc.html#err" target="src">00381</a>  
+<a href="semlit_pl.slsrc.html#err" target="src">00382</a>      print STDERR "Error [$cur_file_name:$cur_file_linenum], $msg\n";
+<a href="semlit_pl.slsrc.html#err" target="src">00383</a>      $exit_status ++;
+<a href="semlit_pl.slsrc.html#err" target="src">00384</a>  }  # err
+</pre><!-- endblock err_ref_1 --></small>
+
+ It also increments
+      $exit_status, which starts out at zero (success):
+      <a name="exit0_ref_1" id="exit0_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#exit0" target="src">00045</a>  my $exit_status = 0;  # assume success
+</pre><!-- endblock exit0_ref_1 --></small>
+
+ and is used when exiting the program:
+      <a name="exit_ref_1" id="exit_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#exit" target="src">00130</a>  # All done.
+<a href="semlit_pl.slsrc.html#exit" target="src">00131</a>  exit($exit_status);
+</pre><!-- endblock exit_ref_1 --></small>
+
+ Thus, a non-zero (failure) exit status also
+      indicates how many errors there were.<br>
+    </p>
+    <h2><a class="mozTocH2" name="mozTocId647222"></a>Program
+      Explanation: semlit.sh</h2>
+    <p>As mentioned above, the first line of <tt>semlit.pl</tt> is a
+      fairly common <a
+        href="http://en.wikipedia.org/wiki/Shebang_%28Unix%29">shebang</a>:
+      <a name="shebang_ref_1" id="shebang_ref_1"></a>
+<small><pre>
+<a href="semlit_pl.slsrc.html#shebang" target="src">00004</a>  #!/usr/local/bin/perl -w
+</pre><!-- endblock shebang_ref_1 --></small>
+
+ </p>
+    <p>This Unix construct, combined with setting the executable bit on
+      the file, is intended to allow the tool to be run by simply typing
+      the file name as a command (assuming that the <span
+        style="font-family: monospace;">PATH</span> environment variable
+      is set up right). However, it does require that the physical
+      location of the Perl interpreter be encoded directly in the file.
+      Unfortunately, different Unix systems install Perl in different
+      places - sometimes under <tt>/usr/local</tt>, sometimes in <tt>/bin</tt>,
+      sometimes under <tt>/opt</tt>. <br>
+    </p>
+    <p>I vaguely remember that there is a clever way to re-code that
+      line such that the shell will search for the Perl interpreter in
+      the <tt>PATH</tt> environment variable. But I don't remember how
+      to do it. <br>
+    </p>
+    <p>One way to run <tt>semlit.pl</tt> without having to set the Perl
+      interpreter's full location is:<br>
+      &nbsp;&nbsp;&nbsp; <span style="font-family: monospace;">perl </span><span
+        style="font-style: italic; font-family: monospace;">SemLitPath</span><span
+        style="font-family: monospace;">/semlit.pl</span> ... <br>
+    </p>
+    <p>But even that is somewhat unsatisfying for an experienced Unix
+      user. Lazy as we are, we would prefer to let <span
+        style="font-family: monospace;">PATH</span> do the work of
+      finding the program, so we just enter:<br>
+      &nbsp;&nbsp;&nbsp; <span style="font-family: monospace;">semlit</span>
+      ...</p>
+    <p>One common way to accomplish this is with a wrapper shell script
+      which encapsulates any annoying details of running the tool. Hence
+      the <tt>semlit</tt> file. <br>
+    </p>
+    <p>The first line of <tt>semlit</tt> is the standard <a
+        href="http://en.wikipedia.org/wiki/Shebang_%28Unix%29">shebang</a>:
+      <a name="sh_shebang_ref_1" id="sh_shebang_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_shebang" target="src">00004</a>  #!/bin/sh
+</pre><!-- endblock sh_shebang_ref_1 --></small>
+
+ </p>
+    <p>But this time it references the universally-respected location
+      for a <a href="http://en.wikipedia.org/wiki/Bourne_shell">Bourne-compatible
+
+
+
+
+
+
+
+
+        shell</a>. No chance that this won't work on some flavor of
+      Unix. <br>
+    </p>
+    <p>Next save the initial working directory (so that we can get back
+      to it). <a name="sh_iwd_ref_1" id="sh_iwd_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_iwd" target="src">00008</a>  IWD=`pwd`                    # remember initial working directory
+</pre><!-- endblock sh_iwd_ref_1 --></small>
+
+ </p>
+    <p>I establish the convention that the wrapper script <em>must</em>
+      be in the same directory as the perl script. So, the next thing to
+      do is figure out which directory contains the wrapper which is
+      running: <a name="sh_finddir_ref_1" id="sh_finddir_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_finddir" target="src">00010</a>  # Find dir where tool is stored (useful for finding related files)
+<a href="semlit_sh.slsrc.html#sh_finddir" target="src">00011</a>  TOOLDIR=`dirname $0`
+<a href="semlit_sh.slsrc.html#sh_finddir" target="src">00012</a>  # Make sure TOOLDIR is a full path name (not relative)
+<a href="semlit_sh.slsrc.html#sh_finddir" target="src">00013</a>  cd $TOOLDIR; TOOLDIR=`pwd`; cd $IWD
+</pre><!-- endblock sh_finddir_ref_1 --></small>
+
+ </p>
+    <p>This might look more complicated than it needs to be. Isn't the
+      first line enough? <a name="sh_dirname_ref_1" id="sh_dirname_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_dirname" target="src">00011</a>  TOOLDIR=`dirname $0`
+</pre><!-- endblock sh_dirname_ref_1 --></small>
+
+ </p>
+    <p>No, it isn't. Suppose you are in your home directory, and you
+      have placed the semlit files in <tt>$HOME/bin</tt>. Then let's
+      say you execute the program by entering:<br>
+      &nbsp;&nbsp;&nbsp; <span style="font-family: monospace;">bin/semlit</span>
+      ...</p>
+    <p>That is perfectly legal, and <tt>dirname $0</tt> will, not
+      surprisingly, return <tt>bin</tt>, a relative path. But I want a
+      fully-qualified path, so I include the three commands:
+      <a name="sh_fix_tooldir_ref_1" id="sh_fix_tooldir_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_fix_tooldir" target="src">00013</a>  cd $TOOLDIR; TOOLDIR=`pwd`; cd $IWD
+</pre><!-- endblock sh_fix_tooldir_ref_1 --></small>
+
+ </p>
+    <p>You simply <tt>cd</tt> to that potentially-relative location and
+      use <tt>pwd</tt> to get the full path. Then <tt>cd</tt> back to
+      the initial working directory. This is easier than trying to parse
+      all the possible return values for <tt>dirname.</tt></p>
+    <p>All that remains to be done is to run the perl interpreter as a
+      comand (such that <tt>PATH</tt> is used):
+      <a name="sh_runperl_ref_1" id="sh_runperl_ref_1"></a>
+<small><pre>
+<a href="semlit_sh.slsrc.html#sh_runperl" target="src">00015</a>  perl $TOOLDIR/semlit.pl $*
+</pre><!-- endblock sh_runperl_ref_1 --></small>
+
+ </p>
+  </body>
+</html>
+
