@@ -139,12 +139,12 @@ This leaves all the output in the html subdirectory.
 SEMLIT markup commands are embedded in the source files, both documentation and program.
 They are of the general form:
 
-`  `delim semlit fs command fs parameter [fs parameter ...] delim
+`  `_delim semlit fs command fs parameter [fs parameter ...] delim_
 
 By default, delim (delimiter) is '`=`' and fs (field separator) is '`,`' which
 simplifies the general form to:
 
-`  =semlit,`_command_`,`_parameter[_`,`_parameter...]=`
+`  =semlit,`_command_`,`_parameter[_`,`_parameter...]_=`
 
 In the sections that follow, it is assumed that the delimiter and field separator
 are defaulted.
@@ -196,6 +196,7 @@ Form:
     =semlit,srcfile,inputfile,outputfile=
 
 Example:
+
     The following program source files are documented.  Right-click the links and save.
     =semlit,srcfile,semlit_pl.slsrc,semlit_pl.txt= - main semlit Perl source code.
     =semlit,srcfile,semlit_sh.slsrc,semlit_sh.txt= - shell script wrapper.
@@ -215,7 +216,7 @@ Example:
 
     =semlit,include,copyright.sldoc=
 
-block - src
+## block - src
 
 The block command is used in the program source file to start a named block
 of code.  The block is ended with the "endblock" command.  The code between
