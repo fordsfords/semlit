@@ -13,7 +13,7 @@
 
 
         document</a> for the program <tt>semlit.pl</tt> and it's shell
-      wrapper <tt>semlit</tt>.&nbsp; This program is used to create
+      wrapper <tt>semlit.sh</tt>.&nbsp; This program is used to create
       semi-literate documentation (of which this document is an
       example).&nbsp; Semi-literate documents like this are intended to
       explain the internals of a program, which is different than user
