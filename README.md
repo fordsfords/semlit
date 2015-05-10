@@ -144,7 +144,7 @@ They are of the general form:
 By default, delim (delimiter) is '`=`' and fs (field separator) is '`,`' which
 simplifies the general form to:
 
-`  =semlit,`_command_`,`_parameter[_`,`_parameter...]_=`
+`  =semlit,`_command_`,`_parameter[_`,`_parameter...]_`=`
 
 In the sections that follow, it is assumed that the delimiter and field separator
 are defaulted.
