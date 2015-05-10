@@ -2,21 +2,24 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html;
-      charset=ISO-8859-1">
+      charset=windows-1252">
     <title>semlit - Semi-Literate Documentation</title>
   </head>
   <body>
     <h1><a class="mozTocH1" name="mozTocId336658"></a>semlit Program
       Description</h1>
-    <p>This is a <a href="http://geeky-boy.com/semlit/">semi-literate
+    <p>This is a <a
+        href="https://github.com/fordsfords/semlit/tree/gh-pages">semi-literate
+
 
         document</a> for the program <tt>semlit.pl</tt> and it's shell
-      wrapper <tt>semlit</tt>.&nbsp; This program is used to create
+      wrapper <tt>semlit.sh</tt>.&nbsp; This program is used to create
       semi-literate documentation (of which this document is an
       example).&nbsp; Semi-literate documents like this are intended to
       explain the internals of a program, which is different than user
       documentation.&nbsp; If you are an end user, you probably want the
-      <a href="../index.html">user document</a>.</p>
+      <a href="https://github.com/fordsfords/semlit/tree/gh-pages">user
+        document</a>.</p>
     <p>Copyright 2012 Steven Ford <a href="http://geeky-boy.com">http://geeky-boy.com</a> and
 licensed under:</p>
     <p xmlns:dct="http://purl.org/dc/terms/"
@@ -129,13 +132,14 @@ licensed under:</p>
       understand, maintain, and perhaps reuse the code.&nbsp; Before
       reading this documentation, you are expected to have a good
       user-level understanding of SEMLIT.&nbsp; Please be familiar <a
-        href="../index.html">user document</a> with&nbsp; before starting this,
-      unless you are just getting a feel for what SEMLIT documentation
-      is like.<br>
+        href="https://github.com/fordsfords/semlit/tree/gh-pages">user
+        document</a> with&nbsp; before starting this, unless you are
+      just getting a feel for what SEMLIT documentation is like.<br>
     </p>
     <p>The main program is written in Perl. The reader is assumed to
       have at least <a
 href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-level
+
         knowledge of Perl</a>. Some of the more-advanced Perl constructs
       are explained for the benefit of the novice.<br>
     </p>
@@ -224,6 +228,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
         style="font-family: monospace;">__EOF__</span> See <a
         href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
       and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+
 
 
 
@@ -561,6 +566,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
 
 
+
       Also note that the match pattern captures the text between that
       field separator and the ending delimiter. That represents the
       semlit command keyword and parameters.<br>
@@ -576,6 +582,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
         style="font-family: monospace;">$PREMATCH</span> and <span
         style="font-family: monospace;">$POSTMATCH</span> built-in
       variables. See the <a href="http://perldoc.perl.org/perlvar.html">Perl
+
 
 
 
@@ -689,6 +696,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
 
 
+
       and the first field separator are stripped, so that the passed-in
       command string starts with the command name.<br>
     </p>
@@ -734,6 +742,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
  (In the function <a href="#mozTocId378007"><span
           style="font-family: monospace;">process_src_file()</span></a>.)
+
 
 
 
@@ -829,6 +838,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       ... <span style="font-family: monospace;">__EOF__</span> See <a
         href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
       and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+
 
 
 
@@ -1253,6 +1263,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
 
 
+
         documentation</a> if you are not familiar with this construct. </p>
     <h3><a class="mozTocH3" name="mozTocId389878"></a>Error handling</h3>
     <p>When there is an obvious user error in the invocation of the
@@ -1267,6 +1278,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
  Note the use of the
       logical OR construct (<span style="font-family: monospace;">||</span>).
+
 
 
 
@@ -1401,6 +1413,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
  </p>
     <p>But this time it references the universally-respected location
       for a <a href="http://en.wikipedia.org/wiki/Bourne_shell">Bourne-compatible
+
 
 
 
