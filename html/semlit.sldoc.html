@@ -20,8 +20,8 @@
       documentation.&nbsp; If you are an end user, you probably want the
       <a href="https://github.com/fordsfords/semlit/tree/gh-pages">user
         document</a>.</p>
-    <p>Copyright 2012 Steven Ford <a href="http://geeky-boy.com">http://geeky-boy.com</a> and
-licensed under:</p>
+    <p>Copyright 2012, 2015 Steven Ford <a href="http://geeky-boy.com">http://geeky-boy.com</a> and
+licensed "public domain" style under:</p>
     <p xmlns:dct="http://purl.org/dc/terms/"
       xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"> <a
         rel="license"
@@ -181,16 +181,16 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Let's declare some global variables to hold values for program
       options, and set their default values: <a name="options_ref_1" id="options_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#options" target="src">00049</a>  my $o_help;
-<a href="semlit_pl.slsrc.html#options" target="src">00050</a>  my $o_fs = ",";
-<a href="semlit_pl.slsrc.html#options" target="src">00051</a>  my $o_delim = "=";
-<a href="semlit_pl.slsrc.html#options" target="src">00052</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
-<a href="semlit_pl.slsrc.html#options" target="src">00053</a>  $tabstop = 4;  # defined and used by Text::Tabs - see "expand()" function
-<a href="semlit_pl.slsrc.html#options" target="src">00054</a>  
-<a href="semlit_pl.slsrc.html#options" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
-<a href="semlit_pl.slsrc.html#options" target="src">00056</a>  if (defined($o_help)) {
-<a href="semlit_pl.slsrc.html#options" target="src">00057</a>      help();  # if -h had a value, it would be in $opt_h
-<a href="semlit_pl.slsrc.html#options" target="src">00058</a>  }
+<a href="semlit_pl.slsrc.html#options" target="src">00048</a>  my $o_help;
+<a href="semlit_pl.slsrc.html#options" target="src">00049</a>  my $o_fs = ",";
+<a href="semlit_pl.slsrc.html#options" target="src">00050</a>  my $o_delim = "=";
+<a href="semlit_pl.slsrc.html#options" target="src">00051</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+<a href="semlit_pl.slsrc.html#options" target="src">00052</a>  $tabstop = 4;  # defined and used by Text::Tabs - see "expand()" function
+<a href="semlit_pl.slsrc.html#options" target="src">00053</a>  
+<a href="semlit_pl.slsrc.html#options" target="src">00054</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="semlit_pl.slsrc.html#options" target="src">00055</a>  if (defined($o_help)) {
+<a href="semlit_pl.slsrc.html#options" target="src">00056</a>      help();  # if -h had a value, it would be in $opt_h
+<a href="semlit_pl.slsrc.html#options" target="src">00057</a>  }
 </pre><!-- endblock options_ref_1 --></small>
 
 
@@ -209,19 +209,19 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       documentation. Since the documentation is best viewed with html
       frames, the first file is the frameset: <a name="frameset_ref_1" id="frameset_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#frameset" target="src">00073</a>  # Create frameset page
-<a href="semlit_pl.slsrc.html#frameset" target="src">00074</a>  
-<a href="semlit_pl.slsrc.html#frameset" target="src">00075</a>  my $index_o_file;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00076</a>  open($index_o_file, "&gt;", "index.html") || die "Error, could not open htmlfile 'index.html'";
-<a href="semlit_pl.slsrc.html#frameset" target="src">00077</a>  print $index_o_file &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00078</a>  &lt;html&gt;&lt;head&gt;&lt;/head&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00079</a>  &lt;frameset cols="50%,*"&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00080</a>  &lt;frame src="$doc_html_filename" name="doc"&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00081</a>  &lt;frame src="blank.html" name="src"&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00082</a>  &lt;/frameset&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00083</a>  &lt;/html&gt;
-<a href="semlit_pl.slsrc.html#frameset" target="src">00084</a>  __EOF__
-<a href="semlit_pl.slsrc.html#frameset" target="src">00085</a>  close($index_o_file);
+<a href="semlit_pl.slsrc.html#frameset" target="src">00072</a>  # Create frameset page
+<a href="semlit_pl.slsrc.html#frameset" target="src">00073</a>  
+<a href="semlit_pl.slsrc.html#frameset" target="src">00074</a>  my $index_o_file;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00075</a>  open($index_o_file, "&gt;", "index.html") || die "Error, could not open htmlfile 'index.html'";
+<a href="semlit_pl.slsrc.html#frameset" target="src">00076</a>  print $index_o_file &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00077</a>  &lt;html&gt;&lt;head&gt;&lt;/head&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00078</a>  &lt;frameset cols="50%,*"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00079</a>  &lt;frame src="$doc_html_filename" name="doc"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00080</a>  &lt;frame src="blank.html" name="src"&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00081</a>  &lt;/frameset&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00082</a>  &lt;/html&gt;
+<a href="semlit_pl.slsrc.html#frameset" target="src">00083</a>  __EOF__
+<a href="semlit_pl.slsrc.html#frameset" target="src">00084</a>  close($index_o_file);
 </pre><!-- endblock frameset_ref_1 --></small>
 
 
@@ -245,12 +245,12 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       display in the source frame. So we need an almost blank page:
       <a name="blank_ref_1" id="blank_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#blank" target="src">00087</a>  # Create blank page for initial source frame
-<a href="semlit_pl.slsrc.html#blank" target="src">00088</a>  
-<a href="semlit_pl.slsrc.html#blank" target="src">00089</a>  my $blank_o_file;
-<a href="semlit_pl.slsrc.html#blank" target="src">00090</a>  open($blank_o_file, "&gt;", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
-<a href="semlit_pl.slsrc.html#blank" target="src">00091</a>  print $blank_o_file "&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;Click a source line number to see the line in context.&lt;/body&gt;&lt;/html&gt;\n";
-<a href="semlit_pl.slsrc.html#blank" target="src">00092</a>  close($blank_o_file);
+<a href="semlit_pl.slsrc.html#blank" target="src">00086</a>  # Create blank page for initial source frame
+<a href="semlit_pl.slsrc.html#blank" target="src">00087</a>  
+<a href="semlit_pl.slsrc.html#blank" target="src">00088</a>  my $blank_o_file;
+<a href="semlit_pl.slsrc.html#blank" target="src">00089</a>  open($blank_o_file, "&gt;", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
+<a href="semlit_pl.slsrc.html#blank" target="src">00090</a>  print $blank_o_file "&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;Click a source line number to see the line in context.&lt;/body&gt;&lt;/html&gt;\n";
+<a href="semlit_pl.slsrc.html#blank" target="src">00091</a>  close($blank_o_file);
 </pre><!-- endblock blank_ref_1 --></small>
 
  I didn't use a "here" document for this, but
@@ -262,13 +262,13 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       file supplied on the command line. So, early on we get that file
       name: <a name="infile_ref_1" id="infile_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#infile" target="src">00060</a>  if (scalar(@ARGV) != 1) {
-<a href="semlit_pl.slsrc.html#infile" target="src">00061</a>      usage("Error, .sldoc file missing");
-<a href="semlit_pl.slsrc.html#infile" target="src">00062</a>  }
-<a href="semlit_pl.slsrc.html#infile" target="src">00063</a>  $main_doc_filename = $ARGV[0];
-<a href="semlit_pl.slsrc.html#infile" target="src">00064</a>  if ( ! -r "$main_doc_filename" ) {
-<a href="semlit_pl.slsrc.html#infile" target="src">00065</a>      usage("Error, could not read '$main_doc_filename'");
-<a href="semlit_pl.slsrc.html#infile" target="src">00066</a>  }
+<a href="semlit_pl.slsrc.html#infile" target="src">00059</a>  if (scalar(@ARGV) != 1) {
+<a href="semlit_pl.slsrc.html#infile" target="src">00060</a>      usage("Error, .sldoc file missing");
+<a href="semlit_pl.slsrc.html#infile" target="src">00061</a>  }
+<a href="semlit_pl.slsrc.html#infile" target="src">00062</a>  $main_doc_filename = $ARGV[0];
+<a href="semlit_pl.slsrc.html#infile" target="src">00063</a>  if ( ! -r "$main_doc_filename" ) {
+<a href="semlit_pl.slsrc.html#infile" target="src">00064</a>      usage("Error, could not read '$main_doc_filename'");
+<a href="semlit_pl.slsrc.html#infile" target="src">00065</a>  }
 </pre><!-- endblock infile_ref_1 --></small>
 
  Note the use of the perl construct <span
@@ -282,9 +282,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Once the file name is determined, we now process that input file:
       <a name="mainloop_ref_1" id="mainloop_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  # Main loop; read each line in doc file
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00096</a>  my $doc_html_str = process_doc_file($main_doc_filename);
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00093</a>  # Main loop; read each line in doc file
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  my $doc_html_str = process_doc_file($main_doc_filename);
 <a href="#mainloop_ref_2">next ref</a>  <a href="#mainloop_ref_2">last ref</a></pre></small>
 
  Note that the function <a
@@ -310,13 +310,13 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       need code in the <a href="#mozTocId193858"><tt>semlit_cmd()</tt></a>
       function to do the counting: <a name="countRefs_ref_1" id="countRefs_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00218</a>              my $num_refs = 1;
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00219</a>              my $block_ref_name = $block_name;
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00220</a>              if (defined($block_numrefs{$block_name})) {
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00221</a>                  $num_refs = $block_numrefs{$block_name} + 1;
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00222</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00223</a>              }
-<a href="semlit_pl.slsrc.html#countRefs" target="src">00224</a>              $block_numrefs{$block_name} = $num_refs;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00217</a>              my $num_refs = 1;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00218</a>              my $block_ref_name = $block_name;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00219</a>              if (defined($block_numrefs{$block_name})) {
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00220</a>                  $num_refs = $block_numrefs{$block_name} + 1;
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00221</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00222</a>              }
+<a href="semlit_pl.slsrc.html#countRefs" target="src">00223</a>              $block_numrefs{$block_name} = $num_refs;
 </pre><!-- endblock countRefs_ref_1 --></small>
 
  If <tt>$block_numrefs{$block_name}</tt>
@@ -325,32 +325,32 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     </p>
     <p>Back to main and the fix-up step: <a name="fixRefs_ref_1" id="fixRefs_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00098</a>  # fix up multiple source references
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00099</a>  foreach my $blockname (keys(%block_numrefs)) {
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00100</a>      if ($block_numrefs{$blockname} &gt; 1) {
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00101</a>          # First ref points to next and last
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00102</a>          my $refnum = 1;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00103</a>          my $this_block = $blockname . "_ref_" . ($refnum);
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00104</a>          my $first_block = $this_block;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00105</a>          my $last_block = $blockname . "_ref_" . $block_numrefs{$blockname};
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00106</a>          my $next_block = $blockname . "_ref_" . ($refnum + 1);
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00107</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$last_block"&gt;last ref&lt;\/a&gt;&lt;\/pre&gt;/s;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00108</a>  
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00109</a>          # Middle refs point to previous and next
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00110</a>          my $prev_block = $this_block;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00111</a>          for ($refnum = 2; $refnum &lt;= $block_numrefs{$blockname} - 1; $refnum ++) {
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00112</a>              # middle refs point to prev and next
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00113</a>              $this_block = $blockname . "_ref_" . ($refnum);
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00114</a>              $next_block = $blockname . "_ref_" . ($refnum + 1);
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00115</a>              $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00116</a>              $prev_block = $this_block;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00117</a>          }
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00118</a>  
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00119</a>          # last ref points to first and previous
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00120</a>          $this_block = $blockname . "_ref_" . ($refnum);
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00121</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$first_block"&gt;first ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00122</a>      }
-<a href="semlit_pl.slsrc.html#fixRefs" target="src">00123</a>  }
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00097</a>  # fix up multiple source references
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00098</a>  foreach my $blockname (keys(%block_numrefs)) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00099</a>      if ($block_numrefs{$blockname} &gt; 1) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00100</a>          # First ref points to next and last
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00101</a>          my $refnum = 1;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00102</a>          my $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00103</a>          my $first_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00104</a>          my $last_block = $blockname . "_ref_" . $block_numrefs{$blockname};
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00105</a>          my $next_block = $blockname . "_ref_" . ($refnum + 1);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00106</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$last_block"&gt;last ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00107</a>  
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00108</a>          # Middle refs point to previous and next
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00109</a>          my $prev_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00110</a>          for ($refnum = 2; $refnum &lt;= $block_numrefs{$blockname} - 1; $refnum ++) {
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00111</a>              # middle refs point to prev and next
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00112</a>              $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00113</a>              $next_block = $blockname . "_ref_" . ($refnum + 1);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00114</a>              $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$next_block"&gt;next ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00115</a>              $prev_block = $this_block;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00116</a>          }
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00117</a>  
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00118</a>          # last ref points to first and previous
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00119</a>          $this_block = $blockname . "_ref_" . ($refnum);
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00120</a>          $doc_html_str =~ s/&lt;\/pre&gt;&lt;!-- endblock $this_block --&gt;/&lt;a href="#$first_block"&gt;first ref&lt;\/a&gt;  &lt;a href="#$prev_block"&gt;prev ref&lt;\/a&gt;&lt;\/pre&gt;/s;
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00121</a>      }
+<a href="semlit_pl.slsrc.html#fixRefs" target="src">00122</a>  }
 </pre><!-- endblock fixRefs_ref_1 --></small>
 
  The
@@ -365,23 +365,23 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>A bit earlier in the program, the output file was opened:
       <a name="openOutHtml_ref_1" id="openOutHtml_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00068</a>  # open main doc file
-<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00069</a>  
-<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00070</a>  $doc_html_filename = basename($main_doc_filename) . ".html";  # strip directory
-<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00071</a>  open($doc_html_outfd, "&gt;", $doc_html_filename) || die "Error, could not open htmlfile '$doc_html_filename'";
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00067</a>  # open main doc file
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00068</a>  
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00069</a>  $doc_html_filename = basename($main_doc_filename) . ".html";  # strip directory
+<a href="semlit_pl.slsrc.html#openOutHtml" target="src">00070</a>  open($doc_html_outfd, "&gt;", $doc_html_filename) || die "Error, could not open htmlfile '$doc_html_filename'";
 </pre><!-- endblock openOutHtml_ref_1 --></small>
 
  Then, after the input file is
       processed, the returned html output is written to the output file:
       <a name="writeOut_ref_1" id="writeOut_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00125</a>  # write doc html file
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00126</a>  
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00127</a>  print $doc_html_outfd "$doc_html_str\n";
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00128</a>  close($doc_html_outfd);
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00129</a>  
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00130</a>  # All done.
-<a href="semlit_pl.slsrc.html#writeOut" target="src">00131</a>  exit($exit_status);
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00124</a>  # write doc html file
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00125</a>  
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00126</a>  print $doc_html_outfd "$doc_html_str\n";
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00127</a>  close($doc_html_outfd);
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00128</a>  
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00129</a>  # All done.
+<a href="semlit_pl.slsrc.html#writeOut" target="src">00130</a>  exit($exit_status);
 </pre><!-- endblock writeOut_ref_1 --></small>
 
  The variable <span style="font-family:
@@ -395,9 +395,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>The <span style="font-family: monospace;">process_doc_file()</span>
       function is called from the main program: <a name="mainloop_ref_2" id="mainloop_ref_2"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  # Main loop; read each line in doc file
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  
-<a href="semlit_pl.slsrc.html#mainloop" target="src">00096</a>  my $doc_html_str = process_doc_file($main_doc_filename);
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00093</a>  # Main loop; read each line in doc file
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00094</a>  
+<a href="semlit_pl.slsrc.html#mainloop" target="src">00095</a>  my $doc_html_str = process_doc_file($main_doc_filename);
 <a href="#mainloop_ref_1">first ref</a>  <a href="#mainloop_ref_1">prev ref</a></pre></small>
 
 
@@ -406,8 +406,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     </p>
     <p>The function starts out with: <a name="process_doc_file_ref_1" id="process_doc_file_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00137</a>  sub process_doc_file {
-<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00138</a>      my ($doc_filename) = @_;
+<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00136</a>  sub process_doc_file {
+<a href="semlit_pl.slsrc.html#process_doc_file" target="src">00137</a>      my ($doc_filename) = @_;
 </pre><!-- endblock process_doc_file_ref_1 --></small>
 
 
@@ -469,12 +469,12 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       option. These directories are set up in the main program thus:
       <a name="initIncdirs_ref_1" id="initIncdirs_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#initIncdirs" target="src">00052</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+<a href="semlit_pl.slsrc.html#initIncdirs" target="src">00051</a>  my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
 </pre><!-- endblock initIncdirs_ref_1 --></small>
 
  ... <a name="GetOptionsError_ref_1" id="GetOptionsError_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00054</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
 <a href="#GetOptionsError_ref_2">next ref</a>  <a href="#GetOptionsError_ref_3">last ref</a></pre></small>
 
 
@@ -487,20 +487,20 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Back in the process_doc_file() function, the file is opened as
       follows: <a name="openSldocFile_ref_1" id="openSldocFile_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00141</a>      # open source file, using one or more search directories
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00142</a>  
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00143</a>      my $incdir;
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00144</a>      my $open_success = 0;
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00145</a>      foreach $incdir (@o_incdirs) {
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00146</a>          if (open($doc_infd, "&lt;", "$incdir/$doc_filename")) {
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00147</a>              $open_success = 1;
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00148</a>              last;  # break out of foreach
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00149</a>          }
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00150</a>      }
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00151</a>      if (! $open_success) {
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00152</a>          err("could not open doc file '$doc_filename', skipping");
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00153</a>          return;
-<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00154</a>      }
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00140</a>      # open source file, using one or more search directories
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00141</a>  
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00142</a>      my $incdir;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00143</a>      my $open_success = 0;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00144</a>      foreach $incdir (@o_incdirs) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00145</a>          if (open($doc_infd, "&lt;", "$incdir/$doc_filename")) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00146</a>              $open_success = 1;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00147</a>              last;  # break out of foreach
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00148</a>          }
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00149</a>      }
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00150</a>      if (! $open_success) {
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00151</a>          err("could not open doc file '$doc_filename', skipping");
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00152</a>          return;
+<a href="semlit_pl.slsrc.html#openSldocFile" target="src">00153</a>      }
 </pre><!-- endblock openSldocFile_ref_1 --></small>
 
  It loops through the array
@@ -512,14 +512,14 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       memory</h4>
     <p>Perl makes this easy: <a name="readsldoc_ref_1" id="readsldoc_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00156</a>      # Read entire file into memory
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00157</a>  
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00158</a>      my @doctexts = &lt;$doc_infd&gt;;
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00159</a>      close($doc_infd);
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00160</a>      chomp(@doctexts);  # remove line delims from every line
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00161</a>      my $num_lines = scalar(@doctexts);  # count lines in file
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00162</a>      my $doctext = join("\n", @doctexts) . "\n";  # combine as a single string
-<a href="semlit_pl.slsrc.html#readsldoc" target="src">00163</a>      $doctext =~ s/\r//gs;  # remove carriage returns, if any
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00155</a>      # Read entire file into memory
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00156</a>  
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00157</a>      my @doctexts = &lt;$doc_infd&gt;;
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00158</a>      close($doc_infd);
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00159</a>      chomp(@doctexts);  # remove line delims from every line
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00160</a>      my $num_lines = scalar(@doctexts);  # count lines in file
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00161</a>      my $doctext = join("\n", @doctexts) . "\n";  # combine as a single string
+<a href="semlit_pl.slsrc.html#readsldoc" target="src">00162</a>      $doctext =~ s/\r//gs;  # remove carriage returns, if any
 </pre><!-- endblock readsldoc_ref_1 --></small>
 
  The <tt>chomp()</tt>
@@ -542,9 +542,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       executes until there are no more commands to execute:
       <a name="findCommand_ref_1" id="findCommand_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#findCommand" target="src">00168</a>      # process semlit commands
-<a href="semlit_pl.slsrc.html#findCommand" target="src">00169</a>      while ($doctext =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/is) {
-<a href="semlit_pl.slsrc.html#findCommand" target="src">00170</a>          my $cmd = $1;  # text of command (minus standard stuff)
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00167</a>      # process semlit commands
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00168</a>      while ($doctext =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/is) {
+<a href="semlit_pl.slsrc.html#findCommand" target="src">00169</a>          my $cmd = $1;  # text of command (minus standard stuff)
 </pre><!-- endblock findCommand_ref_1 --></small>
 
  The variable <span
@@ -576,8 +576,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>The next lines captures the file contents before and after the
       semlit command: <a name="prematch_ref_1" id="prematch_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#prematch" target="src">00171</a>          my $prefix = $PREMATCH;  # text preceiding the command
-<a href="semlit_pl.slsrc.html#prematch" target="src">00172</a>          my $suffix = $POSTMATCH;  # text after the command
+<a href="semlit_pl.slsrc.html#prematch" target="src">00170</a>          my $prefix = $PREMATCH;  # text preceiding the command
+<a href="semlit_pl.slsrc.html#prematch" target="src">00171</a>          my $suffix = $POSTMATCH;  # text after the command
 </pre><!-- endblock prematch_ref_1 --></small>
 
  Note the use of the <span
@@ -603,8 +603,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       command, and subtracting it from the total number:
       <a name="linecount_ref_1" id="linecount_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#linecount" target="src">00174</a>          # calculate line number containing the start of this semlit command
-<a href="semlit_pl.slsrc.html#linecount" target="src">00175</a>          $cur_file_linenum = $num_lines - scalar(my @t = split("\n", $suffix)) + 1;
+<a href="semlit_pl.slsrc.html#linecount" target="src">00173</a>          # calculate line number containing the start of this semlit command
+<a href="semlit_pl.slsrc.html#linecount" target="src">00174</a>          $cur_file_linenum = $num_lines - scalar(my @t = split("\n", $suffix)) + 1;
 </pre><!-- endblock linecount_ref_1 --></small>
 
  As you know from the <a
@@ -618,7 +618,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Now execute the command and capture the replacement text:
       <a name="executeCmd_ref_1" id="executeCmd_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#executeCmd" target="src">00177</a>          my $repl = semlit_cmd($cmd);
+<a href="semlit_pl.slsrc.html#executeCmd" target="src">00176</a>          my $repl = semlit_cmd($cmd);
 </pre><!-- endblock executeCmd_ref_1 --></small>
 
  The <a href="#mozTocId193858"><tt>semlit_cmd()</tt></a>
@@ -630,9 +630,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Replacing the matched semlit command with the resulting text is
       straight-forward: <a name="replText_ref_1" id="replText_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#replText" target="src">00179</a>          # Commands are removed, and often replaced with some result
-<a href="semlit_pl.slsrc.html#replText" target="src">00180</a>          $doctext = $prefix . $repl . $suffix;
-<a href="semlit_pl.slsrc.html#replText" target="src">00181</a>      }  # while
+<a href="semlit_pl.slsrc.html#replText" target="src">00178</a>          # Commands are removed, and often replaced with some result
+<a href="semlit_pl.slsrc.html#replText" target="src">00179</a>          $doctext = $prefix . $repl . $suffix;
+<a href="semlit_pl.slsrc.html#replText" target="src">00180</a>      }  # while
 </pre><!-- endblock replText_ref_1 --></small>
 
  This is where the
@@ -643,8 +643,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       processed html</h4>
     <p>Finally: <a name="returnHtml_ref_1" id="returnHtml_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#returnHtml" target="src">00185</a>      return $doctext;
-<a href="semlit_pl.slsrc.html#returnHtml" target="src">00186</a>  }  # process_doc_file
+<a href="semlit_pl.slsrc.html#returnHtml" target="src">00184</a>      return $doctext;
+<a href="semlit_pl.slsrc.html#returnHtml" target="src">00185</a>  }  # process_doc_file
 </pre><!-- endblock returnHtml_ref_1 --></small>
 
 <br>
@@ -655,8 +655,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       reporting which adds an extra challange:
       <a name="fileGlobals_ref_1" id="fileGlobals_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00033</a>  my $cur_file_name = "";
-<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00034</a>  my $cur_file_linenum = 0;
+<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00032</a>  my $cur_file_name = "";
+<a href="semlit_pl.slsrc.html#fileGlobals" target="src">00033</a>  my $cur_file_linenum = 0;
 </pre><!-- endblock fileGlobals_ref_1 --></small>
 
  By keeping the file name and line
@@ -668,8 +668,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       function is ready to start handling commands. But before it does,
       we want to save those global variables: <a name="saveFile_ref_1" id="saveFile_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#saveFile" target="src">00165</a>      my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
-<a href="semlit_pl.slsrc.html#saveFile" target="src">00166</a>      ($cur_file_name, $cur_file_linenum) = ($doc_filename, 0);
+<a href="semlit_pl.slsrc.html#saveFile" target="src">00164</a>      my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
+<a href="semlit_pl.slsrc.html#saveFile" target="src">00165</a>      ($cur_file_name, $cur_file_linenum) = ($doc_filename, 0);
 </pre><!-- endblock saveFile_ref_1 --></small>
 
 
@@ -677,7 +677,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       returning, we want to restore the global variables:
       <a name="restoreFile_ref_1" id="restoreFile_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#restoreFile" target="src">00183</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
+<a href="semlit_pl.slsrc.html#restoreFile" target="src">00182</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
 </pre><!-- endblock restoreFile_ref_1 --></small>
 
  You will see very similar code in the
@@ -708,16 +708,16 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       simply updates the <span style="font-family: monospace;">$tabstop</span>
       global variable: <a name="tabstop_ref_1" id="tabstop_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00193</a>      # semlit tabstop - doc: source tab expansion
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00194</a>      if ($cmd =~ /^tabstop\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00195</a>          if ($1 =~ /^\d+$/) {
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00196</a>              $tabstop = $1;  # used by Text::Tabs
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00197</a>              return "";
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00198</a>          } else {
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00199</a>              err("Tabstop value '$1' must be numeric");
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00200</a>              return "";
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00201</a>          }
-<a href="semlit_pl.slsrc.html#tabstop" target="src">00202</a>      }
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00192</a>      # semlit tabstop - doc: source tab expansion
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00193</a>      if ($cmd =~ /^tabstop\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00194</a>          if ($1 =~ /^\d+$/) {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00195</a>              $tabstop = $1;  # used by Text::Tabs
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00196</a>              return "";
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00197</a>          } else {
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00198</a>              err("Tabstop value '$1' must be numeric");
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00199</a>              return "";
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00200</a>          }
+<a href="semlit_pl.slsrc.html#tabstop" target="src">00201</a>      }
 </pre><!-- endblock tabstop_ref_1 --></small>
 
  The <span
@@ -725,21 +725,21 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       directly by the built-in <span style="font-family: monospace;">Text::Tabs</span>
       Perl module: <a name="useTabs_ref_1" id="useTabs_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#useTabs" target="src">00024</a>  use Text::Tabs;
+<a href="semlit_pl.slsrc.html#useTabs" target="src">00023</a>  use Text::Tabs;
 </pre><!-- endblock useTabs_ref_1 --></small>
 
  Note that the <span
         style="font-family: monospace;">$tabstop</span> variable can
       also be set on the command line: <a name="GetOptionsError_ref_2" id="GetOptionsError_ref_2"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00054</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
 <a href="#GetOptionsError_ref_3">next ref</a>  <a href="#GetOptionsError_ref_1">prev ref</a></pre></small>
 
 
       So, where does this actually get used? Right here:
       <a name="expand_ref_1" id="expand_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#expand" target="src">00363</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
+<a href="semlit_pl.slsrc.html#expand" target="src">00362</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
 </pre><!-- endblock expand_ref_1 --></small>
 
  (In the function <a href="#mozTocId378007"><span
@@ -764,10 +764,10 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>The <span style="font-family: monospace;">srcfile</span> command
       is used to scan an <b>slsrc</b> file: <a name="srcfile_ref_1" id="srcfile_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#srcfile" target="src">00204</a>      # semlit srcfile - doc: read and process source file
-<a href="semlit_pl.slsrc.html#srcfile" target="src">00205</a>      elsif ($cmd =~ /^srcfile\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#srcfile" target="src">00206</a>          return process_src_file($1, $2);
-<a href="semlit_pl.slsrc.html#srcfile" target="src">00207</a>      }
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00203</a>      # semlit srcfile - doc: read and process source file
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00204</a>      elsif ($cmd =~ /^srcfile\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00205</a>          return process_src_file($1, $2);
+<a href="semlit_pl.slsrc.html#srcfile" target="src">00206</a>      }
 </pre><!-- endblock srcfile_ref_1 --></small>
 
 
@@ -788,10 +788,10 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>The <span style="font-family: monospace;">include</span> command
       is used to scan an <b>sldoc</b> file: <a name="include_ref_1" id="include_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#include" target="src">00209</a>      # semlit include - doc: read and process doc file
-<a href="semlit_pl.slsrc.html#include" target="src">00210</a>      elsif ($cmd =~ /^include\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#include" target="src">00211</a>          return process_doc_file($1);
-<a href="semlit_pl.slsrc.html#include" target="src">00212</a>      }
+<a href="semlit_pl.slsrc.html#include" target="src">00208</a>      # semlit include - doc: read and process doc file
+<a href="semlit_pl.slsrc.html#include" target="src">00209</a>      elsif ($cmd =~ /^include\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#include" target="src">00210</a>          return process_doc_file($1);
+<a href="semlit_pl.slsrc.html#include" target="src">00211</a>      }
 </pre><!-- endblock include_ref_1 --></small>
 
 
@@ -809,30 +809,30 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       output <b>html</b> file a named block of source lines (from <b>slsrc</b>
       files): <a name="insert_ref_1" id="insert_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#insert" target="src">00214</a>      # semlit insert - doc: insert a source block
-<a href="semlit_pl.slsrc.html#insert" target="src">00215</a>      elsif ($cmd =~ /^insert\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#insert" target="src">00216</a>          my $block_name = $1;
-<a href="semlit_pl.slsrc.html#insert" target="src">00217</a>          if (exists($srcblocks{$block_name})) {
-<a href="semlit_pl.slsrc.html#insert" target="src">00218</a>              my $num_refs = 1;
-<a href="semlit_pl.slsrc.html#insert" target="src">00219</a>              my $block_ref_name = $block_name;
-<a href="semlit_pl.slsrc.html#insert" target="src">00220</a>              if (defined($block_numrefs{$block_name})) {
-<a href="semlit_pl.slsrc.html#insert" target="src">00221</a>                  $num_refs = $block_numrefs{$block_name} + 1;
-<a href="semlit_pl.slsrc.html#insert" target="src">00222</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
-<a href="semlit_pl.slsrc.html#insert" target="src">00223</a>              }
-<a href="semlit_pl.slsrc.html#insert" target="src">00224</a>              $block_numrefs{$block_name} = $num_refs;
-<a href="semlit_pl.slsrc.html#insert" target="src">00225</a>  
-<a href="semlit_pl.slsrc.html#insert" target="src">00226</a>              my $block_str = $srcblocks{$block_name};
-<a href="semlit_pl.slsrc.html#insert" target="src">00227</a>              return &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#insert" target="src">00228</a>  &lt;a name="$block_ref_name" id="$block_ref_name"&gt;&lt;\/a&gt;
-<a href="semlit_pl.slsrc.html#insert" target="src">00229</a>  &lt;small&gt;&lt;pre&gt;
-<a href="semlit_pl.slsrc.html#insert" target="src">00230</a>  $block_str
-<a href="semlit_pl.slsrc.html#insert" target="src">00231</a>  &lt;\/pre&gt;&lt;!-- endblock $block_ref_name --&gt;&lt;/small&gt;\n
-<a href="semlit_pl.slsrc.html#insert" target="src">00232</a>  __EOF__
-<a href="semlit_pl.slsrc.html#insert" target="src">00233</a>          } else {
-<a href="semlit_pl.slsrc.html#insert" target="src">00234</a>              err("attempt to insert block named '$block_name' but block not defined");
-<a href="semlit_pl.slsrc.html#insert" target="src">00235</a>              return "";
-<a href="semlit_pl.slsrc.html#insert" target="src">00236</a>          }
-<a href="semlit_pl.slsrc.html#insert" target="src">00237</a>      }
+<a href="semlit_pl.slsrc.html#insert" target="src">00213</a>      # semlit insert - doc: insert a source block
+<a href="semlit_pl.slsrc.html#insert" target="src">00214</a>      elsif ($cmd =~ /^insert\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00215</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00216</a>          if (exists($srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00217</a>              my $num_refs = 1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00218</a>              my $block_ref_name = $block_name;
+<a href="semlit_pl.slsrc.html#insert" target="src">00219</a>              if (defined($block_numrefs{$block_name})) {
+<a href="semlit_pl.slsrc.html#insert" target="src">00220</a>                  $num_refs = $block_numrefs{$block_name} + 1;
+<a href="semlit_pl.slsrc.html#insert" target="src">00221</a>                  $block_ref_name = $block_name . "_ref_$num_refs";
+<a href="semlit_pl.slsrc.html#insert" target="src">00222</a>              }
+<a href="semlit_pl.slsrc.html#insert" target="src">00223</a>              $block_numrefs{$block_name} = $num_refs;
+<a href="semlit_pl.slsrc.html#insert" target="src">00224</a>  
+<a href="semlit_pl.slsrc.html#insert" target="src">00225</a>              my $block_str = $srcblocks{$block_name};
+<a href="semlit_pl.slsrc.html#insert" target="src">00226</a>              return &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#insert" target="src">00227</a>  &lt;a name="$block_ref_name" id="$block_ref_name"&gt;&lt;\/a&gt;
+<a href="semlit_pl.slsrc.html#insert" target="src">00228</a>  &lt;small&gt;&lt;pre&gt;
+<a href="semlit_pl.slsrc.html#insert" target="src">00229</a>  $block_str
+<a href="semlit_pl.slsrc.html#insert" target="src">00230</a>  &lt;\/pre&gt;&lt;!-- endblock $block_ref_name --&gt;&lt;/small&gt;\n
+<a href="semlit_pl.slsrc.html#insert" target="src">00231</a>  __EOF__
+<a href="semlit_pl.slsrc.html#insert" target="src">00232</a>          } else {
+<a href="semlit_pl.slsrc.html#insert" target="src">00233</a>              err("attempt to insert block named '$block_name' but block not defined");
+<a href="semlit_pl.slsrc.html#insert" target="src">00234</a>              return "";
+<a href="semlit_pl.slsrc.html#insert" target="src">00235</a>          }
+<a href="semlit_pl.slsrc.html#insert" target="src">00236</a>      }
 </pre><!-- endblock insert_ref_1 --></small>
 
  Note the use of Perl's "here
@@ -868,19 +868,19 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       to start storing source lines into a named block:
       <a name="block_ref_1" id="block_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#block" target="src">00239</a>      # semlit block - src: start a named block of source
-<a href="semlit_pl.slsrc.html#block" target="src">00240</a>      elsif ($cmd =~ /^block\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#block" target="src">00241</a>          my $block_name = $1;
-<a href="semlit_pl.slsrc.html#block" target="src">00242</a>          if (defined($srcblocks{$block_name})) {
-<a href="semlit_pl.slsrc.html#block" target="src">00243</a>              err("block '$block_name' already defined");
-<a href="semlit_pl.slsrc.html#block" target="src">00244</a>              return "";
-<a href="semlit_pl.slsrc.html#block" target="src">00245</a>          }
-<a href="semlit_pl.slsrc.html#block" target="src">00246</a>          $srcblocks{$block_name} = "";
-<a href="semlit_pl.slsrc.html#block" target="src">00247</a>          $block_numrefs{$block_name} = 0;
-<a href="semlit_pl.slsrc.html#block" target="src">00248</a>          $active_srcblocks{$block_name} = $cur_file_linenum;
-<a href="semlit_pl.slsrc.html#block" target="src">00249</a>          print $src_html_outfd "&lt;a name=\"$block_name\" id=\"$block_name\"&gt;&lt;\/a&gt;";
-<a href="semlit_pl.slsrc.html#block" target="src">00250</a>          return "";
-<a href="semlit_pl.slsrc.html#block" target="src">00251</a>      }
+<a href="semlit_pl.slsrc.html#block" target="src">00238</a>      # semlit block - src: start a named block of source
+<a href="semlit_pl.slsrc.html#block" target="src">00239</a>      elsif ($cmd =~ /^block\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#block" target="src">00240</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#block" target="src">00241</a>          if (defined($srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#block" target="src">00242</a>              err("block '$block_name' already defined");
+<a href="semlit_pl.slsrc.html#block" target="src">00243</a>              return "";
+<a href="semlit_pl.slsrc.html#block" target="src">00244</a>          }
+<a href="semlit_pl.slsrc.html#block" target="src">00245</a>          $srcblocks{$block_name} = "";
+<a href="semlit_pl.slsrc.html#block" target="src">00246</a>          $block_numrefs{$block_name} = 0;
+<a href="semlit_pl.slsrc.html#block" target="src">00247</a>          $active_srcblocks{$block_name} = $cur_file_linenum;
+<a href="semlit_pl.slsrc.html#block" target="src">00248</a>          print $src_html_outfd "&lt;a name=\"$block_name\" id=\"$block_name\"&gt;&lt;\/a&gt;";
+<a href="semlit_pl.slsrc.html#block" target="src">00249</a>          return "";
+<a href="semlit_pl.slsrc.html#block" target="src">00250</a>      }
 </pre><!-- endblock block_ref_1 --></small>
 
  Since it is possible for source lines to be
@@ -893,29 +893,29 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       to stop storing source lines into the named block:
       <a name="endblock_ref_1" id="endblock_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#endblock" target="src">00253</a>      # semlit endblock - src: end a named block of source
-<a href="semlit_pl.slsrc.html#endblock" target="src">00254</a>      elsif ($cmd =~ /^endblock\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#endblock" target="src">00255</a>          my $block_name = $1;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00256</a>          if (exists($active_srcblocks{$block_name})) {
-<a href="semlit_pl.slsrc.html#endblock" target="src">00257</a>              delete($active_srcblocks{$block_name});
-<a href="semlit_pl.slsrc.html#endblock" target="src">00258</a>              $srcblocks{$block_name} =~ s/\n$//s;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00259</a>              return "";
-<a href="semlit_pl.slsrc.html#endblock" target="src">00260</a>          } else {
-<a href="semlit_pl.slsrc.html#endblock" target="src">00261</a>              err("found endblock for '$block_name', which is not active");
-<a href="semlit_pl.slsrc.html#endblock" target="src">00262</a>              return "";
-<a href="semlit_pl.slsrc.html#endblock" target="src">00263</a>          }
-<a href="semlit_pl.slsrc.html#endblock" target="src">00264</a>      }
-<a href="semlit_pl.slsrc.html#endblock" target="src">00265</a>  
-<a href="semlit_pl.slsrc.html#endblock" target="src">00266</a>      # semlit tooltip - create hover over text for a phrase
-<a href="semlit_pl.slsrc.html#endblock" target="src">00267</a>      elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#endblock" target="src">00268</a>                  my $text_source = $1;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00269</a>                  my $text_link = $2;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00270</a>                  my $contents = file_get_contents($text_source);
-<a href="semlit_pl.slsrc.html#endblock" target="src">00271</a>                  return &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00272</a>  &lt;a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;"&gt;$text_link&lt;/a&gt;
-<a href="semlit_pl.slsrc.html#endblock" target="src">00273</a>  __EOF__
-<a href="semlit_pl.slsrc.html#endblock" target="src">00274</a>          }
-<a href="semlit_pl.slsrc.html#endblock" target="src">00275</a>  
+<a href="semlit_pl.slsrc.html#endblock" target="src">00252</a>      # semlit endblock - src: end a named block of source
+<a href="semlit_pl.slsrc.html#endblock" target="src">00253</a>      elsif ($cmd =~ /^endblock\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00254</a>          my $block_name = $1;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00255</a>          if (exists($active_srcblocks{$block_name})) {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00256</a>              delete($active_srcblocks{$block_name});
+<a href="semlit_pl.slsrc.html#endblock" target="src">00257</a>              $srcblocks{$block_name} =~ s/\n$//s;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00258</a>              return "";
+<a href="semlit_pl.slsrc.html#endblock" target="src">00259</a>          } else {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00260</a>              err("found endblock for '$block_name', which is not active");
+<a href="semlit_pl.slsrc.html#endblock" target="src">00261</a>              return "";
+<a href="semlit_pl.slsrc.html#endblock" target="src">00262</a>          }
+<a href="semlit_pl.slsrc.html#endblock" target="src">00263</a>      }
+<a href="semlit_pl.slsrc.html#endblock" target="src">00264</a>  
+<a href="semlit_pl.slsrc.html#endblock" target="src">00265</a>      # semlit tooltip - create hover over text for a phrase
+<a href="semlit_pl.slsrc.html#endblock" target="src">00266</a>      elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#endblock" target="src">00267</a>                  my $text_source = $1;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00268</a>                  my $text_link = $2;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00269</a>                  my $contents = file_get_contents($text_source);
+<a href="semlit_pl.slsrc.html#endblock" target="src">00270</a>                  return &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00271</a>  &lt;a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;"&gt;$text_link&lt;/a&gt;
+<a href="semlit_pl.slsrc.html#endblock" target="src">00272</a>  __EOF__
+<a href="semlit_pl.slsrc.html#endblock" target="src">00273</a>          }
+<a href="semlit_pl.slsrc.html#endblock" target="src">00274</a>  
 </pre><!-- endblock endblock_ref_1 --></small>
 
  The block name needs to be supplied
@@ -928,15 +928,15 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       that can be hovered over for additional information.
       <a name="tooltip_ref_1" id="tooltip_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00266</a>      # semlit tooltip - create hover over text for a phrase
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00267</a>      elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00268</a>                  my $text_source = $1;
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00269</a>                  my $text_link = $2;
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00270</a>                  my $contents = file_get_contents($text_source);
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00271</a>                  return &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00272</a>  &lt;a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;"&gt;$text_link&lt;/a&gt;
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00273</a>  __EOF__
-<a href="semlit_pl.slsrc.html#tooltip" target="src">00274</a>          }
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00265</a>      # semlit tooltip - create hover over text for a phrase
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00266</a>      elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00267</a>                  my $text_source = $1;
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00268</a>                  my $text_link = $2;
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00269</a>                  my $contents = file_get_contents($text_source);
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00270</a>                  return &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00271</a>  &lt;a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;"&gt;$text_link&lt;/a&gt;
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00272</a>  __EOF__
+<a href="semlit_pl.slsrc.html#tooltip" target="src">00273</a>          }
 </pre><!-- endblock tooltip_ref_1 --></small>
 
  The tooltip data is loaded from a 
@@ -996,19 +996,19 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       directories in the array <tt>@o_incdirs</tt>:
       <a name="openslsrc_ref_1" id="openslsrc_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00291</a>      # open source file, using one or more search directories
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00292</a>      my $incdir;
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00293</a>      my $open_success = 0;
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00294</a>      foreach $incdir (@o_incdirs) {
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00295</a>          if (open($slsrc_infd, "&lt;", "$incdir/$src_filename")) {
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00296</a>              $open_success = 1;
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00297</a>              last;  # break out of foreach
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00298</a>          }
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00299</a>      }
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00300</a>      if (! $open_success) {
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00301</a>          err("could not open src file '$src_filename', skipping");
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00302</a>          return "";
-<a href="semlit_pl.slsrc.html#openslsrc" target="src">00303</a>      }
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00290</a>      # open source file, using one or more search directories
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00291</a>      my $incdir;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00292</a>      my $open_success = 0;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00293</a>      foreach $incdir (@o_incdirs) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00294</a>          if (open($slsrc_infd, "&lt;", "$incdir/$src_filename")) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00295</a>              $open_success = 1;
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00296</a>              last;  # break out of foreach
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00297</a>          }
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00298</a>      }
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00299</a>      if (! $open_success) {
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00300</a>          err("could not open src file '$src_filename', skipping");
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00301</a>          return "";
+<a href="semlit_pl.slsrc.html#openslsrc" target="src">00302</a>      }
 </pre><!-- endblock openslsrc_ref_1 --></small>
 
 <br>
@@ -1018,33 +1018,33 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>The output source <b>html</b> file is opened and some initial
       content is written: <a name="openSourceHtml_ref_1" id="openSourceHtml_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00305</a>      # create and write initial content to html-ified source file
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00306</a>      if (! open($src_html_outfd, "&gt;", "$src_filename.html")) {
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00307</a>          err("could not open output source html file '$src_filename.html', skipping");
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00308</a>          close($slsrc_infd);
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00309</a>          return "";
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00310</a>      }
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00311</a>      print $src_html_outfd &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00312</a>  &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00313</a>  &lt;link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00314</a>  &lt;script src="//code.jquery.com/jquery-1.10.2.js"&gt;&lt;/script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00315</a>  &lt;script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"&gt;&lt;/script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00316</a>  &lt;link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00317</a>  &lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"&gt;&lt;/script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00318</a>  &lt;script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00319</a>    \$(function() {
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00320</a>      \$( document ).tooltip();
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00321</a>    });
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00322</a>  &lt;/script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00323</a>  &lt;style&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00324</a>  #code {background-color:#ffffff;};
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00325</a>  &lt;/style&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00326</a>  &lt;/head&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00327</a>  &lt;body&gt;&lt;h1&gt;$plain_src_filename&lt;/h1&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00328</a>  &lt;p&gt;&lt;em&gt;Hint:&lt;/em&gt; do not cut-and-paste from this page.  Instead, right-click on '&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;' and save file.
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00329</a>  &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00330</a>  &lt;small&gt;&lt;pre&gt;&lt;code id="code"&gt;
-<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00331</a>  __EOF__
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00304</a>      # create and write initial content to html-ified source file
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00305</a>      if (! open($src_html_outfd, "&gt;", "$src_filename.html")) {
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00306</a>          err("could not open output source html file '$src_filename.html', skipping");
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00307</a>          close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00308</a>          return "";
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00309</a>      }
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00310</a>      print $src_html_outfd &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00311</a>  &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00312</a>  &lt;link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00313</a>  &lt;script src="//code.jquery.com/jquery-1.10.2.js"&gt;&lt;/script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00314</a>  &lt;script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"&gt;&lt;/script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00315</a>  &lt;link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00316</a>  &lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"&gt;&lt;/script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00317</a>  &lt;script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00318</a>    \$(function() {
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00319</a>      \$( document ).tooltip();
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00320</a>    });
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00321</a>  &lt;/script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00322</a>  &lt;style&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00323</a>  #code {background-color:#ffffff;};
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00324</a>  &lt;/style&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00325</a>  &lt;/head&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00326</a>  &lt;body&gt;&lt;h1&gt;$plain_src_filename&lt;/h1&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00327</a>  &lt;p&gt;&lt;em&gt;Hint:&lt;/em&gt; do not cut-and-paste from this page.  Instead, right-click on '&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;' and save file.
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00328</a>  &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00329</a>  &lt;small&gt;&lt;pre&gt;&lt;code id="code"&gt;
+<a href="semlit_pl.slsrc.html#openSourceHtml" target="src">00330</a>  __EOF__
 </pre><!-- endblock openSourceHtml_ref_1 --></small>
 
  In addition to
@@ -1055,13 +1055,13 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       src file</h4>
     <p>The output <b>src</b> file is opened: <a name="openSrc_ref_1" id="openSrc_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00333</a>      # Create plaintext source file (without semlit commands)
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00334</a>      if (! open($src_outfd, "&gt;", "$plain_src_filename")) {
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00335</a>          err("could not open output src '$plain_src_filename', skipping");
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00336</a>          close($slsrc_infd);
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00337</a>          close($src_html_outfd);
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00338</a>          return "";
-<a href="semlit_pl.slsrc.html#openSrc" target="src">00339</a>      }
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00332</a>      # Create plaintext source file (without semlit commands)
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00333</a>      if (! open($src_outfd, "&gt;", "$plain_src_filename")) {
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00334</a>          err("could not open output src '$plain_src_filename', skipping");
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00335</a>          close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00336</a>          close($src_html_outfd);
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00337</a>          return "";
+<a href="semlit_pl.slsrc.html#openSrc" target="src">00338</a>      }
 </pre><!-- endblock openSrc_ref_1 --></small>
 
 <br>
@@ -1071,12 +1071,12 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Read the <b>slsrc</b> file, line-by-line:
       <a name="foreachLine_ref_1" id="foreachLine_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00345</a>      my $iline;
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00346</a>      while (defined($iline = &lt;$slsrc_infd&gt;)) {
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00347</a>          chomp($iline);  # remove line delim
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00348</a>          $iline .= "\n";  # add newline
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00349</a>          $iline =~ s/\r//gs;  # remove carriage returns, if any
-<a href="semlit_pl.slsrc.html#foreachLine" target="src">00350</a>          $cur_file_linenum ++;
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00344</a>      my $iline;
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00345</a>      while (defined($iline = &lt;$slsrc_infd&gt;)) {
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00346</a>          chomp($iline);  # remove line delim
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00347</a>          $iline .= "\n";  # add newline
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00348</a>          $iline =~ s/\r//gs;  # remove carriage returns, if any
+<a href="semlit_pl.slsrc.html#foreachLine" target="src">00349</a>          $cur_file_linenum ++;
 </pre><!-- endblock foreachLine_ref_1 --></small>
 
  The <tt>chomp()</tt> function removes
@@ -1092,11 +1092,11 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
         href="#mozTocId911738"><tt>endblock</tt></a>. Find and process
       them: <a name="ifsemlit_ref_1" id="ifsemlit_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00352</a>          # check for semlit commands
-<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00353</a>          if ($iline =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/i) {
-<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00354</a>              semlit_cmd($1);
-<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00355</a>              # discard command line
-<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00356</a>          }
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00351</a>          # check for semlit commands
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00352</a>          if ($iline =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/i) {
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00353</a>              semlit_cmd($1);
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00354</a>              # discard command line
+<a href="semlit_pl.slsrc.html#ifsemlit" target="src">00355</a>          }
 </pre><!-- endblock ifsemlit_ref_1 --></small>
 
 <br>
@@ -1106,8 +1106,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>If the <b>slsrc</b> line does not contain a semlit command, then
       it is normal source code. <a name="elseSource_ref_1" id="elseSource_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#elseSource" target="src">00357</a>          else {
-<a href="semlit_pl.slsrc.html#elseSource" target="src">00358</a>              $src_linenum ++;  # don't count semlit command lines
+<a href="semlit_pl.slsrc.html#elseSource" target="src">00356</a>          else {
+<a href="semlit_pl.slsrc.html#elseSource" target="src">00357</a>              $src_linenum ++;  # don't count semlit command lines
 </pre><!-- endblock elseSource_ref_1 --></small>
 
  Note that
@@ -1125,7 +1125,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Write the plaintext source line to the <b>src</b> file:
       <a name="writeSrc_ref_1" id="writeSrc_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#writeSrc" target="src">00360</a>              print $src_outfd $iline;
+<a href="semlit_pl.slsrc.html#writeSrc" target="src">00359</a>              print $src_outfd $iline;
 </pre><!-- endblock writeSrc_ref_1 --></small>
 
 <br>
@@ -1136,9 +1136,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       '&lt;' and '&gt;' to their html forms:
       <a name="htmlifySource_ref_1" id="htmlifySource_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00362</a>              # fix up source for html rendering (tab expansion, special char encoding)
-<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00363</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
-<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00364</a>              $iline =~ s/\&amp;/\&amp;amp;/g;  $iline =~ s/&lt;/\&amp;lt;/g;  $iline =~ s/&gt;/\&amp;gt;/g;
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00361</a>              # fix up source for html rendering (tab expansion, special char encoding)
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00362</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
+<a href="semlit_pl.slsrc.html#htmlifySource" target="src">00363</a>              $iline =~ s/\&amp;/\&amp;amp;/g;  $iline =~ s/&lt;/\&amp;lt;/g;  $iline =~ s/&gt;/\&amp;gt;/g;
 </pre><!-- endblock htmlifySource_ref_1 --></small>
 
  Note that the <tt>expand()</tt>
@@ -1150,8 +1150,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>Check to see if this source line is inside one or more <tt>block</tt>/<tt>endblock</tt>
       constructs: <a name="ifActiveBlocks_ref_1" id="ifActiveBlocks_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00366</a>              # if we are in at least one block, link the source to the earliest block's first doc reference
-<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00367</a>              if (scalar(keys(%active_srcblocks)) &gt; 0) {
+<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00365</a>              # if we are in at least one block, link the source to the earliest block's first doc reference
+<a href="semlit_pl.slsrc.html#ifActiveBlocks" target="src">00366</a>              if (scalar(keys(%active_srcblocks)) &gt; 0) {
 </pre><!-- endblock ifActiveBlocks_ref_1 --></small>
 
 <br>
@@ -1164,8 +1164,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       opened (is at the highest-numbered input line):
       <a name="createDocLink1_ref_1" id="createDocLink1_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00368</a>                  # descending sort so that elemet 0 is largest
-<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00369</a>                  my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
+<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00367</a>                  # descending sort so that elemet 0 is largest
+<a href="semlit_pl.slsrc.html#createDocLink1" target="src">00368</a>                  my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
 </pre><!-- endblock createDocLink1_ref_1 --></small>
 
  This sort construct orders the keys
@@ -1174,9 +1174,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       most-recently opened block. This is used to construct the link
       back to the doc: <a name="createDocLink2_ref_1" id="createDocLink2_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00370</a>                  my $targ = $active_blocks[0] . "_ref_1";
-<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00371</a>                  my $a = sprintf("&lt;a href=\"$doc_html_filename#$targ\" target=\"doc\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
-<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00372</a>                  print $src_html_outfd $a;
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00369</a>                  my $targ = $active_blocks[0] . "_ref_1";
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00370</a>                  my $a = sprintf("&lt;a href=\"$doc_html_filename#$targ\" target=\"doc\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#createDocLink2" target="src">00371</a>                  print $src_html_outfd $a;
 </pre><!-- endblock createDocLink2_ref_1 --></small>
 
 <br>
@@ -1187,11 +1187,11 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       construct, add the source code to the <tt>%srcblocks</tt> hash:
       <a name="addBlocks_ref_1" id="addBlocks_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#addBlocks" target="src">00374</a>                  # for each open source block on this line of source, link the doc block to the that source block
-<a href="semlit_pl.slsrc.html#addBlocks" target="src">00375</a>                  foreach my $block_name (keys(%active_srcblocks)) {
-<a href="semlit_pl.slsrc.html#addBlocks" target="src">00376</a>                      my $a = sprintf("&lt;a href=\"$cur_file_name.html#$block_name\" target=\"src\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
-<a href="semlit_pl.slsrc.html#addBlocks" target="src">00377</a>                      $srcblocks{$block_name} .= $a;
-<a href="semlit_pl.slsrc.html#addBlocks" target="src">00378</a>                  }
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00373</a>                  # for each open source block on this line of source, link the doc block to the that source block
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00374</a>                  foreach my $block_name (keys(%active_srcblocks)) {
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00375</a>                      my $a = sprintf("&lt;a href=\"$cur_file_name.html#$block_name\" target=\"src\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00376</a>                      $srcblocks{$block_name} .= $a;
+<a href="semlit_pl.slsrc.html#addBlocks" target="src">00377</a>                  }
 </pre><!-- endblock addBlocks_ref_1 --></small>
 
  This is used by the <a
@@ -1204,10 +1204,10 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       construct, no doc link is needed when writing to the output source
       <b>html</b> file: <a name="elseNoActiveBlocks_ref_1" id="elseNoActiveBlocks_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00379</a>              } else {
-<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00380</a>                  # no active blocks
-<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00381</a>                  print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
-<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00382</a>              }
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00378</a>              } else {
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00379</a>                  # no active blocks
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00380</a>                  print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
+<a href="semlit_pl.slsrc.html#elseNoActiveBlocks" target="src">00381</a>              }
 </pre><!-- endblock elseNoActiveBlocks_ref_1 --></small>
 
 <br>
@@ -1216,11 +1216,11 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       wrap up</h4>
     <p>Close the files: <a name="closeWrap1_ref_1" id="closeWrap1_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00386</a>      close($slsrc_infd);
-<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00387</a>      close($src_outfd);
-<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00388</a>  
-<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00389</a>      print $src_html_outfd "&lt;/code&gt;&lt;/pre&gt;&lt;/small&gt;&lt;/body&gt;&lt;/html&gt;\n";
-<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00390</a>      close($src_html_outfd);
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00385</a>      close($slsrc_infd);
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00386</a>      close($src_outfd);
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00387</a>  
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00388</a>      print $src_html_outfd "&lt;/code&gt;&lt;/pre&gt;&lt;/small&gt;&lt;/body&gt;&lt;/html&gt;\n";
+<a href="semlit_pl.slsrc.html#closeWrap1" target="src">00389</a>      close($src_html_outfd);
 </pre><!-- endblock closeWrap1_ref_1 --></small>
 
  Also, if the user
@@ -1228,11 +1228,11 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       them, print errors and force them ended:
       <a name="closeWrap2_ref_1" id="closeWrap2_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00392</a>      # if the source file started a block but reached eof without ending it, end it here.
-<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00393</a>      foreach (keys(%active_srcblocks)) {
-<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00394</a>          err("block named '$_' started but not ended");
-<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00395</a>          semlit_cmd("endblock$o_fs$_");  # end it for the user
-<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00396</a>      }
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00391</a>      # if the source file started a block but reached eof without ending it, end it here.
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00392</a>      foreach (keys(%active_srcblocks)) {
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00393</a>          err("block named '$_' started but not ended");
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00394</a>          semlit_cmd("endblock$o_fs$_");  # end it for the user
+<a href="semlit_pl.slsrc.html#closeWrap2" target="src">00395</a>      }
 </pre><!-- endblock closeWrap2_ref_1 --></small>
 
  Do it by calling <a
@@ -1246,9 +1246,9 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       variables to their previous state. Then return.
       <a name="returnSrcLink_ref_1" id="returnSrcLink_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00398</a>      # the semlit.srcfile command writes a link to the plaintext source file
-<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00399</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
-<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00400</a>      return "&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;";
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00397</a>      # the semlit.srcfile command writes a link to the plaintext source file
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00398</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
+<a href="semlit_pl.slsrc.html#returnSrcLink" target="src">00399</a>      return "&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;";
 </pre><!-- endblock returnSrcLink_ref_1 --></small>
 
  Since the call to <tt>process_src_file()</tt>
@@ -1262,8 +1262,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>First, let's declare a couple of globals that will be used for
       helping the user: <a name="usage_ref_1" id="usage_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $tool = "semlit.pl";
-<a href="semlit_pl.slsrc.html#usage" target="src">00030</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
+<a href="semlit_pl.slsrc.html#usage" target="src">00028</a>  my $tool = "semlit.pl";
+<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
 <a href="#usage_ref_2">next ref</a>  <a href="#usage_ref_2">last ref</a></pre></small>
 
  (The <a
@@ -1272,30 +1272,30 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
         style="font-family: monospace;">-h</span>"option calls <tt>help()</tt>
       to print a more-extensive help: <a name="help_ref_1" id="help_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#help" target="src">00435</a>  sub help {
-<a href="semlit_pl.slsrc.html#help" target="src">00436</a>      my($err_str) = @_;
-<a href="semlit_pl.slsrc.html#help" target="src">00437</a>  
-<a href="semlit_pl.slsrc.html#help" target="src">00438</a>      if (defined $err_str) {
-<a href="semlit_pl.slsrc.html#help" target="src">00439</a>          print "$tool: $err_str\n\n";
-<a href="semlit_pl.slsrc.html#help" target="src">00440</a>      }
-<a href="semlit_pl.slsrc.html#help" target="src">00441</a>      print &lt;&lt;__EOF__;
-<a href="semlit_pl.slsrc.html#help" target="src">00442</a>  Usage: $usage_str
-<a href="semlit_pl.slsrc.html#help" target="src">00443</a>  Where:
-<a href="semlit_pl.slsrc.html#help" target="src">00444</a>      -h - print help screen
-<a href="semlit_pl.slsrc.html#help" target="src">00445</a>      -d delim - delimiter character at start and end of a semlit command.
-<a href="semlit_pl.slsrc.html#help" target="src">00446</a>              (default to '=')
-<a href="semlit_pl.slsrc.html#help" target="src">00447</a>      -f fs - field separator character within a semlit command.
-<a href="semlit_pl.slsrc.html#help" target="src">00448</a>              (default to ',')
-<a href="semlit_pl.slsrc.html#help" target="src">00449</a>      -I dir - directory to find files for 'srcfile' and 'include' commands.
-<a href="semlit_pl.slsrc.html#help" target="src">00450</a>              (default to ".")  The "-I dir" option can be repeated.
-<a href="semlit_pl.slsrc.html#help" target="src">00451</a>      -t tabstop - convert tabs to "tabstop" spaces.
-<a href="semlit_pl.slsrc.html#help" target="src">00452</a>              (default to '4')
-<a href="semlit_pl.slsrc.html#help" target="src">00453</a>      files - zero or more input files.  If omitted, inputs from stdin.
-<a href="semlit_pl.slsrc.html#help" target="src">00454</a>  
-<a href="semlit_pl.slsrc.html#help" target="src">00455</a>  __EOF__
-<a href="semlit_pl.slsrc.html#help" target="src">00456</a>  
-<a href="semlit_pl.slsrc.html#help" target="src">00457</a>      exit($exit_status);
-<a href="semlit_pl.slsrc.html#help" target="src">00458</a>  }  # help
+<a href="semlit_pl.slsrc.html#help" target="src">00434</a>  sub help {
+<a href="semlit_pl.slsrc.html#help" target="src">00435</a>      my($err_str) = @_;
+<a href="semlit_pl.slsrc.html#help" target="src">00436</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00437</a>      if (defined $err_str) {
+<a href="semlit_pl.slsrc.html#help" target="src">00438</a>          print "$tool: $err_str\n\n";
+<a href="semlit_pl.slsrc.html#help" target="src">00439</a>      }
+<a href="semlit_pl.slsrc.html#help" target="src">00440</a>      print &lt;&lt;__EOF__;
+<a href="semlit_pl.slsrc.html#help" target="src">00441</a>  Usage: $usage_str
+<a href="semlit_pl.slsrc.html#help" target="src">00442</a>  Where:
+<a href="semlit_pl.slsrc.html#help" target="src">00443</a>      -h - print help screen
+<a href="semlit_pl.slsrc.html#help" target="src">00444</a>      -d delim - delimiter character at start and end of a semlit command.
+<a href="semlit_pl.slsrc.html#help" target="src">00445</a>              (default to '=')
+<a href="semlit_pl.slsrc.html#help" target="src">00446</a>      -f fs - field separator character within a semlit command.
+<a href="semlit_pl.slsrc.html#help" target="src">00447</a>              (default to ',')
+<a href="semlit_pl.slsrc.html#help" target="src">00448</a>      -I dir - directory to find files for 'srcfile' and 'include' commands.
+<a href="semlit_pl.slsrc.html#help" target="src">00449</a>              (default to ".")  The "-I dir" option can be repeated.
+<a href="semlit_pl.slsrc.html#help" target="src">00450</a>      -t tabstop - convert tabs to "tabstop" spaces.
+<a href="semlit_pl.slsrc.html#help" target="src">00451</a>              (default to '4')
+<a href="semlit_pl.slsrc.html#help" target="src">00452</a>      files - zero or more input files.  If omitted, inputs from stdin.
+<a href="semlit_pl.slsrc.html#help" target="src">00453</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00454</a>  __EOF__
+<a href="semlit_pl.slsrc.html#help" target="src">00455</a>  
+<a href="semlit_pl.slsrc.html#help" target="src">00456</a>      exit($exit_status);
+<a href="semlit_pl.slsrc.html#help" target="src">00457</a>  }  # help
 </pre><!-- endblock help_ref_1 --></small>
 
  Note the use
@@ -1317,17 +1317,17 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>This is a simple routine to read the contents of a file for the purpose
       of filling in the <a href="#mozTocId911739">tooltips</a>: <a name="file_get_contents_ref_1" id="file_get_contents_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00423</a>  sub file_get_contents{
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00424</a>        my ($text_file) = @_;
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00425</a>        open FILE, $text_file or die $!;
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00426</a>        flock FILE, 1 or die $!;      # wait for lock
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00427</a>        seek(FILE, 0, 0);         # move pointer to beginning
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00428</a>        my $slurp = do{local $/; &lt;FILE&gt;};
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00429</a>        flock FILE, 8;            # release the lock
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00430</a>        close(FILE);
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00431</a>  
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00432</a>        return $slurp;
-<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00433</a>  } # file_get_contents
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00422</a>  sub file_get_contents{
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00423</a>        my ($text_file) = @_;
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00424</a>        open FILE, $text_file or die $!;
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00425</a>        flock FILE, 1 or die $!;      # wait for lock
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00426</a>        seek(FILE, 0, 0);         # move pointer to beginning
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00427</a>        my $slurp = do{local $/; &lt;FILE&gt;};
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00428</a>        flock FILE, 8;            # release the lock
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00429</a>        close(FILE);
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00430</a>  
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00431</a>        return $slurp;
+<a href="semlit_pl.slsrc.html#file_get_contents" target="src">00432</a>  } # file_get_contents
 </pre><!-- endblock file_get_contents_ref_1 --></small>
 
  </p>
@@ -1339,7 +1339,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     </p>
     <p>For example: <a name="GetOptionsError_ref_3" id="GetOptionsError_ref_3"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00055</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
+<a href="semlit_pl.slsrc.html#GetOptionsError" target="src">00054</a>  GetOptions("h"=&gt; \$o_help, "d=s" =&gt; \$o_delim, "f=s" =&gt; \$o_fs, "I=s" =&gt; \@o_incdirs, "t=i" =&gt; \$tabstop) || usage("Error in GetOptions");
 <a href="#GetOptionsError_ref_1">first ref</a>  <a href="#GetOptionsError_ref_2">prev ref</a></pre></small>
 
  Note the use of the
@@ -1373,8 +1373,8 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <p>First, let's declare a couple of globals that will be used for
       helping the user: <a name="usage_ref_2" id="usage_ref_2"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $tool = "semlit.pl";
-<a href="semlit_pl.slsrc.html#usage" target="src">00030</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
+<a href="semlit_pl.slsrc.html#usage" target="src">00028</a>  my $tool = "semlit.pl";
+<a href="semlit_pl.slsrc.html#usage" target="src">00029</a>  my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
 <a href="#usage_ref_1">first ref</a>  <a href="#usage_ref_1">prev ref</a></pre></small>
 
  (The <a
@@ -1383,16 +1383,16 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       message to be passed in, which is printed before the usage string:
       <a name="usageFunct_ref_1" id="usageFunct_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00412</a>  sub usage {
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00413</a>      my($err_str) = @_;
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00414</a>  
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00415</a>      if (defined $err_str) {
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00416</a>          print STDERR "$tool: $err_str\n\n";
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00417</a>      }
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00418</a>      print STDERR "Usage: $usage_str\n\n";
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00419</a>      $exit_status ++;
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00420</a>      exit($exit_status);
-<a href="semlit_pl.slsrc.html#usageFunct" target="src">00421</a>  }  # usage
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00411</a>  sub usage {
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00412</a>      my($err_str) = @_;
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00413</a>  
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00414</a>      if (defined $err_str) {
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00415</a>          print STDERR "$tool: $err_str\n\n";
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00416</a>      }
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00417</a>      print STDERR "Usage: $usage_str\n\n";
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00418</a>      $exit_status ++;
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00419</a>      exit($exit_status);
+<a href="semlit_pl.slsrc.html#usageFunct" target="src">00420</a>  }  # usage
 </pre><!-- endblock usageFunct_ref_1 --></small>
 
 <br>
@@ -1402,26 +1402,26 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       error message, along with the file name and line number where the
       error was discovered. <a name="err_ref_1" id="err_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#err" target="src">00404</a>  sub err {
-<a href="semlit_pl.slsrc.html#err" target="src">00405</a>      my ($msg) = @_;
-<a href="semlit_pl.slsrc.html#err" target="src">00406</a>  
-<a href="semlit_pl.slsrc.html#err" target="src">00407</a>      print STDERR "Error [$cur_file_name:$cur_file_linenum], $msg\n";
-<a href="semlit_pl.slsrc.html#err" target="src">00408</a>      $exit_status ++;
-<a href="semlit_pl.slsrc.html#err" target="src">00409</a>  }  # err
+<a href="semlit_pl.slsrc.html#err" target="src">00403</a>  sub err {
+<a href="semlit_pl.slsrc.html#err" target="src">00404</a>      my ($msg) = @_;
+<a href="semlit_pl.slsrc.html#err" target="src">00405</a>  
+<a href="semlit_pl.slsrc.html#err" target="src">00406</a>      print STDERR "Error [$cur_file_name:$cur_file_linenum], $msg\n";
+<a href="semlit_pl.slsrc.html#err" target="src">00407</a>      $exit_status ++;
+<a href="semlit_pl.slsrc.html#err" target="src">00408</a>  }  # err
 </pre><!-- endblock err_ref_1 --></small>
 
  It also increments
       $exit_status, which starts out at zero (success):
       <a name="exit0_ref_1" id="exit0_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#exit0" target="src">00045</a>  my $exit_status = 0;  # assume success
+<a href="semlit_pl.slsrc.html#exit0" target="src">00044</a>  my $exit_status = 0;  # assume success
 </pre><!-- endblock exit0_ref_1 --></small>
 
  and is used when exiting the program:
       <a name="exit_ref_1" id="exit_ref_1"></a>
 <small><pre>
-<a href="semlit_pl.slsrc.html#exit" target="src">00130</a>  # All done.
-<a href="semlit_pl.slsrc.html#exit" target="src">00131</a>  exit($exit_status);
+<a href="semlit_pl.slsrc.html#exit" target="src">00129</a>  # All done.
+<a href="semlit_pl.slsrc.html#exit" target="src">00130</a>  exit($exit_status);
 </pre><!-- endblock exit_ref_1 --></small>
 
  Thus, a non-zero (failure) exit status also
