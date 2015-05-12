@@ -14,23 +14,38 @@
 </style>
 </head>
 <body><h1>semlit_sh.txt</h1>
-<p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href="semlit_sh.txt">semlit_sh.txt</a>' and save file.
 <script>hljs.initHighlightingOnLoad();</script>
-<small><pre><code id="code">
-00001  #!/bin/sh
-00002  
-00003  # repeat the shebang for doc purposes (the real shebang needs to be line 1)
-<a name="sh_shebang" id="sh_shebang"></a><a href="semlit.sldoc.html#sh_shebang_ref_1" target="doc">00004</a>  #!/bin/sh
-00005  
-00006  # semlit - wrapper script around the perl tool
-00007  
-<a name="sh_iwd" id="sh_iwd"></a><a href="semlit.sldoc.html#sh_iwd_ref_1" target="doc">00008</a>  IWD=`pwd`                    # remember initial working directory
-00009  
-<a name="sh_finddir" id="sh_finddir"></a><a href="semlit.sldoc.html#sh_finddir_ref_1" target="doc">00010</a>  # Find dir where tool is stored (useful for finding related files)
-<a name="sh_dirname" id="sh_dirname"></a><a href="semlit.sldoc.html#sh_dirname_ref_1" target="doc">00011</a>  TOOLDIR=`dirname $0`
-<a href="semlit.sldoc.html#sh_finddir_ref_1" target="doc">00012</a>  # Make sure TOOLDIR is a full path name (not relative)
-<a name="sh_fix_tooldir" id="sh_fix_tooldir"></a><a href="semlit.sldoc.html#sh_fix_tooldir_ref_1" target="doc">00013</a>  cd $TOOLDIR; TOOLDIR=`pwd`; cd $IWD
-00014  
-<a name="sh_runperl" id="sh_runperl"></a><a href="semlit.sldoc.html#sh_runperl_ref_1" target="doc">00015</a>  perl $TOOLDIR/semlit.pl $*
-00016  exit $?
-</code></pre></small></body></html>
+<small><pre><code id="code"><table border=0 cellpadding=0 cellspacing=0><tr>
+<a name="sh_shebang" id="sh_shebang"></a><a name="sh_iwd" id="sh_iwd"></a><a name="sh_finddir" id="sh_finddir"></a><a name="sh_dirname" id="sh_dirname"></a><a name="sh_fix_tooldir" id="sh_fix_tooldir"></a><a name="sh_runperl" id="sh_runperl"></a><td>00001
+00002
+00003
+<a href="semlit.sldoc.html#sh_shebang_ref_1" target="doc">00004</a>
+00005
+00006
+00007
+<a href="semlit.sldoc.html#sh_iwd_ref_1" target="doc">00008</a>
+00009
+<a href="semlit.sldoc.html#sh_finddir_ref_1" target="doc">00010</a>
+<a href="semlit.sldoc.html#sh_dirname_ref_1" target="doc">00011</a>
+<a href="semlit.sldoc.html#sh_finddir_ref_1" target="doc">00012</a>
+<a href="semlit.sldoc.html#sh_fix_tooldir_ref_1" target="doc">00013</a>
+00014
+<a href="semlit.sldoc.html#sh_runperl_ref_1" target="doc">00015</a>
+00016
+</td><td>  #!/bin/sh
+  
+  # repeat the shebang for doc purposes (the real shebang needs to be line 1)
+  #!/bin/sh
+  
+  # semlit - wrapper script around the perl tool
+  
+  IWD=`pwd`                    # remember initial working directory
+  
+  # Find dir where tool is stored (useful for finding related files)
+  TOOLDIR=`dirname $0`
+  # Make sure TOOLDIR is a full path name (not relative)
+  cd $TOOLDIR; TOOLDIR=`pwd`; cd $IWD
+  
+  perl $TOOLDIR/semlit.pl $*
+  exit $?
+</td></tr></table></code></pre></small></body></html>
