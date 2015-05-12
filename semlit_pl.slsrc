@@ -41,6 +41,10 @@ my $cur_file_name = "";
 my $cur_file_linenum = 0;
 #=semlit,endblock,fileGlobals=
 
+#=semlit,block,global_src_buffer=
+my $global_src_buffer = "";
+#=semlit,endblock,global_src_buffer=
+
 my $doc_html_filename;
 my $doc_html_outfd;
 
@@ -311,7 +315,8 @@ __EOF__
 		$srcblocks{$block_name} = "";
 		$block_numrefs{$block_name} = 0;
 		$active_srcblocks{$block_name} = $cur_file_linenum;
-		print $src_html_outfd "<a name=\"$block_name\" id=\"$block_name\"><\/a>";
+		
+		$global_src_buffer = "<span name=\"$block_name\" id=\"$block_name\"><\/span>";
 		return "";
 	}
 #=semlit,endblock,block=
@@ -465,10 +470,14 @@ __EOF__
 #=semlit,endblock,createDocLink1=
 #=semlit,block,createDocLink2=
 				my $targ = $active_blocks[0] . "_ref_1";
-				my $a = sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
-				my $c = sprintf("  %s", $iline);
-				$src_lines_td .= $a;
-				$src_content_td .= $c;
+				$src_lines_td .= sprintf("<a \"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
+				if ($global_src_buffer) {
+					$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+					$global_src_buffer = "";
+				}
+				else {
+					$src_content_td .= sprintf("  %s", $iline);
+				}
 #=semlit,endblock,createDocLink2=
 
 #=semlit,block,addBlocks=
@@ -488,7 +497,14 @@ __EOF__
 			}
 #=semlit,endblock,elseNoActiveBlocks=
 		}
+
 	}  # while
+
+        # if the global buffer is still full, dump it here
+        if ($global_src_buffer) {
+         	$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+                $global_src_buffer = "";
+        }
 
 	$src_lines_td .= "<\/td>";
 	$src_content_td .= "<\/td>";

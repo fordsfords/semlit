@@ -33,6 +33,8 @@ my $main_doc_filename;
 my $cur_file_name = "";
 my $cur_file_linenum = 0;
 
+my $global_src_buffer = "";
+
 my $doc_html_filename;
 my $doc_html_outfd;
 
@@ -246,7 +248,8 @@ __EOF__
 		$srcblocks{$block_name} = "";
 		$block_numrefs{$block_name} = 0;
 		$active_srcblocks{$block_name} = $cur_file_linenum;
-		print $src_html_outfd "<a name=\"$block_name\" id=\"$block_name\"><\/a>";
+		
+		$global_src_buffer = "<span name=\"$block_name\" id=\"$block_name\"><\/span>";
 		return "";
 	}
 
@@ -372,10 +375,14 @@ __EOF__
 				# descending sort so that elemet 0 is largest
 				my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
 				my $targ = $active_blocks[0] . "_ref_1";
-				my $a = sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
-				my $c = sprintf("  %s", $iline);
-				$src_lines_td .= $a;
-				$src_content_td .= $c;
+				$src_lines_td .= sprintf("<a \"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
+				if ($global_src_buffer) {
+					$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+					$global_src_buffer = "";
+				}
+				else {
+					$src_content_td .= sprintf("  %s", $iline);
+				}
 
 				# for each open source block on this line of source, link the doc block to the that source block
 				foreach my $block_name (keys(%active_srcblocks)) {
@@ -390,7 +397,14 @@ __EOF__
                                 $src_content_td .= $c;
 			}
 		}
+
 	}  # while
+
+        # if the global buffer is still full, dump it here
+        if ($global_src_buffer) {
+         	$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+                $global_src_buffer = "";
+        }
 
 	$src_lines_td .= "<\/td>";
 	$src_content_td .= "<\/td>";
