@@ -65,6 +65,7 @@
                   <li><a href="#mozTocId374013">Command: insert</a></li>
                   <li><a href="#mozTocId495366">Command: block </a></li>
                   <li><a href="#mozTocId911738">Command: endblock</a></li>
+                  <li><a href="#mozTocId911739">Command: tooltip</a></li>
                 </ol>
               </li>
               <li><a href="#mozTocId378007">Function: process_src_file()</a>
@@ -96,6 +97,7 @@
                 </ol>
               </li>
               <li><a href="#mozTocId370472">Function: help() </a></li>
+              <li><a href="#mozTocId370473">Function: file_get_contents() </a></li>
               <li><a href="#mozTocId389878">Error handling</a>
                 <ol>
                   <li><a href="#mozTocId49613">Function: usage()</a></li>
@@ -560,6 +562,13 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       outer block. I.e. if multiple blocks are active, the <tt>endblock</tt>
       does not necessarily end the most-recently opened block.<br>
     </p>
+    <h4><a class="mozToCH4" name="mozTocId911739"></a>Command: <tt>tooltip</tt></h4>
+    <p>The <tt>tooltip</tt> command creates a keyword in block of text
+      that can be hovered over for additional information.
+      =semlit,insert,tooltip= The tooltip data is loaded from a 
+      file on the local server, and the keyword is supplied as the last
+      parameter. Note: the keyword cannot contain any spaces. 
+    </p>
     <h3><a class="mozTocH3" name="mozTocId378007"></a>Function: <tt>process_src_file()</tt></h3>
     <p>The <tt>process_src_file()</tt> function is called from the <a
         href="#mozTocId897187"><tt>srcfile</tt></a> command. It reads
@@ -738,6 +747,10 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
 
 
         documentation</a> if you are not familiar with this construct. </p>
+    <h3><a class="mozTocH3" name="mozTocId370473"></a>Function: <tt>file_get_contents()</tt><br>
+    </h3>
+    <p>This is a simple routine to read the contents of a file for the purpose
+      of filling in the <a href="#mozTocId911739">tooltips</a>: =semlit,insert,file_get_contents= </p>
     <h3><a class="mozTocH3" name="mozTocId389878"></a>Error handling</h3>
     <p>When there is an obvious user error in the invocation of the
       semlit program, the <a href="#mozTocId49613"><span
