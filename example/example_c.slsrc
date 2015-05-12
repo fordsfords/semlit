@@ -1,5 +1,5 @@
 /* example.c - program to serve as a starting point for users of semlit
- * See https://github.com/fordsfords/semlit/tree/gh-pages  */
+ * See http://wiki.geeky-boy.com/semlit/  */
 
 /* =semlit,block,includes=*/
 #include <stdio.h>
