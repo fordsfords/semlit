@@ -1,8 +1,22 @@
-<html><head><title>semlit_pl.txt</title></head>
-<html><head><title>semlit_pl.txt</title></head>
+<!DOCTYPE html><html><head><title>semlit_pl.txt</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script>
+  $(function() {
+    $( document ).tooltip();
+  });
+</script>
+<style>
+#code {background-color:#ffffff;};
+</style>
+</head>
 <body><h1>semlit_pl.txt</h1>
 <p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href="semlit_pl.txt">semlit_pl.txt</a>' and save file.
-<small><pre>
+<script>hljs.initHighlightingOnLoad();</script>
+<small><pre><code id="code">
 00001  #!/usr/local/bin/perl -w
 00002  
 00003  # repeat the shebang for doc purposes (the real shebang needs to be line 1)
@@ -267,162 +281,198 @@
 <a href="semlit.sldoc.html#endblock_ref_1" target="doc">00262</a>              return "";
 <a href="semlit.sldoc.html#endblock_ref_1" target="doc">00263</a>          }
 <a href="semlit.sldoc.html#endblock_ref_1" target="doc">00264</a>      }
-00265  
-00266      # unrecognized semlit
-00267      else {
-00268          err("semlit command '$cmd' invalid or malformed");
-00269          return "";
-00270      }
-00271  }  # semlit_cmd
-00272  
-00273  
-00274  # process semlit srcfile command
-00275  sub process_src_file {
-00276      my ($src_filename, $plain_src_filename) = @_;
-00277      my $slsrc_infd;
-00278      my $src_outfd;
-00279  
-<a name="openslsrc" id="openslsrc"></a><a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00280</a>      # open source file, using one or more search directories
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00281</a>      my $incdir;
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00282</a>      my $open_success = 0;
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00283</a>      foreach $incdir (@o_incdirs) {
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00284</a>          if (open($slsrc_infd, "&lt;", "$incdir/$src_filename")) {
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00285</a>              $open_success = 1;
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00286</a>              last;  # break out of foreach
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00287</a>          }
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00288</a>      }
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00289</a>      if (! $open_success) {
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00290</a>          err("could not open src file '$src_filename', skipping");
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00291</a>          return "";
-<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00292</a>      }
-00293  
-<a name="openSourceHtml" id="openSourceHtml"></a><a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00294</a>      # create and write initial content to html-ified source file
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00295</a>      if (! open($src_html_outfd, "&gt;", "$src_filename.html")) {
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00296</a>          err("could not open output source html file '$src_filename.html', skipping");
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00297</a>          close($slsrc_infd);
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00298</a>          return "";
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00299</a>      }
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00300</a>      print $src_html_outfd &lt;&lt;__EOF__;
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00301</a>  &lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;&lt;/head&gt;
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00302</a>  &lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;&lt;/head&gt;
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00303</a>  &lt;body&gt;&lt;h1&gt;$plain_src_filename&lt;/h1&gt;
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00304</a>  &lt;p&gt;&lt;em&gt;Hint:&lt;/em&gt; do not cut-and-paste from this page.  Instead, right-click on '&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;' and save file.
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00305</a>  &lt;small&gt;&lt;pre&gt;
-<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00306</a>  __EOF__
-00307  
-<a name="openSrc" id="openSrc"></a><a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00308</a>      # Create plaintext source file (without semlit commands)
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00309</a>      if (! open($src_outfd, "&gt;", "$plain_src_filename")) {
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00310</a>          err("could not open output src '$plain_src_filename', skipping");
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00311</a>          close($slsrc_infd);
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00312</a>          close($src_html_outfd);
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00313</a>          return "";
-<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00314</a>      }
-00315  
-00316      my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
-00317      ($cur_file_name, $cur_file_linenum) = ($src_filename, 0);
-00318      my $src_linenum = 0;  # separate variable to track source output file
-00319  
-<a name="foreachLine" id="foreachLine"></a><a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00320</a>      my $iline;
-<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00321</a>      while (defined($iline = &lt;$slsrc_infd&gt;)) {
-<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00322</a>          chomp($iline);  # remove line delim
-<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00323</a>          $iline .= "\n";  # add newline
-<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00324</a>          $iline =~ s/\r//gs;  # remove carriage returns, if any
-<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00325</a>          $cur_file_linenum ++;
-00326  
-<a name="ifsemlit" id="ifsemlit"></a><a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00327</a>          # check for semlit commands
-<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00328</a>          if ($iline =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/i) {
-<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00329</a>              semlit_cmd($1);
-<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00330</a>              # discard command line
-<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00331</a>          }
-<a name="elseSource" id="elseSource"></a><a href="semlit.sldoc.html#elseSource_ref_1" target="doc">00332</a>          else {
-<a href="semlit.sldoc.html#elseSource_ref_1" target="doc">00333</a>              $src_linenum ++;  # don't count semlit command lines
-00334  
-<a name="writeSrc" id="writeSrc"></a><a href="semlit.sldoc.html#writeSrc_ref_1" target="doc">00335</a>              print $src_outfd $iline;
-00336  
-<a name="htmlifySource" id="htmlifySource"></a><a href="semlit.sldoc.html#htmlifySource_ref_1" target="doc">00337</a>              # fix up source for html rendering (tab expansion, special char encoding)
-<a name="expand" id="expand"></a><a href="semlit.sldoc.html#expand_ref_1" target="doc">00338</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
-<a href="semlit.sldoc.html#htmlifySource_ref_1" target="doc">00339</a>              $iline =~ s/\&amp;/\&amp;amp;/g;  $iline =~ s/&lt;/\&amp;lt;/g;  $iline =~ s/&gt;/\&amp;gt;/g;
+<a href="semlit.sldoc.html#endblock_ref_1" target="doc">00265</a>  
+<a name="tooltip" id="tooltip"></a><a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00266</a>      # semlit tooltip - create hover over text for a phrase
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00267</a>      elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00268</a>                  my $text_source = $1;
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00269</a>                  my $text_link = $2;
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00270</a>                  my $contents = file_get_contents($text_source);
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00271</a>                  return &lt;&lt;__EOF__;
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00272</a>  &lt;a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;"&gt;$text_link&lt;/a&gt;
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00273</a>  __EOF__
+<a href="semlit.sldoc.html#tooltip_ref_1" target="doc">00274</a>          }
+<a href="semlit.sldoc.html#endblock_ref_1" target="doc">00275</a>  
+00276  
+00277      # unrecognized semlit
+00278      else {
+00279          err("semlit command '$cmd' invalid or malformed");
+00280          return "";
+00281      }
+00282  }  # semlit_cmd
+00283  
+00284  
+00285  # process semlit srcfile command
+00286  sub process_src_file {
+00287      my ($src_filename, $plain_src_filename) = @_;
+00288      my $slsrc_infd;
+00289      my $src_outfd;
+00290  
+<a name="openslsrc" id="openslsrc"></a><a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00291</a>      # open source file, using one or more search directories
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00292</a>      my $incdir;
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00293</a>      my $open_success = 0;
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00294</a>      foreach $incdir (@o_incdirs) {
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00295</a>          if (open($slsrc_infd, "&lt;", "$incdir/$src_filename")) {
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00296</a>              $open_success = 1;
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00297</a>              last;  # break out of foreach
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00298</a>          }
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00299</a>      }
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00300</a>      if (! $open_success) {
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00301</a>          err("could not open src file '$src_filename', skipping");
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00302</a>          return "";
+<a href="semlit.sldoc.html#openslsrc_ref_1" target="doc">00303</a>      }
+00304  
+<a name="openSourceHtml" id="openSourceHtml"></a><a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00305</a>      # create and write initial content to html-ified source file
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00306</a>      if (! open($src_html_outfd, "&gt;", "$src_filename.html")) {
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00307</a>          err("could not open output source html file '$src_filename.html', skipping");
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00308</a>          close($slsrc_infd);
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00309</a>          return "";
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00310</a>      }
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00311</a>      print $src_html_outfd &lt;&lt;__EOF__;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00312</a>  &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;$plain_src_filename&lt;/title&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00313</a>  &lt;link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00314</a>  &lt;script src="//code.jquery.com/jquery-1.10.2.js"&gt;&lt;/script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00315</a>  &lt;script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"&gt;&lt;/script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00316</a>  &lt;link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00317</a>  &lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"&gt;&lt;/script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00318</a>  &lt;script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00319</a>    \$(function() {
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00320</a>      \$( document ).tooltip();
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00321</a>    });
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00322</a>  &lt;/script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00323</a>  &lt;style&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00324</a>  #code {background-color:#ffffff;};
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00325</a>  &lt;/style&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00326</a>  &lt;/head&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00327</a>  &lt;body&gt;&lt;h1&gt;$plain_src_filename&lt;/h1&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00328</a>  &lt;p&gt;&lt;em&gt;Hint:&lt;/em&gt; do not cut-and-paste from this page.  Instead, right-click on '&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;' and save file.
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00329</a>  &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00330</a>  &lt;small&gt;&lt;pre&gt;&lt;code id="code"&gt;
+<a href="semlit.sldoc.html#openSourceHtml_ref_1" target="doc">00331</a>  __EOF__
+00332  
+<a name="openSrc" id="openSrc"></a><a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00333</a>      # Create plaintext source file (without semlit commands)
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00334</a>      if (! open($src_outfd, "&gt;", "$plain_src_filename")) {
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00335</a>          err("could not open output src '$plain_src_filename', skipping");
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00336</a>          close($slsrc_infd);
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00337</a>          close($src_html_outfd);
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00338</a>          return "";
+<a href="semlit.sldoc.html#openSrc_ref_1" target="doc">00339</a>      }
 00340  
-<a name="ifActiveBlocks" id="ifActiveBlocks"></a><a href="semlit.sldoc.html#ifActiveBlocks_ref_1" target="doc">00341</a>              # if we are in at least one block, link the source to the earliest block's first doc reference
-<a href="semlit.sldoc.html#ifActiveBlocks_ref_1" target="doc">00342</a>              if (scalar(keys(%active_srcblocks)) &gt; 0) {
-<a name="createDocLink1" id="createDocLink1"></a><a href="semlit.sldoc.html#createDocLink1_ref_1" target="doc">00343</a>                  # descending sort so that elemet 0 is largest
-<a href="semlit.sldoc.html#createDocLink1_ref_1" target="doc">00344</a>                  my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
-<a name="createDocLink2" id="createDocLink2"></a><a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00345</a>                  my $targ = $active_blocks[0] . "_ref_1";
-<a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00346</a>                  my $a = sprintf("&lt;a href=\"$doc_html_filename#$targ\" target=\"doc\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
-<a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00347</a>                  print $src_html_outfd $a;
-00348  
-<a name="addBlocks" id="addBlocks"></a><a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00349</a>                  # for each open source block on this line of source, link the doc block to the that source block
-<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00350</a>                  foreach my $block_name (keys(%active_srcblocks)) {
-<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00351</a>                      my $a = sprintf("&lt;a href=\"$cur_file_name.html#$block_name\" target=\"src\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
-<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00352</a>                      $srcblocks{$block_name} .= $a;
-<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00353</a>                  }
-<a name="elseNoActiveBlocks" id="elseNoActiveBlocks"></a><a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00354</a>              } else {
-<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00355</a>                  # no active blocks
-<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00356</a>                  print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
-<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00357</a>              }
-00358          }
-00359      }  # while
-00360  
-<a name="closeWrap1" id="closeWrap1"></a><a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00361</a>      close($slsrc_infd);
-<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00362</a>      close($src_outfd);
-<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00363</a>  
-<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00364</a>      print $src_html_outfd "&lt;/pre&gt;&lt;/small&gt;&lt;/body&gt;&lt;/html&gt;\n";
-<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00365</a>      close($src_html_outfd);
-00366  
-<a name="closeWrap2" id="closeWrap2"></a><a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00367</a>      # if the source file started a block but reached eof without ending it, end it here.
-<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00368</a>      foreach (keys(%active_srcblocks)) {
-<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00369</a>          err("block named '$_' started but not ended");
-<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00370</a>          semlit_cmd("endblock$o_fs$_");  # end it for the user
-<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00371</a>      }
-00372  
-<a name="returnSrcLink" id="returnSrcLink"></a><a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00373</a>      # the semlit.srcfile command writes a link to the plaintext source file
-<a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00374</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
-<a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00375</a>      return "&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;";
-00376  }  # process_src_file
-00377  
-00378  
-<a name="err" id="err"></a><a href="semlit.sldoc.html#err_ref_1" target="doc">00379</a>  sub err {
-<a href="semlit.sldoc.html#err_ref_1" target="doc">00380</a>      my ($msg) = @_;
-<a href="semlit.sldoc.html#err_ref_1" target="doc">00381</a>  
-<a href="semlit.sldoc.html#err_ref_1" target="doc">00382</a>      print STDERR "Error [$cur_file_name:$cur_file_linenum], $msg\n";
-<a href="semlit.sldoc.html#err_ref_1" target="doc">00383</a>      $exit_status ++;
-<a href="semlit.sldoc.html#err_ref_1" target="doc">00384</a>  }  # err
+00341      my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
+00342      ($cur_file_name, $cur_file_linenum) = ($src_filename, 0);
+00343      my $src_linenum = 0;  # separate variable to track source output file
+00344  
+<a name="foreachLine" id="foreachLine"></a><a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00345</a>      my $iline;
+<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00346</a>      while (defined($iline = &lt;$slsrc_infd&gt;)) {
+<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00347</a>          chomp($iline);  # remove line delim
+<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00348</a>          $iline .= "\n";  # add newline
+<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00349</a>          $iline =~ s/\r//gs;  # remove carriage returns, if any
+<a href="semlit.sldoc.html#foreachLine_ref_1" target="doc">00350</a>          $cur_file_linenum ++;
+00351  
+<a name="ifsemlit" id="ifsemlit"></a><a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00352</a>          # check for semlit commands
+<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00353</a>          if ($iline =~ /$o_delim\s*semlit\s*$o_fs\s*([^$o_delim]+)$o_delim/i) {
+<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00354</a>              semlit_cmd($1);
+<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00355</a>              # discard command line
+<a href="semlit.sldoc.html#ifsemlit_ref_1" target="doc">00356</a>          }
+<a name="elseSource" id="elseSource"></a><a href="semlit.sldoc.html#elseSource_ref_1" target="doc">00357</a>          else {
+<a href="semlit.sldoc.html#elseSource_ref_1" target="doc">00358</a>              $src_linenum ++;  # don't count semlit command lines
+00359  
+<a name="writeSrc" id="writeSrc"></a><a href="semlit.sldoc.html#writeSrc_ref_1" target="doc">00360</a>              print $src_outfd $iline;
+00361  
+<a name="htmlifySource" id="htmlifySource"></a><a href="semlit.sldoc.html#htmlifySource_ref_1" target="doc">00362</a>              # fix up source for html rendering (tab expansion, special char encoding)
+<a name="expand" id="expand"></a><a href="semlit.sldoc.html#expand_ref_1" target="doc">00363</a>              $iline = expand($iline);  # expand tabs according to $tabstop.
+<a href="semlit.sldoc.html#htmlifySource_ref_1" target="doc">00364</a>              $iline =~ s/\&amp;/\&amp;amp;/g;  $iline =~ s/&lt;/\&amp;lt;/g;  $iline =~ s/&gt;/\&amp;gt;/g;
+00365  
+<a name="ifActiveBlocks" id="ifActiveBlocks"></a><a href="semlit.sldoc.html#ifActiveBlocks_ref_1" target="doc">00366</a>              # if we are in at least one block, link the source to the earliest block's first doc reference
+<a href="semlit.sldoc.html#ifActiveBlocks_ref_1" target="doc">00367</a>              if (scalar(keys(%active_srcblocks)) &gt; 0) {
+<a name="createDocLink1" id="createDocLink1"></a><a href="semlit.sldoc.html#createDocLink1_ref_1" target="doc">00368</a>                  # descending sort so that elemet 0 is largest
+<a href="semlit.sldoc.html#createDocLink1_ref_1" target="doc">00369</a>                  my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
+<a name="createDocLink2" id="createDocLink2"></a><a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00370</a>                  my $targ = $active_blocks[0] . "_ref_1";
+<a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00371</a>                  my $a = sprintf("&lt;a href=\"$doc_html_filename#$targ\" target=\"doc\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit.sldoc.html#createDocLink2_ref_1" target="doc">00372</a>                  print $src_html_outfd $a;
+00373  
+<a name="addBlocks" id="addBlocks"></a><a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00374</a>                  # for each open source block on this line of source, link the doc block to the that source block
+<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00375</a>                  foreach my $block_name (keys(%active_srcblocks)) {
+<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00376</a>                      my $a = sprintf("&lt;a href=\"$cur_file_name.html#$block_name\" target=\"src\"&gt;%05d&lt;\/a&gt;  %s", $src_linenum, $iline);
+<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00377</a>                      $srcblocks{$block_name} .= $a;
+<a href="semlit.sldoc.html#addBlocks_ref_1" target="doc">00378</a>                  }
+<a name="elseNoActiveBlocks" id="elseNoActiveBlocks"></a><a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00379</a>              } else {
+<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00380</a>                  # no active blocks
+<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00381</a>                  print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
+<a href="semlit.sldoc.html#elseNoActiveBlocks_ref_1" target="doc">00382</a>              }
+00383          }
+00384      }  # while
 00385  
-00386  
-<a name="usageFunct" id="usageFunct"></a><a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00387</a>  sub usage {
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00388</a>      my($err_str) = @_;
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00389</a>  
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00390</a>      if (defined $err_str) {
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00391</a>          print STDERR "$tool: $err_str\n\n";
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00392</a>      }
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00393</a>      print STDERR "Usage: $usage_str\n\n";
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00394</a>      $exit_status ++;
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00395</a>      exit($exit_status);
-<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00396</a>  }  # usage
+<a name="closeWrap1" id="closeWrap1"></a><a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00386</a>      close($slsrc_infd);
+<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00387</a>      close($src_outfd);
+<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00388</a>  
+<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00389</a>      print $src_html_outfd "&lt;/code&gt;&lt;/pre&gt;&lt;/small&gt;&lt;/body&gt;&lt;/html&gt;\n";
+<a href="semlit.sldoc.html#closeWrap1_ref_1" target="doc">00390</a>      close($src_html_outfd);
+00391  
+<a name="closeWrap2" id="closeWrap2"></a><a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00392</a>      # if the source file started a block but reached eof without ending it, end it here.
+<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00393</a>      foreach (keys(%active_srcblocks)) {
+<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00394</a>          err("block named '$_' started but not ended");
+<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00395</a>          semlit_cmd("endblock$o_fs$_");  # end it for the user
+<a href="semlit.sldoc.html#closeWrap2_ref_1" target="doc">00396</a>      }
 00397  
-00398  
-<a name="help" id="help"></a><a href="semlit.sldoc.html#help_ref_1" target="doc">00399</a>  sub help {
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00400</a>      my($err_str) = @_;
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00401</a>  
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00402</a>      if (defined $err_str) {
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00403</a>          print "$tool: $err_str\n\n";
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00404</a>      }
-<a name="heredoc1" id="heredoc1"></a><a href="semlit.sldoc.html#heredoc1_ref_1" target="doc">00405</a>      print &lt;&lt;__EOF__;
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00406</a>  Usage: $usage_str
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00407</a>  Where:
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00408</a>      -h - print help screen
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00409</a>      -d delim - delimiter character at start and end of a semlit command.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00410</a>              (default to '=')
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00411</a>      -f fs - field separator character within a semlit command.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00412</a>              (default to ',')
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00413</a>      -I dir - directory to find files for 'srcfile' and 'include' commands.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00414</a>              (default to ".")  The "-I dir" option can be repeated.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00415</a>      -t tabstop - convert tabs to "tabstop" spaces.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00416</a>              (default to '4')
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00417</a>      files - zero or more input files.  If omitted, inputs from stdin.
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00418</a>  
-<a name="heredoc2" id="heredoc2"></a><a href="semlit.sldoc.html#heredoc2_ref_1" target="doc">00419</a>  __EOF__
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00420</a>  
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00421</a>      exit($exit_status);
-<a href="semlit.sldoc.html#help_ref_1" target="doc">00422</a>  }  # help
-</pre></small></body></html>
+<a name="returnSrcLink" id="returnSrcLink"></a><a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00398</a>      # the semlit.srcfile command writes a link to the plaintext source file
+<a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00399</a>      ($cur_file_name, $cur_file_linenum) = ($save_doc_filename, $save_doc_linenum);
+<a href="semlit.sldoc.html#returnSrcLink_ref_1" target="doc">00400</a>      return "&lt;a href=\"$plain_src_filename\"&gt;$plain_src_filename&lt;/a&gt;";
+00401  }  # process_src_file
+00402  
+00403  
+<a name="err" id="err"></a><a href="semlit.sldoc.html#err_ref_1" target="doc">00404</a>  sub err {
+<a href="semlit.sldoc.html#err_ref_1" target="doc">00405</a>      my ($msg) = @_;
+<a href="semlit.sldoc.html#err_ref_1" target="doc">00406</a>  
+<a href="semlit.sldoc.html#err_ref_1" target="doc">00407</a>      print STDERR "Error [$cur_file_name:$cur_file_linenum], $msg\n";
+<a href="semlit.sldoc.html#err_ref_1" target="doc">00408</a>      $exit_status ++;
+<a href="semlit.sldoc.html#err_ref_1" target="doc">00409</a>  }  # err
+00410  
+00411  
+<a name="usageFunct" id="usageFunct"></a><a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00412</a>  sub usage {
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00413</a>      my($err_str) = @_;
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00414</a>  
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00415</a>      if (defined $err_str) {
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00416</a>          print STDERR "$tool: $err_str\n\n";
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00417</a>      }
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00418</a>      print STDERR "Usage: $usage_str\n\n";
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00419</a>      $exit_status ++;
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00420</a>      exit($exit_status);
+<a href="semlit.sldoc.html#usageFunct_ref_1" target="doc">00421</a>  }  # usage
+00422  
+<a name="file_get_contents" id="file_get_contents"></a><a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00423</a>  sub file_get_contents{
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00424</a>        my ($text_file) = @_;
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00425</a>        open FILE, $text_file or die $!;
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00426</a>        flock FILE, 1 or die $!;      # wait for lock
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00427</a>        seek(FILE, 0, 0);         # move pointer to beginning
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00428</a>        my $slurp = do{local $/; &lt;FILE&gt;};
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00429</a>        flock FILE, 8;            # release the lock
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00430</a>        close(FILE);
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00431</a>  
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00432</a>        return $slurp;
+<a href="semlit.sldoc.html#file_get_contents_ref_1" target="doc">00433</a>  } # file_get_contents
+00434  
+<a name="help" id="help"></a><a href="semlit.sldoc.html#help_ref_1" target="doc">00435</a>  sub help {
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00436</a>      my($err_str) = @_;
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00437</a>  
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00438</a>      if (defined $err_str) {
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00439</a>          print "$tool: $err_str\n\n";
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00440</a>      }
+<a name="heredoc1" id="heredoc1"></a><a href="semlit.sldoc.html#heredoc1_ref_1" target="doc">00441</a>      print &lt;&lt;__EOF__;
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00442</a>  Usage: $usage_str
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00443</a>  Where:
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00444</a>      -h - print help screen
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00445</a>      -d delim - delimiter character at start and end of a semlit command.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00446</a>              (default to '=')
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00447</a>      -f fs - field separator character within a semlit command.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00448</a>              (default to ',')
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00449</a>      -I dir - directory to find files for 'srcfile' and 'include' commands.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00450</a>              (default to ".")  The "-I dir" option can be repeated.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00451</a>      -t tabstop - convert tabs to "tabstop" spaces.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00452</a>              (default to '4')
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00453</a>      files - zero or more input files.  If omitted, inputs from stdin.
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00454</a>  
+<a name="heredoc2" id="heredoc2"></a><a href="semlit.sldoc.html#heredoc2_ref_1" target="doc">00455</a>  __EOF__
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00456</a>  
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00457</a>      exit($exit_status);
+<a href="semlit.sldoc.html#help_ref_1" target="doc">00458</a>  }  # help
+</code></pre></small></body></html>

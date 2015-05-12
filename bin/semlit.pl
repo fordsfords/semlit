@@ -263,6 +263,17 @@ __EOF__
 		}
 	}
 
+	# semlit tooltip - create hover over text for a phrase
+	elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
+                my $text_source = $1;
+                my $text_link = $2;
+                my $contents = file_get_contents($text_source);
+                return <<__EOF__;
+<a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;">$text_link</a>
+__EOF__
+        }
+
+
 	# unrecognized semlit
 	else {
 		err("semlit command '$cmd' invalid or malformed");
@@ -298,11 +309,25 @@ sub process_src_file {
 		return "";
 	}
 	print $src_html_outfd <<__EOF__;
-<html><head><title>$plain_src_filename</title></head>
-<html><head><title>$plain_src_filename</title></head>
+<!DOCTYPE html><html><head><title>$plain_src_filename</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script>
+  \$(function() {
+    \$( document ).tooltip();
+  });
+</script>
+<style>
+#code {background-color:#ffffff;};
+</style>
+</head>
 <body><h1>$plain_src_filename</h1>
 <p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href=\"$plain_src_filename\">$plain_src_filename</a>' and save file.
-<small><pre>
+<script>hljs.initHighlightingOnLoad();</script>
+<small><pre><code id="code">
 __EOF__
 
 	# Create plaintext source file (without semlit commands)
@@ -361,7 +386,7 @@ __EOF__
 	close($slsrc_infd);
 	close($src_outfd);
 
-	print $src_html_outfd "</pre></small></body></html>\n";
+	print $src_html_outfd "</code></pre></small></body></html>\n";
 	close($src_html_outfd);
 
 	# if the source file started a block but reached eof without ending it, end it here.
@@ -395,6 +420,17 @@ sub usage {
 	exit($exit_status);
 }  # usage
 
+sub file_get_contents{
+      my ($text_file) = @_;
+      open FILE, $text_file or die $!;
+      flock FILE, 1 or die $!; 		# wait for lock
+      seek(FILE, 0, 0); 		# move pointer to beginning
+      my $slurp = do{local $/; <FILE>};
+      flock FILE, 8; 			# release the lock
+      close(FILE);
+
+      return $slurp;
+} # file_get_contents
 
 sub help {
 	my($err_str) = @_;
