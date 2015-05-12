@@ -287,6 +287,8 @@ sub process_src_file {
 	my ($src_filename, $plain_src_filename) = @_;
 	my $slsrc_infd;
 	my $src_outfd;
+	my $src_lines_td;
+        my $src_content_td;
 
 	# open source file, using one or more search directories
 	my $incdir;
@@ -325,9 +327,8 @@ sub process_src_file {
 </style>
 </head>
 <body><h1>$plain_src_filename</h1>
-<p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href=\"$plain_src_filename\">$plain_src_filename</a>' and save file.
 <script>hljs.initHighlightingOnLoad();</script>
-<small><pre><code id="code">
+<small><pre><code id="code"><table border=0 cellpadding=0 cellspacing=0><tr>
 __EOF__
 
 	# Create plaintext source file (without semlit commands)
@@ -341,6 +342,9 @@ __EOF__
 	my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
 	($cur_file_name, $cur_file_linenum) = ($src_filename, 0);
 	my $src_linenum = 0;  # separate variable to track source output file
+	
+	$src_lines_td = "<td>";
+	$src_content_td = "<td>";
 
 	my $iline;
 	while (defined($iline = <$slsrc_infd>)) {
@@ -368,8 +372,10 @@ __EOF__
 				# descending sort so that elemet 0 is largest
 				my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
 				my $targ = $active_blocks[0] . "_ref_1";
-				my $a = sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>  %s", $src_linenum, $iline);
-				print $src_html_outfd $a;
+				my $a = sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
+				my $c = sprintf("  %s", $iline);
+				$src_lines_td .= $a;
+				$src_content_td .= $c;
 
 				# for each open source block on this line of source, link the doc block to the that source block
 				foreach my $block_name (keys(%active_srcblocks)) {
@@ -378,15 +384,24 @@ __EOF__
 				}
 			} else {
 				# no active blocks
-				print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
+				my $a = sprintf("%05d\n", $src_linenum);
+                                my $c = sprintf("  %s", $iline);
+                                $src_lines_td .= $a;
+                                $src_content_td .= $c;
 			}
 		}
 	}  # while
 
+	$src_lines_td .= "<\/td>";
+	$src_content_td .= "<\/td>";
+
+	print $src_html_outfd $src_lines_td;
+	print $src_html_outfd $src_content_td;
+
 	close($slsrc_infd);
 	close($src_outfd);
 
-	print $src_html_outfd "</code></pre></small></body></html>\n";
+	print $src_html_outfd "</tr></table></code></pre></small></body></html>\n";
 	close($src_html_outfd);
 
 	# if the source file started a block but reached eof without ending it, end it here.
