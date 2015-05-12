@@ -6,10 +6,8 @@
 # semlit.pl - program to implement Steve Ford's "Semi-Literate Documentation".
 # See http://wiki.geeky-boy.com/w/index.php?title=Sford_Semi-literate_documentation
 #
-# Copyright 2012, 2015 Steven Ford http://geeky-boy.com and licensed
-# "public domain" style under
-# CC0  http://creativecommons.org/publicdomain/zero/1.0/
-#
+# This code and its documentation is Copyright 2012, 2015 Steven Ford, http://geeky-boy.com
+# and licensed "public domain" style under Creative Commons "CC0": http://creativecommons.org/publicdomain/zero/1.0/
 # To the extent possible under law, the contributors to this project have
 # waived all copyright and related or neighboring rights to this work.
 # In other words, you can use this code for any purpose without any 
