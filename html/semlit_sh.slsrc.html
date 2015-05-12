@@ -1,8 +1,22 @@
-<html><head><title>semlit_sh.txt</title></head>
-<html><head><title>semlit_sh.txt</title></head>
+<!DOCTYPE html><html><head><title>semlit_sh.txt</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script>
+  $(function() {
+    $( document ).tooltip();
+  });
+</script>
+<style>
+#code {background-color:#ffffff;};
+</style>
+</head>
 <body><h1>semlit_sh.txt</h1>
 <p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href="semlit_sh.txt">semlit_sh.txt</a>' and save file.
-<small><pre>
+<script>hljs.initHighlightingOnLoad();</script>
+<small><pre><code id="code">
 00001  #!/bin/sh
 00002  
 00003  # repeat the shebang for doc purposes (the real shebang needs to be line 1)
@@ -19,4 +33,4 @@
 00014  
 <a name="sh_runperl" id="sh_runperl"></a><a href="semlit.sldoc.html#sh_runperl_ref_1" target="doc">00015</a>  perl $TOOLDIR/semlit.pl $*
 00016  exit $?
-</pre></small></body></html>
+</code></pre></small></body></html>
