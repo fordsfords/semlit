@@ -708,7 +708,11 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     </p>
     <h4><a class="mozTocH4" name="mozTocId103803"></a>Close files and
       wrap up</h4>
-    <p>Close the files: =semlit,insert,closeWrap1= Also, if the user
+    <p>Close the files: =semlit,insert,closeWrap1= Note the many newlines
+      printed. This is so that clicking on a line number which is near the
+      end of the source file will still position that line of source at the
+      top of the screen.</p>
+    <p>Also, if the user
       accidentally started one or more named blocks but did not end
       them, print errors and force them ended:
       =semlit,insert,closeWrap2= Do it by calling <a

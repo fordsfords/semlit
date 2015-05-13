@@ -371,7 +371,7 @@ __EOF__
 				# descending sort so that elemet 0 is largest
 				my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
 				my $targ = $active_blocks[0] . "_ref_1";
-				$src_lines_td .= sprintf("<a \"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
+				$src_lines_td .= sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
 				if ($global_src_buffer) {
 					$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
 					$global_src_buffer = "";
@@ -411,7 +411,10 @@ __EOF__
 	close($slsrc_infd);
 	close($src_outfd);
 
-	print $src_html_outfd "</tr></table></code></pre></small></body></html>\n";
+	print $src_html_outfd "</tr></table></code>\n";
+	print $src_html_outfd "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	print $src_html_outfd "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	print $src_html_outfd "</pre></small></body></html>\n";
 	close($src_html_outfd);
 
 	# if the source file started a block but reached eof without ending it, end it here.
