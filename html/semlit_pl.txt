@@ -14,7 +14,6 @@
 # restrictions.  This work is published from: United States.  The project home
 # is https://github.com/fordsfords/semlit/tree/gh-pages
 
-
 use strict;
 use English;  # allow long names for special variables
 use Getopt::Long qw(:config no_ignore_case bundling);
@@ -29,6 +28,8 @@ my $usage_str = "$tool [-h] [-d delim] [-f fs] [-I dir] [-t tabstop] [files]";
 my $main_doc_filename;
 my $cur_file_name = "";
 my $cur_file_linenum = 0;
+
+my $global_src_buffer = "";
 
 my $doc_html_filename;
 my $doc_html_outfd;
@@ -243,7 +244,8 @@ __EOF__
 		$srcblocks{$block_name} = "";
 		$block_numrefs{$block_name} = 0;
 		$active_srcblocks{$block_name} = $cur_file_linenum;
-		print $src_html_outfd "<a name=\"$block_name\" id=\"$block_name\"><\/a>";
+		
+		$global_src_buffer = "<span name=\"$block_name\" id=\"$block_name\"><\/span>";
 		return "";
 	}
 
@@ -262,13 +264,13 @@ __EOF__
 
 	# semlit tooltip - create hover over text for a phrase
 	elsif ($cmd =~ /^tooltip\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
-                my $text_source = $1;
-                my $text_link = $2;
-                my $contents = file_get_contents($text_source);
-                return <<__EOF__;
+		my $text_source = $1;
+		my $text_link = $2;
+		my $contents = file_get_contents($text_source);
+		return <<__EOF__;
 <a href="#" title="$contents" style="color:2222ee;border-bottom:1px dotted #2222ee;text-decoration: none;">$text_link</a>
 __EOF__
-        }
+	}
 
 
 	# unrecognized semlit
@@ -284,6 +286,8 @@ sub process_src_file {
 	my ($src_filename, $plain_src_filename) = @_;
 	my $slsrc_infd;
 	my $src_outfd;
+	my $src_lines_td;
+	my $src_content_td;
 
 	# open source file, using one or more search directories
 	my $incdir;
@@ -322,9 +326,8 @@ sub process_src_file {
 </style>
 </head>
 <body><h1>$plain_src_filename</h1>
-<p><em>Hint:</em> do not cut-and-paste from this page.  Instead, right-click on '<a href=\"$plain_src_filename\">$plain_src_filename</a>' and save file.
 <script>hljs.initHighlightingOnLoad();</script>
-<small><pre><code id="code">
+<small><pre><code id="code"><table border=0 cellpadding=0 cellspacing=0><tr>
 __EOF__
 
 	# Create plaintext source file (without semlit commands)
@@ -338,6 +341,9 @@ __EOF__
 	my ($save_doc_filename, $save_doc_linenum) = ($cur_file_name, $cur_file_linenum);
 	($cur_file_name, $cur_file_linenum) = ($src_filename, 0);
 	my $src_linenum = 0;  # separate variable to track source output file
+	
+	$src_lines_td = "<td>";
+	$src_content_td = "<td>";
 
 	my $iline;
 	while (defined($iline = <$slsrc_infd>)) {
@@ -365,8 +371,14 @@ __EOF__
 				# descending sort so that elemet 0 is largest
 				my @active_blocks = sort { $active_srcblocks{$b} cmp $active_srcblocks{$a} } keys(%active_srcblocks);
 				my $targ = $active_blocks[0] . "_ref_1";
-				my $a = sprintf("<a href=\"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>  %s", $src_linenum, $iline);
-				print $src_html_outfd $a;
+				$src_lines_td .= sprintf("<a \"$doc_html_filename#$targ\" target=\"doc\">%05d<\/a>\n", $src_linenum);
+				if ($global_src_buffer) {
+					$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+					$global_src_buffer = "";
+				}
+				else {
+					$src_content_td .= sprintf("  %s", $iline);
+				}
 
 				# for each open source block on this line of source, link the doc block to the that source block
 				foreach my $block_name (keys(%active_srcblocks)) {
@@ -375,15 +387,31 @@ __EOF__
 				}
 			} else {
 				# no active blocks
-				print $src_html_outfd sprintf("%05d  %s", $src_linenum, $iline);
+				my $a = sprintf("%05d\n", $src_linenum);
+				my $c = sprintf("  %s", $iline);
+				$src_lines_td .= $a;
+				$src_content_td .= $c;
 			}
 		}
+
 	}  # while
+
+	# if the global buffer is still full, dump it here
+	if ($global_src_buffer) {
+		$src_content_td .= sprintf("%s  %s", $global_src_buffer, $iline);
+		$global_src_buffer = "";
+	}
+
+	$src_lines_td .= "<\/td>";
+	$src_content_td .= "<\/td>";
+
+	print $src_html_outfd $src_lines_td;
+	print $src_html_outfd $src_content_td;
 
 	close($slsrc_infd);
 	close($src_outfd);
 
-	print $src_html_outfd "</code></pre></small></body></html>\n";
+	print $src_html_outfd "</tr></table></code></pre></small></body></html>\n";
 	close($src_html_outfd);
 
 	# if the source file started a block but reached eof without ending it, end it here.
@@ -418,15 +446,15 @@ sub usage {
 }  # usage
 
 sub file_get_contents{
-      my ($text_file) = @_;
-      open FILE, $text_file or die $!;
-      flock FILE, 1 or die $!; 		# wait for lock
-      seek(FILE, 0, 0); 		# move pointer to beginning
-      my $slurp = do{local $/; <FILE>};
-      flock FILE, 8; 			# release the lock
-      close(FILE);
+	my ($text_file) = @_;
+	open FILE, $text_file or die $!;
+	flock FILE, 1 or die $!; 		# wait for lock
+	seek(FILE, 0, 0); 		# move pointer to beginning
+	my $slurp = do{local $/; <FILE>};
+	flock FILE, 8; 			# release the lock
+	close(FILE);
 
-      return $slurp;
+	return $slurp;
 } # file_get_contents
 
 sub help {
