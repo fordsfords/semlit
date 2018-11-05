@@ -42,15 +42,16 @@ my %block_numrefs;  # number of doc references to each source block
 
 my $exit_status = 0;  # assume success
 
-# process command options and parameters
+# process command options and parameters.  See help().
 
-my $o_help;
-my $o_fs = ",";
-my $o_delim = "=";
-my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+my $o_help;        # -h
+my $o_fs = ",";    # -f
+my $o_delim = "="; # -d
+my $o_initialsource = "blank.html";  # -i
+my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I".
 $tabstop = 4;  # defined and used by Text::Tabs - see "expand()" function
 
-GetOptions("h"=> \$o_help, "d=s" => \$o_delim, "f=s" => \$o_fs, "I=s" => \@o_incdirs, "t=i" => \$tabstop) || usage("Error in GetOptions");
+GetOptions("h"=> \$o_help, "d=s" => \$o_delim, "f=s" => \$o_fs, "i=s" => \$o_initialsource, "I=s" => \@o_incdirs, "t=i" => \$tabstop) || usage("Error in GetOptions");
 if (defined($o_help)) {
 	help();  # if -h had a value, it would be in $opt_h
 }
@@ -67,27 +68,6 @@ if ( ! -r "$main_doc_filename" ) {
 
 $doc_html_filename = basename($main_doc_filename) . ".html";  # strip directory
 open($doc_html_outfd, ">", $doc_html_filename) || die "Error, could not open htmlfile '$doc_html_filename'";
-
-# Create frameset page
-
-my $index_o_file;
-open($index_o_file, ">", "index.html") || die "Error, could not open htmlfile 'index.html'";
-print $index_o_file <<__EOF__;
-<html><head></head>
-<frameset cols="50%,*">
-<frame src="$doc_html_filename" name="doc">
-<frame src="blank.html" name="src">
-</frameset>
-</html>
-__EOF__
-close($index_o_file);
-
-# Create blank page for initial source frame
-
-my $blank_o_file;
-open($blank_o_file, ">", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
-print $blank_o_file "<html><head></head><body>Click a source line number to see the line in context.</body></html>\n";
-close($blank_o_file);
 
 # Main loop; read each line in doc file
 
@@ -124,6 +104,27 @@ foreach my $blockname (keys(%block_numrefs)) {
 
 print $doc_html_outfd "$doc_html_str\n";
 close($doc_html_outfd);
+
+# Create frameset page
+
+my $index_o_file;
+open($index_o_file, ">", "index.html") || die "Error, could not open htmlfile 'index.html'";
+print $index_o_file <<__EOF__;
+<html><head></head>
+<frameset cols="50%,*">
+<frame src="$doc_html_filename" name="doc">
+<frame src="$o_initialsource" name="src">
+</frameset>
+</html>
+__EOF__
+close($index_o_file);
+
+# Create blank page for initial source frame
+
+my $blank_o_file;
+open($blank_o_file, ">", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
+print $blank_o_file "<html><head></head><body>Click a source line number to see the line in context.</body></html>\n";
+close($blank_o_file);
 
 # All done.
 exit($exit_status);
@@ -202,6 +203,12 @@ sub semlit_cmd {
 	# semlit srcfile - doc: read and process source file
 	elsif ($cmd =~ /^srcfile\s*$o_fs\s*([^\s$o_fs]+)\s*$o_fs\s*([^\s$o_fs]+)\s*$/i) {
 		return process_src_file($1, $2);
+	}
+
+	# semlit initialsource - doc: set initial source frame
+	elsif ($cmd =~ /^initialsource\s*$o_fs\s*([^\s$o_fs]+)\s*/i) {
+		$o_initialsource = $1;
+		return "";
 	}
 
 	# semlit include - doc: read and process doc file
@@ -474,6 +481,8 @@ Where:
             (default to '=')
     -f fs - field separator character within a semlit command.
             (default to ',')
+    -i initialsource - file name for initial source frame.
+            (default to "blank.htmo")  Also, initialsource semlit command.
     -I dir - directory to find files for 'srcfile' and 'include' commands.
             (default to ".")  The "-I dir" option can be repeated.
     -t tabstop - convert tabs to "tabstop" spaces.

@@ -42,14 +42,13 @@ my %block_numrefs;  # number of doc references to each source block
 
 my $exit_status = 0;  # assume success
 
-# Process command options and parameters.  See help().
+# process command options and parameters.  See help().
 
-my $o_help;
-my $o_fs = ",";     # Field separator.
-my $o_delim = "=";  # Delimiter.
-my $o_initialsource = "blank.html";
-
-my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I dir"
+my $o_help;        # -h
+my $o_fs = ",";    # -f
+my $o_delim = "="; # -d
+my $o_initialsource = "blank.html";  # -i
+my @o_incdirs = (".");  # GetOptions will append additional dirs for each "-I".
 $tabstop = 4;  # defined and used by Text::Tabs - see "expand()" function
 
 GetOptions("h"=> \$o_help, "d=s" => \$o_delim, "f=s" => \$o_fs, "i=s" => \$o_initialsource, "I=s" => \@o_incdirs, "t=i" => \$tabstop) || usage("Error in GetOptions");
@@ -106,13 +105,6 @@ foreach my $blockname (keys(%block_numrefs)) {
 print $doc_html_outfd "$doc_html_str\n";
 close($doc_html_outfd);
 
-# Create blank page for initial source frame
-
-my $blank_o_file;
-open($blank_o_file, ">", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
-print $blank_o_file "<html><head></head><body>Click a source line number to see the line in context.</body></html>\n";
-close($blank_o_file);
-
 # Create frameset page
 
 my $index_o_file;
@@ -126,6 +118,13 @@ print $index_o_file <<__EOF__;
 </html>
 __EOF__
 close($index_o_file);
+
+# Create blank page for initial source frame
+
+my $blank_o_file;
+open($blank_o_file, ">", "blank.html") || die "Error, could not open htmlfile 'blank.html'";
+print $blank_o_file "<html><head></head><body>Click a source line number to see the line in context.</body></html>\n";
+close($blank_o_file);
 
 # All done.
 exit($exit_status);
@@ -208,7 +207,7 @@ sub semlit_cmd {
 
 	# semlit initialsource - doc: set initial source frame
 	elsif ($cmd =~ /^initialsource\s*$o_fs\s*([^\s$o_fs]+)\s*/i) {
-	    $o_initialsource = $1;
+		$o_initialsource = $1;
 		return "";
 	}
 
