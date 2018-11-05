@@ -31,14 +31,14 @@
               <li><a href="#mozTocId462502">Main </a>
                 <ol>
                   <li><a href="#mozTocId280226">Process command line</a></li>
-                  <li><a href="#mozTocId129472">Create a few html output
-                      files </a></li>
                   <li><a href="#mozTocId259975">Read and process the
                       input sldoc file </a></li>
                   <li><a href="#mozTocId64">Fix up multiple source block
                       references</a></li>
                   <li><a href="#mozTocId139735">Write out the main
                       documentation html file and exit </a></li>
+                  <li><a href="#mozTocId129472">Create a few html output
+                      files </a></li>
                 </ol>
               </li>
               <li><a href="#mozTocId142916">Function: process_doc_file()
@@ -61,6 +61,7 @@
                 <ol>
                   <li><a href="#mozTocId638426">Command: tabstop</a></li>
                   <li><a href="#mozTocId897187">Command: srcfile </a></li>
+                  <li><a href="#mozTocId897188">Command: initialsource </a></li>
                   <li><a href="#mozTocId395404">Command: include</a></li>
                   <li><a href="#mozTocId374013">Command: insert</a></li>
                   <li><a href="#mozTocId495366">Command: block </a></li>
@@ -132,6 +133,7 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     <ul>
       <li><b><span style="font-family: monospace;">=semlit,srcfile,semlit_pl.slsrc,semlit_pl.txt=</span></b>
         - (right-click and save as "semlit.pl") main program.</li>
+=semlit,initialsource,semlit_pl.slsrc.html=
       <li><b><span style="font-family: monospace;">=semlit,srcfile,semlit_sh.slsrc,semlit_sh.txt=</span></b>
         - (right-click and save as "semlit.sh") wrapper shell script for
         <span style="font-family: monospace;">semlit.pl</span>.
@@ -150,13 +152,13 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
     </p>
     <ol>
       <li>Process command line.</li>
-      <li>Create a few <b>html</b> output files.</li>
       <li>Read and process the input <b>sldoc</b> file. This has the
         side effect of reading the <b>slsrc</b> files and generating
         the <b>src</b> files.</li>
       <li>Fix up multiple source block references.<br>
       </li>
       <li>Write out the main documentation <b>html</b> file and exit.</li>
+      <li>Create a few <b>html</b> output files.</li>
     </ol>
     <h4><a class="mozTocH3" name="mozTocId280226"></a>Process command
       line</h4>
@@ -170,32 +172,6 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
         href="http://perldoc.perl.org/Getopt/Long.html">Perl
         documentation</a> if you are not familiar with the construct.<br>
     </p>
-    <h4><a class="mozTocH3" name="mozTocId129472"></a>Create a few html
-      output files<br>
-    </h4>
-    <p>There are a couple of misc support files needed by the html
-      documentation. Since the documentation is best viewed with html
-      frames, the first file is the frameset: =semlit,insert,frameset=
-      Note the use of Perl's "here document" <span style="font-family:
-        monospace;">&lt;&lt;__EOF__</span> ... <span
-        style="font-family: monospace;">__EOF__</span> See <a
-        href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
-      and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
-
-
-
-
-
-
-
-
-        documentation</a> if you are not familiar with this construct.
-      Contrast this with the next code fragment.<br>
-    </p>
-    <p>When the documentation is first brought up, there is no source to
-      display in the source frame. So we need an almost blank page:
-      =semlit,insert,blank= I didn't use a "here" document for this, but
-      I could have. </p>
     <h4><a class="mozTocH3" name="mozTocId259975"></a>Read and process
       the input sldoc file<br>
     </h4>
@@ -252,6 +228,27 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       and is incremented each time an error is reported. Thus, if no
       errors are reported, the program exits with success (0).<br>
     </p>
+    <h4><a class="mozTocH3" name="mozTocId129472"></a>Create a few html
+      output files<br>
+    </h4>
+    <p>There are a couple of misc support files needed by the html
+      documentation. Since the documentation is best viewed with html
+      frames, the first file is the frameset: =semlit,insert,frameset=
+      Note the use of Perl's "here document" <span style="font-family:
+        monospace;">&lt;&lt;__EOF__</span> ... <span
+        style="font-family: monospace;">__EOF__</span> See <a
+        href="http://en.wikipedia.org/wiki/Here_document#Perl">Wikipedia</a>
+      and the <a href="http://perldoc.perl.org/perlop.html#%3c%3cEOF">Perl
+        documentation</a> if you are not familiar with this construct.
+      Contrast this with the next code fragment.<br>
+    </p>
+    <p>By default, when the documentation is first brought up, there is no
+      source to display in the source frame. So we need an almost blank page:
+      =semlit,insert,blank= I didn't use a "here" document for this, but
+      I could have. </p>
+    <p>That initial blank page can be overridden with the "-i" command-line
+      option, or with the "initialsource" semlit command. </p>
+
     <h3><a class="mozTocH3" name="mozTocId142916"></a>Function: <span
         style="font-family: monospace;">process_doc_file()</span><br>
     </h3>
@@ -471,12 +468,6 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       So, where does this actually get used? Right here:
       =semlit,insert,expand= (In the function <a href="#mozTocId378007"><span
           style="font-family: monospace;">process_src_file()</span></a>.)
-
-
-
-
-
-
       The <span style="font-family: monospace;">expand()</span>
       function is part of the <span style="font-family: monospace;">Text::Tabs</span>
       module.<br>
@@ -502,6 +493,14 @@ href="http://wiki.geeky-boy.com/w/index.php?title=Perl_for_C_Programmers">entry-
       the <tt>srcfile</tt> commands are arranged in a bullet list. Each
       <tt>srcfile</tt> command is followed by the hint "(right-click and
       save)" followed by a short description of the file. </p>
+    <h4><a class="mozTocH4" name="mozTocId897188"></a>Command: <span
+        style="font-family: monospace;">initialsource</span><br>
+    </h4>
+    <p>The <span style="font-family: monospace;">initialsource</span> command
+      is used to specify a file for initial display in the source frame:=semlit,insert,initialsource=
+      The file must be the final file name, ending with ".html".
+    </p>
+    <p>There is no returned text.</p>
     <h4><a class="mozTocH4" name="mozTocId395404"></a>Command: <span
         style="font-family: monospace;">include</span></h4>
     <p>The <span style="font-family: monospace;">include</span> command
