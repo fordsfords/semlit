@@ -8,7 +8,7 @@ paper "[Literate Programming](http://literateprogramming.com/knuthweb.pdf)".
 
 ## License
 
-Copyright 2012, 2015 Steven Ford http://geeky-boy.com and licensed
+Copyright 2012, 2018 Steven Ford http://geeky-boy.com and licensed
 "public domain" style under
 [CC0](http://creativecommons.org/publicdomain/zero/1.0/): 
 ![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png "CC0")
