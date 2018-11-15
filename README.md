@@ -1,8 +1,8 @@
 # semlit
 Semi-Literate Documentation
 
-SEMLIT is a system for writing detailed source code
-documentation. It is inspired by
+SEMLIT is a system for writing detailed source code documentation.
+It is inspired by
 [Donald Knuth](http://en.wikipedia.org/wiki/Donald_knuth)'s 1994
 paper "[Literate Programming](http://literateprogramming.com/knuthweb.pdf)".
 
