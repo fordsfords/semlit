@@ -1,10 +1,30 @@
 # semlit
-Semi-Literate Documentation
-
-SEMLIT is a system for writing detailed source code
+Semi-Literate Documentation - a system for writing detailed source code
 documentation. It is inspired by
 [Donald Knuth](http://en.wikipedia.org/wiki/Donald_knuth)'s 1994
 paper "[Literate Programming](http://literateprogramming.com/knuthweb.pdf)".
+
+<!-- mdtoc-start -->
+&DoubleRightArrow; [semlit](#semlit)  
+&nbsp;&nbsp;&DoubleRightArrow; [License](#license)  
+&nbsp;&nbsp;&DoubleRightArrow; [Introduction](#introduction)  
+&nbsp;&nbsp;&DoubleRightArrow; [Quick Start](#quick-start)  
+&nbsp;&nbsp;&DoubleRightArrow; [Usage](#usage)  
+&nbsp;&nbsp;&DoubleRightArrow; [Input Files](#input-files)  
+&nbsp;&nbsp;&DoubleRightArrow; [SEMLIT Markup Commands](#semlit-markup-commands)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [tabstop - src](#tabstop---src)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [srcfile - doc](#srcfile---doc)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [initialsource - doc](#initialsource---doc)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [include - doc](#include---doc)  
+&nbsp;&nbsp;&DoubleRightArrow; [block - src](#block---src)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [endblock - src](#endblock---src)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [insert - doc](#insert---doc)  
+&nbsp;&nbsp;&DoubleRightArrow; [Inspiration](#inspiration)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [Reasons for Lack of WEB Adoption](#reasons-for-lack-of-web-adoption)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [Why SEMLIT?](#why-semlit)  
+&nbsp;&nbsp;&nbsp;&nbsp;&DoubleRightArrow; [SEMLIT Drawbacks](#semlit-drawbacks)  
+<!-- TOC created by '../mdtoc/mdtoc.pl README.md' (see https://github.com/fordsfords/mdtoc) -->
+<!-- mdtoc-end -->
 
 ## License
 
